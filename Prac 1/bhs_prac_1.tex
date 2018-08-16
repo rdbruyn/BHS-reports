@@ -67,6 +67,110 @@
 				(s+2)(s^2+7s+12) & = & (s+2)(s+3)(s+4) \\
 				\end{array}
 			\end{equation}
+			The denominator can be given as
+			\begin{equation}
+				\begin{array}{rcl}
+				(s^4+12s^3++41s^2+30s) & = & (s)(s^3+12s^2+41s+30) \\
+				\end{array}
+			\end{equation}
+			Applying the same theorem as before, the second term in the equation has a common factor given as $(s+1)$. The denominator is then given as 
+			\begin{equation}
+					s(s+1)(s+6)(s+5)
+			\end{equation}
+			Thus the final equation is given as 
+			\begin{equation}
+				\begin{array}{rcl}
+				G_2(s) & = & \frac{(s+2)(s+3)(s+7)}{s(s+1)(s+6)(s+5)}
+				\end{array}
+			\end{equation}
+
+
+		\subsection*{Question 3c}
+		\label{sub:question_3c}
+		\begin{equation}
+			\begin{array}{rcl}
+				G_3(s) & = & G_1(s)+G_2(s)\\
+				& = & \frac{20(s+2)(s+3)(s+6)(s+8)}{s(s+7)(s+9)(s+10)(s+15)} + \frac{(s+2)(s+3)(s+4)}{s(s+1)(s+6)(s+5)}\\
+				& = & \frac{20(s+2)(s+3)(s+6)(s+8)(s+1)(s+5)+(s+2)(s+3)(s+4)(s+7)(s+9)(s+10)(s+15)}{s(s+7)(s+9)(s+10)(s+15)(s+1)(s+6)(s+5)}\\
+			\end{array}
+		\end{equation}
+		\begin{equation}
+			\begin{array}{rcl}
+				G_3(s) & = & G_1(s)-G_2(s)\\
+				& = & \frac{20(s+2)(s+3)(s+6)(s+8)}{s(s+7)(s+9)(s+10)(s+15)} - \frac{(s+2)(s+3)(s+4)}{s(s+1)(s+6)(s+5)}\\
+				& = & \frac{20(s+2)(s+3)(s+6)(s+8)(s+1)(s+5)-(s+2)(s+3)(s+4)(s+7)(s+9)(s+10)(s+15)}{s(s+7)(s+9)(s+10)(s+15)(s+1)(s+6)(s+5)}\\
+			\end{array}
+		\end{equation}
+		\begin{equation}
+			\begin{array}{rcl}
+				G_5(s) & = & G_1(s)G_2(s)\\
+				& = & \frac{20(s+2)(s+3)(s+6)(s+8)}{s(s+7)(s+9)(s+10)(s+15)}{} \times \frac{(s+2)(s+3)(s+7)}{s(s+1)(s+6)(s+5)}\\
+				& = & \frac{20(s+2)^2(s+3)^3(s+8)}{s^2(s+1)(s+5)(s+9)(s+10)(s+15)}
+			\end{array}
+		\end{equation}
+		\begin{equation}
+
+	\subsection*{Question 4a}
+		\label{sub:question_4a}
+		\begin{equation}
+			\begin{array}{rcl}
+				G_6(s) & = & \frac{5(s+2)}{s(s^2+8s+15)}\\
+				& = & \frac{5(s+2)}{s(s+5)(s+3)}
+				& = & \frac{K_1}{s} + \frac{K_2}{s+5} + \frac{K_1}{s+3}
+				% \bigg\rvert_{
+			\end{array}
+		\end{equation}
+
+		\begin{equation}
+			\begin{array}{rcl}
+				K_1 & = & \frac{5(s+2)}{(s+5)(s+3)} \bigg\rvert_{s=0} = \frac{2}{3}\\
+				\\
+				K_2 & = & \frac{5(s+2)}{s(s+3)} \bigg\rvert_{s=-5} = \frac{-2}{3} \\
+				\\
+				K_3 & = & \frac{5(s+2)}{(s+5)} \bigg\rvert_{s=-3} = \frac{5}{6} \\
+				\\
+				\\
+				G_6(s) & = & \frac{\frac{2}{3}}{s} - \frac{\frac{2}{3}}{s+5} + \frac{\frac{5}{6}}{s+3}\\
+			\end{array}
+		\end{equation}
+
+	\subsection*{Question 4b}
+		\label{sub:question_4b}
+		?
+	\subsection*{Question 4c}
+	\label{sub:question_4c}
+		\begin{equation}
+			\begin{array}{rcl}
+				G_8 (s) & = & \frac{s(s+2)}{s(s^2+6s+34)} \\
+				& = & \frac{K_1}{s}+\frac{K_2s + K_3}{s^2+6s+34}\\ 
+			\end{array}
+		\end{equation}
+
+		\begin{equation}
+			\begin{array}{rcl}
+				K_1  & = & \frac{5(s+2)}{(s^2+6s+34)}\bigg\rvert_{s=0} = \frac{10}{34}
+				\\ 
+			\end{array}
+		\end{equation}
+		Now in finding the other constants we substitue in the value obtained for $K_1$ and balance $LHS$ and $RHS$
+
+		\begin{equation}
+			\begin{array}{rcl}
+				\frac{5(s+2)}{s(s^2+6s+34)}  & = & \frac{\frac{10}{34}}{s} + \frac{K_2s+K_3}{s^2+6s+34}\\
+				5s+10 & = & (\frac{10}{34}+K_2)s^2 + (\frac{30}{17}+K_3)s +10 
+			\end{array}
+		\end{equation}
+		We then have 2 equations that can give us the answers to the 2 unkmowns 
+
+		\begin{equation}
+			\begin{array}{rcl}
+				K_2 & = & - \frac{10}{34}\\
+				\\
+				K_3 & = & - \frac{30}{17}\\
+				\\
+				G_8(s) & = & \frac{\frac{10}{34}}{s} - \frac{\frac{10}{34}s+\frac{30}{17}}{s^2+6s+34}
+			\end{array}
+		\end{equation}
 
 	% section prelab (end)
 
@@ -96,7 +200,12 @@
 
 		\subsection*{Question 2} % (fold)
 		\label{sub:question_2}
-			What???
+		From the 'symbolic' package we can use the expand function that expands $G_1(s)$ into a polynomial.\\
+		\texttt{syms s;}\\
+		\texttt{poly = expand((s + 7)*(s + 8)*(s + 3)*(s + 5)*(s + 9)*(s + 10));}\\
+
+		Running the above commands gives the following result:
+		$s^6 + 42 s^5 + 718 s^4 + 6372 s^3 + 30817s^2+76530s+75600$\\
 		% subsection question_2 (end)
 
 		\subsection*{Question 3} % (fold)
@@ -110,7 +219,19 @@
 			\]
 
 		% subsection question_3 (end)
+
+		\subsection*{Question 4} % (fold)
+		\label{sub:question_4}
+		\texttt{syms s;}
+		\texttt{poly_num = s**3+9*s**2+26*s+24;}
+		\texttt{poly_den = s**4 +12*s**3+41*s**2+30*s;}
+		\texttt{factored_num = factor(poly_num);}
+		\texttt{factored_den = factor(poly_den);}
+		? 2 functions only 
+
+		% subsection question_4 (end)
 	% section lab (end)
+
 
 	\section{Postlab} % (fold)
 	\label{sec:postlab}
