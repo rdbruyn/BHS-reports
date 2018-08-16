@@ -32,7 +32,7 @@
 				\item[a)] $s_{roots} = \{-2,-3,-4\}$
 				\item[b)] $s_{roots} = \{0,-1,-5,-6\}$
 				\item[c)] $P_3 = s^4 + 13s^3 + 50s^2 + 56s + 24$\\
-						  $P_4 = -s^4 -11s^3 -32s^2 -4s + 24$
+						  $P_4 = -s^4 -11s^3 -32s^2 -4s + 24$ \\
 						  $P_5 = \text{A mystery :'(}$
 			\end{itemize}
 		% subsection question_1 (end)
@@ -50,7 +50,43 @@
 
 	\section{Lab} % (fold)
 	\label{sec:lab}
-		
+		\subsection*{Question 1} % (fold)
+		\label{sub:question}
+			This question was done by using the \texttt{roots} command. The polynomials were initialized as \par
+			\texttt{P\_1 = [0,1,9,26,24];} \par
+			\texttt{P\_2 = [1,12,41,30,0];}
+
+			\noindent The resulting polynomials for this questions were obtained by \par
+			\texttt{P\_3 = P\_1 + P\_2;} \par
+			\texttt{P\_4 = P\_1 - P\_2;} \par
+			\texttt{P\_5 = conv(P\_1, P\_2);} \par
+
+			\noindent Running the \texttt{roots} command on the above polynomials, the roots were found to be
+			\begin{equation*}
+				\begin{array}{rcl}
+					s_{P3} & = & \{-6.72,-4.81,-0.733 + j0.452, -0.733 - j0.452\} \\
+					s_{P4} & = & \{-5.27 + j0.452,-5.27 - j0.452, -1.19, 0.722\} \\
+					s_{P5} & = & \{0,-1,-2,-3,-4,-5,-6\}
+				\end{array}
+			\end{equation*}
+		% subsection question (end)
+
+		\subsection*{Question 2} % (fold)
+		\label{sub:question_2}
+			What???
+		% subsection question_2 (end)
+
+		\subsection*{Question 3} % (fold)
+		\label{sub:question_3}
+			\texttt{s = tf('s');} \par\noindent
+			\texttt{G\_1 = 20*(s+2)*(s+3)*(s+6)*(s+8)/(s*(s+7)*(s+9)*(s+10)*(s+15));}
+
+			\noindent Running the above commands gives the following result:
+			\[
+				G_1(s) = \frac{20 s^4 + 380 s^3 + 2480 s^2 + 6480 s + 5760}{s^5 + 41 s^4 + 613 s^3 + 3975 s^2 + 9450 s}
+			\]
+
+		% subsection question_3 (end)
 	% section lab (end)
 
 	\section{Postlab} % (fold)
