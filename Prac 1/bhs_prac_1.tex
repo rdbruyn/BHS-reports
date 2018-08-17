@@ -49,7 +49,132 @@
 				\end{array}
 			\end{equation}
 		% subsection question_2 (end)
+
+		\subsection*{Question 3a}
+		\label{sub:question_3a}
+			\begin{equation}
+				\begin{array}{rcl}
+					G_1(s) & = & \frac{20(s+2)(s+3)(s+6)(s+8)}{s(s+7)(s+9)(s+10)(s+15)}\\
+					& = & \frac{20(s^3+5s^2+6s+6s^2+30s+36)(s+8)}{(s^3+7s^2+9s^2+63s)(s+10)(s+15)}\\
+					& = & \frac{20(s^3+41s^2+36s+36)(s+8)}{(s^3+16s^2+63s)(s+10)(s+15)}\\
+					& = & \frac{20s^4+380s^3+2480s^2+6480s+5760}{s^5+26s^4+223s^3+630s^2+15s^4+390s^3+3345s^2+9450s}\\
+					& = & \frac{20s^4+380s^3+2480s^2+6480s+5760}{s^5+41s^4+613s^3+3975s^2+9450s}
+				\end{array}
+			\end{equation} 
+
+		\subsection*{Question 3b}
+		\label{sub:question_3b}
+			Now using the Rationale Root Theorem to find the factors of the numerator and denominator, we find that $(s+2)$ is a factor of the numerator
+			\begin{equation}
+				\begin{array}{rcl}
+				(s+2)(s^2+7s+12) & = & (s+2)(s+3)(s+4) \\
+				\end{array}
+			\end{equation}
+			The denominator can be given as
+			\begin{equation}
+				\begin{array}{rcl}
+				(s^4+12s^3++41s^2+30s) & = & (s)(s^3+12s^2+41s+30) \\
+				\end{array}
+			\end{equation}
+			Applying the same theorem as before, the second term in the equation has a common factor given as $(s+1)$. The denominator is then given as 
+			\begin{equation}
+					s(s+1)(s+6)(s+5)
+			\end{equation}
+			Thus the final equation is given as 
+			\begin{equation}
+				\begin{array}{rcl}
+				G_2(s) & = & \frac{(s+2)(s+3)(s+7)}{s(s+1)(s+6)(s+5)}
+				\end{array}
+			\end{equation}
+
+
+		\subsection*{Question 3c}
+		\label{sub:question_3c}
+		\begin{equation}
+			\begin{array}{rcl}
+				G_3(s) & = & G_1(s)+G_2(s)\\
+				& = & \frac{20(s+2)(s+3)(s+6)(s+8)}{s(s+7)(s+9)(s+10)(s+15)} + \frac{(s+2)(s+3)(s+4)}{s(s+1)(s+6)(s+5)}\\
+				& = & \frac{20(s+2)(s+3)(s+6)(s+8)(s+1)(s+5)+(s+2)(s+3)(s+4)(s+7)(s+9)(s+10)(s+15)}{s(s+7)(s+9)(s+10)(s+15)(s+1)(s+6)(s+5)}\\
+			\end{array}
+		\end{equation}
+		\begin{equation}
+			\begin{array}{rcl}
+				G_3(s) & = & G_1(s)-G_2(s)\\
+				& = & \frac{20(s+2)(s+3)(s+6)(s+8)}{s(s+7)(s+9)(s+10)(s+15)} - \frac{(s+2)(s+3)(s+4)}{s(s+1)(s+6)(s+5)}\\
+				& = & \frac{20(s+2)(s+3)(s+6)(s+8)(s+1)(s+5)-(s+2)(s+3)(s+4)(s+7)(s+9)(s+10)(s+15)}{s(s+7)(s+9)(s+10)(s+15)(s+1)(s+6)(s+5)}\\
+			\end{array}
+		\end{equation}
+		\begin{equation}
+			\begin{array}{rcl}
+				G_5(s) & = & G_1(s)G_2(s)\\
+				& = & \frac{20(s+2)(s+3)(s+6)(s+8)}{s(s+7)(s+9)(s+10)(s+15)}{} \times \frac{(s+2)(s+3)(s+7)}{s(s+1)(s+6)(s+5)}\\
+				& = & \frac{20(s+2)^2(s+3)^3(s+8)}{s^2(s+1)(s+5)(s+9)(s+10)(s+15)}
+			\end{array}
+		\end{equation}
+
+	\subsection*{Question 4a}
+		\label{sub:question_4a}
+		\begin{equation}
+			\begin{array}{rcl}
+				G_6(s) & = & \frac{5(s+2)}{s(s^2+8s+15)}\\
+				& = & \frac{5(s+2)}{s(s+5)(s+3)}\\
+				& = & \frac{K_1}{s} + \frac{K_2}{s+5} + \frac{K_1}{s+3}
+			\end{array}
+		\end{equation}
+
+		\begin{equation}
+			\begin{array}{rcl}
+				K_1 & = & \frac{5(s+2)}{(s+5)(s+3)} \bigg\rvert_{s=0} = \frac{2}{3}\\
+				\\
+				K_2 & = & \frac{5(s+2)}{s(s+3)} \bigg\rvert_{s=-5} = \frac{-2}{3} \\
+				\\
+				K_3 & = & \frac{5(s+2)}{(s+5)} \bigg\rvert_{s=-3} = \frac{5}{6} \\
+				\\
+				\\
+				G_6(s) & = & \frac{\frac{2}{3}}{s} - \frac{\frac{2}{3}}{s+5} + \frac{\frac{5}{6}}{s+3}\\
+			\end{array}
+		\end{equation}
+
+	\subsection*{Question 4b}
+		\label{sub:question_4b}
+		?
+	\subsection*{Question 4c}
+	\label{sub:question_4c}
+		\begin{equation}
+			\begin{array}{rcl}
+				G_8 (s) & = & \frac{s(s+2)}{s(s^2+6s+34)} \\
+				& = & \frac{K_1}{s}+\frac{K_2s + K_3}{s^2+6s+34}\\ 
+			\end{array}
+		\end{equation}
+
+		\begin{equation}
+			\begin{array}{rcl}
+				K_1  & = & \frac{5(s+2)}{(s^2+6s+34)}\bigg\rvert_{s=0} = \frac{10}{34}
+				\\ 
+			\end{array}
+		\end{equation}
+		Now in finding the other constants we substitue in the value obtained for $K_1$ and balance $LHS$ and $RHS$
+
+		\begin{equation}
+			\begin{array}{rcl}
+				\frac{5(s+2)}{s(s^2+6s+34)}  & = & \frac{\frac{10}{34}}{s} + \frac{K_2s+K_3}{s^2+6s+34}\\
+				5s+10 & = & (\frac{10}{34}+K_2)s^2 + (\frac{30}{17}+K_3)s +10 
+			\end{array}
+		\end{equation}
+		We then have 2 equations that can give us the answers to the 2 unkmowns 
+
+		\begin{equation}
+			\begin{array}{rcl}
+				K_2 & = & - \frac{10}{34}\\
+				\\
+				K_3 & = & - \frac{30}{17}\\
+				\\
+				G_8(s) & = & \frac{\frac{10}{34}}{s} - \frac{\frac{10}{34}s+\frac{30}{17}}{s^2+6s+34}
+			\end{array}
+		\end{equation}
+
 	% section prelab (end)
+
 
 	\section{Lab} % (fold)
 	\label{sec:lab}
@@ -79,8 +204,15 @@
 			\texttt{P\_6 = (tf('s')+7)*(tf('s')+8)*(tf('s')+3)*(tf('s')+5)*(tf('s')+9)*(tf('s')+10);} \par\noindent
 			The result of the above command is
 			\[
-				P_6 = s^6 + 42 s^5 + 718 s^4 + 6372 s^3 + 3.082\times 10^{4} s^2 + 7.653\times10^4 s + 7.56\times 10^4
+				P_6 = s^6 + 42 s^5 + 718 s^4 + 6372 s^3 + 30817 s^2 + 76530 s + 75600
 			\]
+
+		% From the ``symbolic'' package we can use the expand function that expands $G_1(s)$ into a polynomial.\\
+		% \texttt{syms s;}\\
+		% \texttt{poly = expand((s + 7)*(s + 8)*(s + 3)*(s + 5)*(s + 9)*(s + 10));}\\
+
+		% \noindent Running the above commands gives the following result:\\
+		% $s^6 + 42 s^5 + 718 s^4 + 6372 s^3 + 30817s^2+76530s+75600$
 		% subsection question_2 (end)
 
 		\subsection*{Question 3} % (fold)
@@ -94,7 +226,19 @@
 			\]
 
 		% subsection question_3 (end)
+
+		\subsection*{Question 4} % (fold)
+		\label{sub:question_4}
+		\texttt{syms s;}\par\noindent
+		\texttt{poly\_num = s**3+9*s**2+26*s+24;}\par\noindent
+		\texttt{poly\_den = s**4 +12*s**3+41*s**2+30*s;}\par\noindent
+		\texttt{factored\_num = factor(poly\_num);}\par\noindent
+		\texttt{factored\_den = factor(poly\_den);}\par\noindent
+		? 2 functions only 
+
+		% subsection question_4 (end)
 	% section lab (end)
+
 
 	\section{Postlab} % (fold)
 	\label{sec:postlab}
