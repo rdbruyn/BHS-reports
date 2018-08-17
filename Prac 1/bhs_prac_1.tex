@@ -36,23 +36,23 @@
 				\item[b)] $s_{roots} = \{0,-1,-5,-6\}$
 				\item[c)] $P_3 = s^4 + 13s^3 + 50s^2 + 56s + 24$\\
 						  $P_4 = -s^4 -11s^3 -32s^2 -4s + 24$ \\
-						  $P_5 = \text{A mystery :'(}$
+						  $P_5 = s^7 + 21s^6 + 175s^5 +735s^4 + 1624s^3 + 1764s^2 + 720s$
 			\end{itemize}
 		% subsection question_1 (end)
 
 		\subsection*{Question 2} % (fold)
 		\label{sub:question_2}
-			\begin{equation}
+			\begin{equation*}
 				\begin{array}{rcl}
 					P_6 & = & (s+7)(s+8)(s+3)(s+5)(s+9)(s+10) \\
 					& = & s^6 + 42s^5 +718s^4 + 6\,732s^3 + 30\,820s^2 + 76\,530s + 7\,560
 				\end{array}
-			\end{equation}
+			\end{equation*}
 		% subsection question_2 (end)
 
 		\subsection*{Question 3a}
 		\label{sub:question_3a}
-			\begin{equation}
+			\begin{equation*}
 				\begin{array}{rcl}
 					G_1(s) & = & \frac{20(s+2)(s+3)(s+6)(s+8)}{s(s+7)(s+9)(s+10)(s+15)}\\
 					& = & \frac{20(s^3+5s^2+6s+6s^2+30s+36)(s+8)}{(s^3+7s^2+9s^2+63s)(s+10)(s+15)}\\
@@ -60,146 +60,145 @@
 					& = & \frac{20s^4+380s^3+2480s^2+6480s+5760}{s^5+26s^4+223s^3+630s^2+15s^4+390s^3+3345s^2+9450s}\\
 					& = & \frac{20s^4+380s^3+2480s^2+6480s+5760}{s^5+41s^4+613s^3+3975s^2+9450s}
 				\end{array}
-			\end{equation} 
+			\end{equation*} 
 
 		\subsection*{Question 3b}
 		\label{sub:question_3b}
 			Now using the Rationale Root Theorem to find the factors of the numerator and denominator, we find that $(s+2)$ is a factor of the numerator
-			\begin{equation}
+			\begin{equation*}
 				\begin{array}{rcl}
 				(s+2)(s^2+7s+12) & = & (s+2)(s+3)(s+4) \\
 				\end{array}
-			\end{equation}
+			\end{equation*}
 			The denominator can be given as
-			\begin{equation}
+			\begin{equation*}
 				\begin{array}{rcl}
 				(s^4+12s^3++41s^2+30s) & = & (s)(s^3+12s^2+41s+30) \\
 				\end{array}
-			\end{equation}
-			Applying the same theorem as before, the second term in the equation has a common factor given as $(s+1)$. The denominator is then given as 
-			\begin{equation}
+			\end{equation*}
+			Applying the same theorem as before, the second term in the equation* has a common factor given as $(s+1)$. The denominator is then given as 
+			\begin{equation*}
 					s(s+1)(s+6)(s+5)
-			\end{equation}
+			\end{equation*}
 			Thus the final equation is given as 
-			\begin{equation}
+			\begin{equation*}
 				\begin{array}{rcl}
 				G_2(s) & = & \frac{(s+2)(s+3)(s+7)}{s(s+1)(s+6)(s+5)}
 				\end{array}
-			\end{equation}
+			\end{equation*}
 
 
 		\subsection*{Question 3c}
 		\label{sub:question_3c}
-		\begin{equation}
+		\begin{equation*}
 			\begin{array}{rcl}
 				G_3(s) & = & G_1(s)+G_2(s)\\
 				& = & \frac{20(s+2)(s+3)(s+6)(s+8)}{s(s+7)(s+9)(s+10)(s+15)} + \frac{(s+2)(s+3)(s+4)}{s(s+1)(s+6)(s+5)}\\
 				& = & \frac{20(s+2)(s+3)(s+6)(s+8)(s+1)(s+5)+(s+2)(s+3)(s+4)(s+7)(s+9)(s+10)(s+15)}{s(s+7)(s+9)(s+10)(s+15)(s+1)(s+6)(s+5)}\\
 			\end{array}
-		\end{equation}
-		\begin{equation}
+		\end{equation*}
+		\begin{equation*}
 			\begin{array}{rcl}
 				G_3(s) & = & G_1(s)-G_2(s)\\
 				& = & \frac{20(s+2)(s+3)(s+6)(s+8)}{s(s+7)(s+9)(s+10)(s+15)} - \frac{(s+2)(s+3)(s+4)}{s(s+1)(s+6)(s+5)}\\
 				& = & \frac{20(s+2)(s+3)(s+6)(s+8)(s+1)(s+5)-(s+2)(s+3)(s+4)(s+7)(s+9)(s+10)(s+15)}{s(s+7)(s+9)(s+10)(s+15)(s+1)(s+6)(s+5)}\\
 			\end{array}
-		\end{equation}
-		\begin{equation}
+		\end{equation*}
+		\begin{equation*}
 			\begin{array}{rcl}
 				G_5(s) & = & G_1(s)G_2(s)\\
 				& = & \frac{20(s+2)(s+3)(s+6)(s+8)}{s(s+7)(s+9)(s+10)(s+15)}{} \times \frac{(s+2)(s+3)(s+7)}{s(s+1)(s+6)(s+5)}\\
 				& = & \frac{20(s+2)^2(s+3)^3(s+8)}{s^2(s+1)(s+5)(s+9)(s+10)(s+15)}
 			\end{array}
-		\end{equation}
+		\end{equation*}
 
 	\subsection*{Question 4a}
 		\label{sub:question_4a}
-		\begin{equation}
+		\begin{equation*}
 			\begin{array}{rcl}
 				G_6(s) & = & \frac{5(s+2)}{s(s^2+8s+15)}\\
 				& = & \frac{5(s+2)}{s(s+5)(s+3)}\\
 				& = & \frac{K_1}{s} + \frac{K_2}{s+5} + \frac{K_1}{s+3}
 			\end{array}
-		\end{equation}
+		\end{equation*}
 
-		\begin{equation}
+		\begin{equation*}
 			\begin{array}{rcl}
 				K_1 & = & \frac{5(s+2)}{(s+5)(s+3)} \bigg\rvert_{s=0} = \frac{2}{3}\\
 				\\
-				K_2 & = & \frac{5(s+2)}{s(s+3)} \bigg\rvert_{s=-5} = \frac{-2}{3} \\
+				K_2 & = & \frac{5(s+2)}{s(s+3)} \bigg\rvert_{s=-5} = \frac{-3}{2} \\
 				\\
 				K_3 & = & \frac{5(s+2)}{(s+5)} \bigg\rvert_{s=-3} = \frac{5}{6} \\
 				\\
 				\\
 				G_6(s) & = & \frac{\frac{2}{3}}{s} - \frac{\frac{2}{3}}{s+5} + \frac{\frac{5}{6}}{s+3}\\
 			\end{array}
-		\end{equation}
+		\end{equation*}
 
 	\subsection*{Question 4b}
 		\label{sub:question_4b}
 		\[
 			\begin{array}{rcl}
-				G_7(s) & = & \frac{5(s+2)}{s(s^2 + 8s + 15)}\\
-				& = & \frac{5s+10}{s[(s+3)^2 + 25]}
+				G_7(s) & = & \frac{5(s+2)}{s(s^2 + 6s + 9)}\\
+				& = & \frac{5s+10}{s(s+3)^2}
 			\end{array}
 		\]
 		\noindent Expanding $G_7(s)$ into partial fractions, we get the equation
 		\[
+			\frac{5s+10}{s(s+3)^2} = \frac{A}{s} + \frac{B}{(s+3)} + \frac{C}{(s+3)^2}
+		\]
+
+		We can then get the coefficients by using Heaviside's method:
+		\[
 			\begin{array}{rcl}
-				\frac{5s+10}{s[(s+3)^2 + 25]} & = & \frac{A}{s} + \frac{B(s+3)}{(s+3)^2 + 25} \\
-				5s + 10 & = & A(s^2 + 6s + 34) + Bs(s+3)
+				A & = & \frac{5s + 10}{(s+3)^2}\bigg\rvert_{s=0}\\
+				& = & \frac{10}{9}
+			\end{array}
+		\]
+		\[
+			\begin{array}{rcl}
+				B & = & \frac{d}{ds}\left(\frac{5s + 10}{s}\right)\bigg\rvert_{s=-3}\\
+				& = & \frac{5s - 5s - 10}{s^2}\bigg\rvert_{s=-3}\\
+				& = & -\frac{10}{9}
+			\end{array}
+		\]
+		\[
+			\begin{array}{rcl}
+				C & = & \frac{5s + 10}{s}\bigg\rvert_{s=-3} \\
+				& = & \frac{5}{3}
 			\end{array}
 		\]
 
-		\noindent Substituting $s=0$, we get
+		\noindent Therefore we have
 		\[
-			10 = 34A \Rightarrow A = \frac{5}{17}
-		\]
-
-		\noindent which makes our equation so far
-		\[
-			5s+10 = \tfrac{5}{17}(s^2 +6s + 34) + Bs(s+3)
-		\]
-
-		\noindent Substituting $s=1$ yields
-		\[
-			\begin{array}{rcl}
-				15 & = & \tfrac{5}{17}(41) + 4B \\
-				4B & = & \tfrac{50}{17} \\
-				B & = & \tfrac{25}{34}
-			\end{array}
-		\]
-
-		\noindent Therefore, we have
-		\[
-			G_7(s) = \frac{5}{17} \cdot \frac{1}{s} + \frac{25}{34} \cdot \frac{(s+3)}{(s+3)^2 + 25}
+			G_7(s) = \frac{10}{9} \cdot \frac{1}{s} - \frac{10}{9} \cdot \frac{1}{s+3} + \frac{5}{3} \cdot \frac{1}{(s+3)^2}
 		\]
 	\subsection*{Question 4c}
 	\label{sub:question_4c}
-		\begin{equation}
+		\begin{equation*}
 			\begin{array}{rcl}
 				G_8 (s) & = & \frac{s(s+2)}{s(s^2+6s+34)} \\
 				& = & \frac{K_1}{s}+\frac{K_2s + K_3}{s^2+6s+34}\\ 
 			\end{array}
-		\end{equation}
+		\end{equation*}
 
-		\begin{equation}
+		\begin{equation*}
 			\begin{array}{rcl}
 				K_1  & = & \frac{5(s+2)}{(s^2+6s+34)}\bigg\rvert_{s=0} = \frac{10}{34}
 				\\ 
 			\end{array}
-		\end{equation}
-		Now in finding the other constants we substitue in the value obtained for $K_1$ and balance $LHS$ and $RHS$
+		\end{equation*}
+		Now in finding the other constants we substitute in the value obtained for $K_1$ and balance $LHS$ and $RHS$
 
-		\begin{equation}
+		\begin{equation*}
 			\begin{array}{rcl}
 				\frac{5(s+2)}{s(s^2+6s+34)}  & = & \frac{\frac{10}{34}}{s} + \frac{K_2s+K_3}{s^2+6s+34}\\
 				5s+10 & = & (\frac{10}{34}+K_2)s^2 + (\frac{30}{17}+K_3)s +10 
 			\end{array}
-		\end{equation}
-		We then have 2 equations that can give us the answers to the 2 unkmowns 
+		\end{equation*}
+		We then have 2 equations that can give us the answers to the 2 unknowns 
 
-		\begin{equation}
+		\begin{equation*}
 			\begin{array}{rcl}
 				K_2 & = & - \frac{10}{34}\\
 				\\
@@ -207,7 +206,7 @@
 				\\
 				G_8(s) & = & \frac{\frac{10}{34}}{s} - \frac{\frac{10}{34}s+\frac{30}{17}}{s^2+6s+34}
 			\end{array}
-		\end{equation}
+		\end{equation*}
 
 	% section prelab (end)
 
@@ -273,6 +272,44 @@
 		? 2 functions only 
 
 		% subsection question_4 (end)
+
+		\subsection*{Question 6} % (fold)
+		\label{sub:question_6}
+			For this section, the residue command was used to calculate the coefficients of the transfer functions partial fraction expansion. We will show the procedure for calculating the first subquestion, $G_6(s)$.
+
+			\noindent\texttt{num = [0,0,5,10];}\par\noindent
+			\texttt{den = [1,8,15,0];}\par\noindent
+			\texttt{[r,p,k,e] = residue(num,den);}
+
+			\noindent Where the vector \texttt{r} represents the coefficient in the partial factor expansion. Printing \texttt{r} to screen yields the following results:
+			\[
+				r_a =
+				\begin{bmatrix}
+					0.66667 \\
+					0.83333 \\
+					-1.5
+				\end{bmatrix}
+			\]
+			which corresponds to our previous results of $A=\tfrac{2}{3}$, $C=\tfrac{5}{6}$, $B=\tfrac{-3}{2}$, respectively.
+
+			Doing the same procedure on the other subquestions, we get the following results:
+			\[
+				r_b =
+				\begin{bmatrix}
+					-1.1111 \\
+					1.6667 \\
+					1.1111
+				\end{bmatrix}
+			\]
+			\[
+				r_c =
+				\begin{bmatrix}
+					-0.14706 - j0.41176 \\
+					-0.14706 + j0.41176 \\
+					0.29412
+				\end{bmatrix}
+			\]
+		% subsection question_6 (end)
 	% section lab (end)
 
 
