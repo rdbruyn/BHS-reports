@@ -1,5 +1,8 @@
 \documentclass[12pt, a4paper]{article}
 \usepackage{amsmath}
+\usepackage{hyperref}
+
+\hypersetup{colorlinks=true, linkcolor=black}
 
 \title{Control Systems Practical 1}
 \date{21 August 2018}
@@ -16,12 +19,12 @@
 	
 	\section{Introduction} % (fold)
 	\label{sec:introduction}
-		
+		This is an introductory practical to control systems computing using MATLAB/Octave. The purpose of this practical is to become familiar with the common functions used to analyze control systems.
 	% section introduction (end)
 
 	\section{Equipment and Tools} % (fold)
 	\label{sec:equipment_and_tools}
-		
+		The only equipment used during this practical is the MATLAB/Octave scientific computing platforms.
 	% section equipment_and_tools (end)
 
 	\section{Prelab} % (fold)
@@ -73,7 +76,11 @@
 
 		\subsection*{Question 2} % (fold)
 		\label{sub:question_2}
-			What???
+			\texttt{P\_6 = (tf('s')+7)*(tf('s')+8)*(tf('s')+3)*(tf('s')+5)*(tf('s')+9)*(tf('s')+10);} \par\noindent
+			The result of the above command is
+			\[
+				P_6 = s^6 + 42 s^5 + 718 s^4 + 6372 s^3 + 3.082\times 10^{4} s^2 + 7.653\times10^4 s + 7.56\times 10^4
+			\]
 		% subsection question_2 (end)
 
 		\subsection*{Question 3} % (fold)
@@ -91,7 +98,7 @@
 
 	\section{Postlab} % (fold)
 	\label{sec:postlab}
-		
+		Octave was able to do in a few minutes what would otherwise take a human half an hour to do by hand, and is a very convenient and intuitive way to do scientific computing. An interesting finding in the course of this practical, is that polynomials can be multiplied using convolution.
 	% section postlab (end)
 
 	\section{References} % (fold)
