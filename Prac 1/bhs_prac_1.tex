@@ -137,7 +137,43 @@
 
 	\subsection*{Question 4b}
 		\label{sub:question_4b}
-		?
+		\[
+			\begin{array}{rcl}
+				G_7(s) & = & \frac{5(s+2)}{s(s^2 + 8s + 15)}\\
+				& = & \frac{5s+10}{s[(s+3)^2 + 25]}
+			\end{array}
+		\]
+		\noindent Expanding $G_7(s)$ into partial fractions, we get the equation
+		\[
+			\begin{array}{rcl}
+				\frac{5s+10}{s[(s+3)^2 + 25]} & = & \frac{A}{s} + \frac{B(s+3)}{(s+3)^2 + 25} \\
+				5s + 10 & = & A(s^2 + 6s + 34) + Bs(s+3)
+			\end{array}
+		\]
+
+		\noindent Substituting $s=0$, we get
+		\[
+			10 = 34A \Rightarrow A = \frac{5}{17}
+		\]
+
+		\noindent which makes our equation so far
+		\[
+			5s+10 = \tfrac{5}{17}(s^2 +6s + 34) + Bs(s+3)
+		\]
+
+		\noindent Substituting $s=1$ yields
+		\[
+			\begin{array}{rcl}
+				15 & = & \tfrac{5}{17}(41) + 4B \\
+				4B & = & \tfrac{50}{17} \\
+				B & = & \tfrac{25}{34}
+			\end{array}
+		\]
+
+		\noindent Therefore, we have
+		\[
+			G_7(s) = \frac{5}{17} \cdot \frac{1}{s} + \frac{25}{34} \cdot \frac{(s+3)}{(s+3)^2 + 25}
+		\]
 	\subsection*{Question 4c}
 	\label{sub:question_4c}
 		\begin{equation}
