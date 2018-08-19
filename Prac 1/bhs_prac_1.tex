@@ -19,12 +19,12 @@
 	
 	\section{Introduction} % (fold)
 	\label{sec:introduction}
-		This is an introductory practical to control systems computing using MATLAB/Octave. The purpose of this practical is to become familiar with the common functions used to analyze control systems.
+		This is an introductory practical to control systems computing using MATLAB/Octave. The purpose of this practical is to become familiar with the common functions used to analyze control systems, which include generating and manipulating polynomials and transfer functions, as well as performing partial-fraction expansions.
 	% section introduction (end)
 
 	\section{Equipment and Tools} % (fold)
 	\label{sec:equipment_and_tools}
-		The only equipment used during this practical is the MATLAB/Octave scientific computing platforms.
+		The only equipment used during this practical is the MATLAB/Octave scientific computing platforms, with the appropriate packages.
 	% section equipment_and_tools (end)
 
 	\section{Prelab} % (fold)
@@ -32,8 +32,23 @@
 		\subsection*{Question 1} % (fold)
 		\label{sub:question_1}
 			\begin{itemize}
-				\item[a)] $s_{roots} = \{-2,-3,-4\}$
-				\item[b)] $s_{roots} = \{0,-1,-5,-6\}$
+				\item[a)]
+					\[
+						\begin{array}{rcl}
+							s^3 + 9s^2 + 26s + 24 & = & (s+2)(s^2 + 7s + 12) \\
+							& = & (s+2)(s+3)(s+4)
+						\end{array}
+					\]
+					Therefore $s_{roots} = \{-2,-3,-4\}$
+				\item[b)]
+					\[
+						\begin{array}{rcl}
+							s^4 + 12s^3 + 41s^2 + 30s & = & s(s^3 + 12s^2 + 41s +30) \\
+							& = & s(s+1)(s^2 + 11s + 30) \\
+							& = & s(s+1)(s+5)(s+6)
+						\end{array}
+					\]
+					Therefore $s_{roots} = \{0,-1,-5,-6\}$
 				\item[c)] $P_3 = s^4 + 13s^3 + 50s^2 + 56s + 24$\\
 						  $P_4 = -s^4 -11s^3 -32s^2 -4s + 24$ \\
 						  $P_5 = s^7 + 21s^6 + 175s^5 +735s^4 + 1624s^3 + 1764s^2 + 720s$
@@ -45,6 +60,8 @@
 			\begin{equation*}
 				\begin{array}{rcl}
 					P_6 & = & (s+7)(s+8)(s+3)(s+5)(s+9)(s+10) \\
+					& = & (s^2+15s+56)(s^2+8s+15)(s^2+19s+90) \\
+					& = & (s^4 + 23s^3 +191s^2+743s+840)(s^2+19s+90) \\
 					& = & s^6 + 42s^5 +718s^4 + 6\,732s^3 + 30\,820s^2 + 76\,530s + 7\,560
 				\end{array}
 			\end{equation*}
@@ -99,7 +116,7 @@
 		\end{equation*}
 		\begin{equation*}
 			\begin{array}{rcl}
-				G_3(s) & = & G_1(s)-G_2(s)\\
+				G_4(s) & = & G_1(s)-G_2(s)\\
 				& = & \frac{20(s+2)(s+3)(s+6)(s+8)}{s(s+7)(s+9)(s+10)(s+15)} - \frac{(s+2)(s+3)(s+4)}{s(s+1)(s+6)(s+5)}\\
 				& = & \frac{20(s+2)(s+3)(s+6)(s+8)(s+1)(s+5)-(s+2)(s+3)(s+4)(s+7)(s+9)(s+10)(s+15)}{s(s+7)(s+9)(s+10)(s+15)(s+1)(s+6)(s+5)}\\
 			\end{array}
@@ -122,6 +139,8 @@
 			\end{array}
 		\end{equation*}
 
+		\noindent Using Heaviside's method, we get
+
 		\begin{equation*}
 			\begin{array}{rcl}
 				K_1 & = & \frac{5(s+2)}{(s+5)(s+3)} \bigg\rvert_{s=0} = \frac{2}{3}\\
@@ -129,11 +148,12 @@
 				K_2 & = & \frac{5(s+2)}{s(s+3)} \bigg\rvert_{s=-5} = \frac{-3}{2} \\
 				\\
 				K_3 & = & \frac{5(s+2)}{(s+5)} \bigg\rvert_{s=-3} = \frac{5}{6} \\
-				\\
-				\\
-				G_6(s) & = & \frac{\frac{2}{3}}{s} - \frac{\frac{2}{3}}{s+5} + \frac{\frac{5}{6}}{s+3}\\
 			\end{array}
 		\end{equation*}
+		And thus we can express $G_6(s)$ as
+		\[
+			G_6(s) = \frac{\frac{2}{3}}{s} - \frac{\frac{2}{3}}{s+5} + \frac{\frac{5}{6}}{s+3}\\
+		\]
 
 	\subsection*{Question 4b}
 		\label{sub:question_4b}
@@ -148,7 +168,7 @@
 			\frac{5s+10}{s(s+3)^2} = \frac{A}{s} + \frac{B}{(s+3)} + \frac{C}{(s+3)^2}
 		\]
 
-		We can then get the coefficients by using Heaviside's method:
+		\noindent We can then get the coefficients by using Heaviside's method:
 		\[
 			\begin{array}{rcl}
 				A & = & \frac{5s + 10}{(s+3)^2}\bigg\rvert_{s=0}\\
