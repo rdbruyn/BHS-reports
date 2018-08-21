@@ -1,5 +1,6 @@
 \documentclass[12pt, a4paper]{article}
 \usepackage{amsmath}
+\usepackage{graphicx}
 \usepackage{hyperref}
 
 \hypersetup{colorlinks=true, linkcolor=black}
@@ -10,8 +11,18 @@
 
 \begin{document}
 	\pagenumbering{gobble}
-	\maketitle
-	\newpage
+	\begin{titlepage}
+		\centering
+		{\LARGE Controls Systems Practical 1 \par}
+		\vspace*{1.5cm}
+		{\large Q. Kruger, 216008466 \par}
+		{\large R. de Bruyn, 216969696 \par}
+		{\large 21 August 2018}
+		% \makebox[\textwidth]{\includegraphics[width=\textwidth]{img/UJ.jpg}}
+		\vspace*{\fill}
+		\includegraphics[width=\textwidth]{img/UJ.jpg}
+		\vspace*{\fill}
+	\end{titlepage}
 	\pagenumbering{roman}
 	\tableofcontents
 	\newpage
@@ -198,35 +209,42 @@
 		\begin{equation*}
 			\begin{array}{rcl}
 				G_8 (s) & = & \frac{s(s+2)}{s(s^2+6s+34)} \\
-				& = & \frac{K_1}{s}+\frac{K_2s + K_3}{s^2+6s+34}\\ 
+				& = & \frac{A}{s}+\frac{B}{s+3-j5} + \frac{C}{s+3+j5} \\ 
 			\end{array}
 		\end{equation*}
 
+		\noindent We can then find all the constants using Heaviside's Method:
 		\begin{equation*}
 			\begin{array}{rcl}
-				K_1  & = & \frac{5(s+2)}{(s^2+6s+34)}\bigg\rvert_{s=0} = \frac{10}{34}
-				\\ 
+				A  & = & \frac{5(s+2)}{(s^2+6s+34)}\bigg\rvert_{s=0}\\
+				& = & \frac{10}{34} \\
+				& = & \frac{5}{17} 
 			\end{array}
 		\end{equation*}
-		Now in finding the other constants we substitute in the value obtained for $K_1$ and balance $LHS$ and $RHS$
+		
+		\[
+			\begin{array}{rcl}
+				B & = & \frac{5(s+2)}{s(s+3+j5)}\bigg\rvert_{s=-3+j5} \\
+				& = & \frac{5(-1+j5)}{(-3+j5)(-3+j5+3j5)} \\
+				& = & \frac{-5+j25}{-50-j30} \\
+				& = & \frac{5\sqrt{26} \angle -1.3734}{10\sqrt{34} \angle 0.5405} \\
+				& = & 0.4372 \angle -1.9138 \\
+				& = & -0.1471 - j0.4117
+			\end{array}
+		\]
+		
+		\[
+			\begin{array}{rcl}
+				C & = & \frac{5(s+2)}{s(s+3-j5)}\bigg\rvert_{s=-3-j5} \\
+				& = & \frac{5(-1-j5)}{(-3-j5)(-3-j5+3-j5)} \\
+				& = & \frac{-5-j25}{-50+j30} \\
+				& = & \frac{5\sqrt{26} \angle 1.3734}{10\sqrt{34} \angle -0.5405} \\
+				& = & 0.4372 \angle 1.9138 \\
+				& = & -0.1471 + j0.4117
+			\end{array}
+		\]
 
-		\begin{equation*}
-			\begin{array}{rcl}
-				\frac{5(s+2)}{s(s^2+6s+34)}  & = & \frac{\frac{10}{34}}{s} + \frac{K_2s+K_3}{s^2+6s+34}\\
-				5s+10 & = & (\frac{10}{34}+K_2)s^2 + (\frac{30}{17}+K_3)s +10 
-			\end{array}
-		\end{equation*}
-		We then have 2 equations that can give us the answers to the 2 unknowns 
-
-		\begin{equation*}
-			\begin{array}{rcl}
-				K_2 & = & - \frac{10}{34}\\
-				\\
-				K_3 & = & - \frac{30}{17}\\
-				\\
-				G_8(s) & = & \frac{\frac{10}{34}}{s} - \frac{\frac{10}{34}s+\frac{30}{17}}{s^2+6s+34}
-			\end{array}
-		\end{equation*}
+		\noindent Note that all of the values in this question have been rounded for the purposes of displaying the numbers. The high precision values were stored in the calculator's memory and used for calculations.
 
 	% section prelab (end)
 
@@ -337,10 +355,5 @@
 	\label{sec:postlab}
 		Octave was able to do in a few minutes what would otherwise take a human half an hour to do by hand, and is a very convenient and intuitive way to do scientific computing. An interesting finding in the course of this practical, is that polynomials can be multiplied using convolution.
 	% section postlab (end)
-
-	\section{References} % (fold)
-	\label{sec:references}
-		
-	% section references (end)
 
 \end{document}
