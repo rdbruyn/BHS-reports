@@ -3,7 +3,10 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 
-\hypersetup{colorlinks=true, linkcolor=black}
+\hypersetup{colorlinks=true,
+	linkcolor=black,
+	citecolor=black,
+	urlcolor=black}
 
 \title{Control Systems Practical 1}
 \date{21 August 2018}
@@ -16,7 +19,8 @@
 		{\LARGE Controls Systems Practical 1 \par}
 		\vspace*{1.5cm}
 		{\large Q. Kruger, 216008466 \par}
-		{\large R. de Bruyn, 216969696 \par}
+		{\large R. de Bruyn, 216054484 \par}
+		\vspace*{1.2cm}
 		{\large 21 August 2018}
 		% \makebox[\textwidth]{\includegraphics[width=\textwidth]{img/UJ.jpg}}
 		\vspace*{\fill}
@@ -303,10 +307,10 @@
 		\subsection*{Question 4} % (fold)
 		\label{sub:question_4}
 		\texttt{syms s;}\par\noindent
-		\texttt{fraction = (s^3+9*s^2+26*s+24)/(s^4+12*s^3+41*s^2+30*s)}\par\noindent
+		\texttt{fraction = (s\^{}3+9*s\^{}2+26*s+24)/(s\^{}4+12*s\^{}3+41*s\^{}2+30*s)}\par\noindent
 		\texttt{simplification = simplify(factor(fraction));}\par\noindent
 		
-		\nonindent By printing the above result we get:
+		By printing the above result we get:
 		\[
 			\frac{(s+2)(s+3)(s+4)}{s(s+1)(s+5)(s+6)}
 		\]
@@ -314,11 +318,10 @@
 
 		% subsection question_4 (end)
 
-		\subsection8{Question 5}
+		\subsection*	{Question 5}
 		\label{sub:question_5}
 			\texttt{syms s;}\par\noindent
-			\texttt{result = factor(simplify(G1+G2));}\par\noindent
-
+			\texttt{result = factor(simplify(G1+G2));}\\\par\noindent
 			Printing \texttt{result} to screen yields the following result:
 				$(s+3)(s^5+305s^4+5237s^3+30987s^2+73110s+66600)/s(s+7)(s+9)(s+10)(s+15)(12s+15)$
 
@@ -358,13 +361,20 @@
 					0.29412
 				\end{bmatrix}
 			\]
+
+			\noindent Which corresponds to the coefficients found in \mbox{\hyperref[sub:question_4b]{question 4b}} and \mbox{\hyperref[sub:question_4c]{question 4c}}.
 		% subsection question_6 (end)
-	% section lab (end)
+	% section lab (end)sub:question_4c
 
 
 	\section{Postlab} % (fold)
 	\label{sec:postlab}
-		Octave was able to do in a few minutes what would otherwise take a human half an hour to do by hand, and is a very convenient and intuitive way to do scientific computing. An interesting finding in the course of this practical, is that polynomials can be multiplied using convolution.
+		Octave was able to do in a few minutes what would otherwise take a human half an hour to do by hand, and is a very convenient and intuitive way to do scientific computing. An interesting finding in the course of this practical, is that polynomials can be multiplied using convolution. This is due to the complexity of the Fast Fourier Transform, which has computational complexity $\mathcal{O}(N\log N)$. Doing the ``brute-force'' straight forward computation has complexity $\mathcal{O}(N^2)$\cite{polyconvolution}. Often times, performing the FFT, doing the multiplication, and then doing the inverse transform, is more computationally efficient when performing multiplication.
 	% section postlab (end)
+
+	\begin{thebibliography}{9}
+		\bibitem{polyconvolution}
+		The Polynomial Multiplication Problem, \url{http://algorithm.cs.nthu.edu.tw/~course/Extra_Info/Divide%20and%20Conquer_supplement.pdf}
+	\end{thebibliography}
 
 \end{document}
