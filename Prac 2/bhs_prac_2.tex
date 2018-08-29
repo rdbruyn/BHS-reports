@@ -1,0 +1,71 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\begin{document}
+	\pagenumbering{gobble}
+	\begin{titlepage}
+		\centering
+		{\LARGE Controls Systems Practical 1 \par}
+		\vspace*{1.5cm}
+		{\large Q. Kruger, 216008466 \par}
+		{\large R. de Bruyn, 216054484 \par}
+		\vspace*{1.2cm}
+		{\large 21 August 2018}
+		\vspace*{\fill}
+		% \includegraphics[width=\textwidth]{img/UJ.jpg}
+		\vspace*{\fill}
+	\end{titlepage}
+	\pagenumbering{roman}
+	\tableofcontents
+	\newpage
+	\pagenumbering{arabic}
+
+	\section{Prelab} % (fold)
+	\label{sec:prelab}
+	\subsection{Question 1} % (fold)
+	\label{sub:question_1_1}
+		Here, we evaluate the expression
+		\begin{equation}
+			\label{eq:lolz}
+			\mathcal{L}\left[0.0075 - 0.0072e^{-8t} + 0.00034e^{-2.5t}\cos(22t) + 0.087e^{-2.5t}\sin(22t)\right]
+		\end{equation}
+
+		\noindent which, assuming $t \ge 0$, leaves us with
+		\[
+			\begin{array}{rcl}
+				F(s) & = & 0.0075 \cdot \frac{1}{s} - 0.0022 \cdot \frac{1}{s + 8} + 0.0034 \cdot \frac{s+2.5}{(s+2.5)^2 + 22^2} + 0.087 \cdot \frac{22}{(s+2.5)^2 + 22^2} \\
+				& = & \frac{0.0075}{s} - \frac{0.0022}{s + 8} + \frac{0.00034s}{s^2 + 5s + 490.25} + \frac{1.91485}{s^2 + 5s + 490.25}
+			\end{array}
+		\]
+	% subsection question_1_1 (end)
+
+	\subsection{Question 2} % (fold)
+	\label{sub:question_2_1}
+		We have
+		\[
+			\begin{array}{rcl}
+				F(s) & = & \frac{2(s+3)(s+5)(s+7)}{s(s+8)(s^2 + 10s + 100)} \\
+				& = & \frac{A}{s} + \frac{B}{s+8} + \frac{Cs + D}{(s+5)^2 + 75} 
+			\end{array}
+		\]
+
+		Using Heaviside's Method for finding $A$ and $B$, we have
+		\[
+			\begin{array}{rcl}
+				A & = & \frac{2(s+3)(s+5)(s+7)}{(s+8)(s^2 + 10s + 100)}\bigg\rvert_{s=0} \\
+				& = & \frac{21}{80}
+			\end{array}
+		\]
+
+		and
+
+		\[
+			\begin{array}{rcl}
+				B & = & \frac{2(s+3)(s+5)(s+7)}{s(s^2 + 10s + 100)}\bigg\rvert_{s=-8} \\
+				& = & \frac{5}{112}
+			\end{array}
+		\]
+	% subsection question_2_1 (end)
+	% section prelab (end)
+\end{document}
