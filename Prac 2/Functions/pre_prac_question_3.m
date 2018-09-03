@@ -22,7 +22,7 @@
 ## Author: root <root@quintin-Inspiron-15-3567>
 ## Created: 2018-09-01
 
-function [mesh_current_1,mesh_current_2, mesh_current_3] = pre_prac_question_3 ()
+function [] = pre_prac_question_3 ()
   syms s V;
   
   t1 = (s^2 + 7*s + 5)/s;
@@ -49,7 +49,7 @@ function [mesh_current_1,mesh_current_2, mesh_current_3] = pre_prac_question_3 (
   determinant_matrix_a3 = expand(det(matrix_a3));
   
   # Cramer's rule to find the mesh currents 
-  mesh_current_1 =  determinant_matrix_a1/determinant_matrix;
-  mesh_current_2 =  determinant_matrix_a2/determinant_matrix;
-  mesh_current_3 =  determinant_matrix_a3/determinant_matrix;
+  mesh_current_1 =  determinant_matrix_a1/determinant_matrix
+  mesh_current_2 =  determinant_matrix_a2/determinant_matrix
+  mesh_current_3 =  determinant_matrix_a3/determinant_matrix
 endfunction

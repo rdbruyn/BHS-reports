@@ -24,9 +24,9 @@
 
 function [F, expanded, simplified] = question_2 ()
   syms s;
-  numerator = 2*(s+3)*(s+5)*(s+7)
-  denominator = s*(s+8)*(s^2 +10*s +100)
-  F = numerator/denominator
+  numerator = 2*(s+3)*(s+5)*(s+7);
+  denominator = s*(s+8)*(s^2 +10*s +100);
+  F = numerator/denominator;
   expanded = expand(F);
   simplified = simplify(F);
   

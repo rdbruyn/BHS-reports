@@ -25,8 +25,7 @@
 # function returns the function f for use by other questions
 function [f] = question_1()
   syms t;
-  t = [0:1:10];
   f = 0.0075 - 0.0072 .* exp(-8 .* t) + 0.00034 .* exp(-2.5 .* t) .* cos(22 .* t) + 0.087 .* exp(-2.5 .*t ) .* sin(22 .* t);
-  plot(t,f);
+  
     
   endfunction

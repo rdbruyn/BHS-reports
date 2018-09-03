@@ -23,9 +23,9 @@
 ## Created: 2018-08-30
 
 function [inverse] = question_4 ()
-  syms s t;
-  numerator = 2*(s+3)*(s+5)*(s+7);
-  denominator = s*(s+8)*(s^2 +10*s +100);
+  syms s;
+  numerator = 2.*(s+3).*(s+5).*(s+7);
+  denominator = s.*(s+8).*(s^2 +10 .*s +100);
   F = numerator/denominator;
   inverse = ilaplace(F);
   
