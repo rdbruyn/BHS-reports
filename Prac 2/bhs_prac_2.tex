@@ -55,7 +55,7 @@
 			\end{array}
 		\]
 
-		Using Heaviside's Method for finding $A$ and $B$, we have
+		\noindent Using Heaviside's Method for finding $A$ and $B$, we have
 		\[
 			\begin{array}{rcl}
 				A & = & \frac{2(s+3)(s+5)(s+7)}{(s+8)(s^2 + 10s + 100)}\bigg\rvert_{s=0} \\
@@ -63,7 +63,7 @@
 			\end{array}
 		\]
 
-		and
+		\noindent and
 
 		\[
 			\begin{array}{rcl}
@@ -76,7 +76,7 @@
 
 	\subsection*{Question 3} % (fold)
 	\label{sub:question_3}
-	Given the circuit as shown by Figure \ref{fig:circuit}, mesh analysis was applied and the impedance matrix obtained in doing is shown in Figure \ref{fig:pre_lab_question_3_matrix}
+	Given the circuit as shown by Figure \ref{fig:circuit}, mesh analysis was applied and the impedance matrix obtained in doing is shown in equation \ref{eq:all}.
 
 
 	\begin{figure}[H]
@@ -86,60 +86,107 @@
 		\label{fig:circuit}
 	\end{figure}
 
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{pre_lab_question_3_matrix}
-		\caption{Matrix obtained from mesh analysis on the circuit}
-		\label{fig:pre_lab_question_3_matrix}
-	\end{figure}
-
 	% Sit hierdie maar in as j dit kan reg kry maar vir nou sit ek net question 6 van lab se image in 
-	% \begin{bmatrix}
-	%     $\frac{s^2+7s+2}{s}$	&	$-s-2$	&	$-5$\\
-	%     $-s-2$      			& 	$\frac{2s^2+4s+3}{s}$  & 	$-s-2$\\
-	%     $-5$      			& 	$-s-2$  & 	$\frac{s^2+8s+4}{s}$\\
-	% \end{bmatrix}
+	\begin{equation}
+		\label{eq:all}
+		\begin{bmatrix}
+		    \frac{s^2+7s+2}{s}	&	-s-2	&	-5\\
+		    -s-2      			& 	\frac{2s^2+4s+3}{s}  & 	-s-2\\
+		    -5      			& 	-s-2  & 	\frac{s^2+8s+4}{s}\\
+		\end{bmatrix}
+	\end{equation}
 
-	3 additional matrices were constructed from the one in Figure \ref{pre_lab_question_3_matrix}. They are shown respectively by Figure, Figure and Figure 
+	\noindent Three additional matrices were constructed from the one in equation \ref{eq:all}, which will be used to derive the equations for the currents. They are shown respectively by equation \ref{eq:I1}, equation \ref{eq:I2} and equation \ref{eq:I3}. 
 
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{pre_lab_question_3_a1}
-		\caption{Matrix obtained for mesh current 1 - Matrix A1}
-		\label{fig:pre_lab_question_3_a1}
-	\end{figure}
+	\begin{equation}
+		\label{eq:I1}
+		I_{1 \text{num}}(s) =
+		\begin{bmatrix}
+		    V(s)	&	-s-2	&	-5\\
+		    0    & 	\frac{2s^2+4s+3}{s}  & 	-s-2\\
+		    0    & 	-s-2  & 	\frac{s^2+8s+4}{s}\\
+		\end{bmatrix}
+	\end{equation}
 
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{pre_lab_question_3_a2}
-		\caption{Matrix obtained for mesh current 2 - Matrix A2}
-		\label{fig:pre_lab_question_3_a2}
-	\end{figure}
+	\begin{equation}
+		\label{eq:I2}
+		I_{2 \text{num}}(s) =
+		\begin{bmatrix}
+		    \frac{s^2+7s+2}{s}	&	V(s)	&	-5\\
+		    -s-2      			& 	0  & 	-s-2\\
+		    -5      			& 	0  & 	\frac{s^2+8s+4}{s}\\
+		\end{bmatrix}
+	\end{equation}
 
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{pre_lab_question_3_a3}
-		\caption{Matrix obtained mesh current 3 - Matrix A3}
-		\label{fig:pre_lab_question_3_a3}
-	\end{figure}
+	\begin{equation}
+		\label{eq:I3}
+		I_{3 \text{num}}(s) =
+		\begin{bmatrix}
+		    \frac{s^2+7s+2}{s}	&	-s-2	&	V(s)\\
+		    -s-2      			& 	\frac{2s^2+4s+3}{s}  & 	0\\
+		    -5      			& 	-s-2  & 	0\\
+		\end{bmatrix}
+	\end{equation}
 
-	The determinant of the orginal matrix A (Figure \ref{fig:pre_lab_question_3_matrix}) is:\\
+	% \begin{figure}[H]
+	% 	\centering
+	% 	\includegraphics[width=\textwidth]{pre_lab_question_3_a1}
+	% 	\caption{Matrix obtained for mesh current 1 - Matrix A1}
+	% 	\label{fig:pre_lab_question_3_a1}
+	% \end{figure}
+
+	% \begin{figure}[H]
+	% 	\centering
+	% 	\includegraphics[width=\textwidth]{pre_lab_question_3_a2}
+	% 	\caption{Matrix obtained for mesh current 2 - Matrix A2}
+	% 	\label{fig:pre_lab_question_3_a2}
+	% \end{figure}
+
+	% \begin{figure}[H]
+	% 	\centering
+	% 	\includegraphics[width=\textwidth]{pre_lab_question_3_a3}
+	% 	\caption{Matrix obtained mesh current 3 - Matrix A3}
+	% 	\label{fig:pre_lab_question_3_a3}
+	% \end{figure}
+
+	\noindent The determinant of the original matrix A (equation \ref{eq:all}) is:\\
 	\texttt{$s^3+12s^2+26s+153+\frac{380}{s}+\frac{284}{s^2}+\frac{60}{s^3}$}\\
-	The determinant of the matrix A1 (Figure \ref{fig:pre_lab_question_3_a1}) is:\\
-	\texttt{$Vs^2+16Vs+39V+\frac{40V}{s}+\frac{12V}{s^2}$}\\
-	The determinant of the matrix A2 (Figure \ref{fig:pre_lab_question_3_a2}) is:\\
+	The determinant of the matrix $I_{1 \text{num}}(s)$ (equation \ref{eq:I1}) is:\\
+	\texttt{$V(s)s^2+16V(s)s+39V(s)+\frac{40V(s)}{s}+\frac{12V(s)}{s^2}$}\\
+	The determinant of the matrix $I_{2 \text{num}}(s)$ (equation \ref{eq:I2}) is:\\
 	\texttt{$9Vs+42V+\frac{16V}{s}$}\\
-	The determinant of the matrix A1 (Figure \ref{fig:pre_lab_question_3_a3}) is:\\
-	\texttt{$-9s^2-60s-100-\frac{32}{s}$}
+	The determinant of the matrix $I_{1 \text{num}}(s)$ (equation \ref{eq:I3}) is:\\
+	\texttt{$-9s^2-60s-100-\frac{32}{s}$}\\
 
-	Now using Cramer's rule and the determinants of the original matrix, and those of the respective mesh current matrices (A1, A2, A3), the mesh currents were found to be and are shown in Figure 
 
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{mesh_currents}
-		\caption{Mesh currents}
-		\label{fig:pre_lab_question_3_a3}
-	\end{figure}
+	\noindent Now using Cramer's rule and the determinants of the original matrix, and those of the respective mesh current matrices, the mesh currents were found to be and are shown in the following equations:
+
+	\begin{equation}
+		\label{eq:I1_final}
+		I_1(s) = \frac{s^2 + 16s + 39 + \frac{40}{s} + \frac{12}{s^2}}{s^3 + 14s^2 + 26s + 153 + \frac{380}{s} + \frac{284}{s^2} + \frac{60}{s^3}}V(s)
+	\end{equation}
+
+	\begin{equation}
+		\label{eq:I2_final}
+		I_2(s) = \frac{9s + 42 + \frac{16}{s}}{s^3 + 14s^2 + 26s + 153 + \frac{380}{s} + \frac{284}{s^2} + \frac{60}{s^3}}V(s)
+	\end{equation}
+
+	\begin{equation}
+		\label{eq:I3_final}
+		I_3(s) = \frac{9s^ - 60s - 100 - \frac{32}{s}}{s^3 + 14s^2 + 26s + 153 + \frac{380}{s} + \frac{284}{s^2} + \frac{60}{s^3}}V(s)
+	\end{equation}
+
+	% \begin{figure}[H]
+	% 	\centering
+	% 	\includegraphics[width=\textwidth]{mesh_currents}
+	% 	\caption{Mesh currents}
+	% 	\label{fig:pre_lab_question_3_a3}
+	% \end{figure}
+
+	\noindent It is instructive to note that, without an expression for $V(s)$, we cannot explicitly find the mesh currents in the circuit, but we can implicitly solve them with the equations
+	\[
+		i_1(t) = \mathcal{L}^{-1}[I_1(s)] \quad i_2(t) = \mathcal{L}^{-1}[I_2(s)] \quad i_3(t) = \mathcal{L}^{-1}[I_3(s)]
+	\]
 
 	\newpage
 	\section{Lab} % (fold)
@@ -162,11 +209,11 @@
 	\subsection*{Question 2}
 	A symbolic representation of the transfer function (both in factored and simplified form) given in Prelab 2 resulted by executing the following commands:\\
 
-	\texttt{syms s;}
-    \texttt{numerator = 2*(s+3)*(s+5)*(s+7)}
-    \texttt{denominator = s*(s+8)*(s\^2 +10*s +100)}
-    \texttt{F = numerator/denominator}
-    \texttt{expanded = expand(F);}
+	\texttt{syms s;}\\
+    \texttt{numerator = 2*(s+3)*(s+5)*(s+7)}\\
+    \texttt{denominator = s*(s+8)*(s\^{}2 +10*s +100)}\\
+    \texttt{F = numerator/denominator}\\
+    \texttt{expanded = expand(F);}\\
     \texttt{simplified = simplify(F);}\\
 
 
@@ -224,15 +271,15 @@
 	Considering the circuit from Prelab 3, a matrix was found using mesh analysis. The terms that were obtained were entered into Octave according to the following code:\\
 
 	\texttt{syms s V;} \par
-	\texttt{t1 = (s\^2 + 7*s + 5)/s;}\par
+	\texttt{t1 = (s\^{}2 + 7*s + 5)/s;}\par
 	\texttt{t2 = -s-2;}\par
 	\texttt{t3 = -5;}\par
 	\texttt{t4 = -2-2;}\par
-	\texttt{t5 = (2*s\^2 + 4*s + 3)/s;}\par
+	\texttt{t5 = (2*s\^{}2 + 4*s + 3)/s;}\par
 	\texttt{t6 = -s-2;}\par
 	\texttt{t7 = -5;}\par
 	\texttt{t8 = -s-2;}\par
-	\texttt{t9 = (s\^2+8*s+4)/s;}\\
+	\texttt{t9 = (s\^{}2+8*s+4)/s;}\\
 
 	\texttt{matrix = [t1,t2,t3;t4,t5,t6;t7,t8,t9];}\\
 
