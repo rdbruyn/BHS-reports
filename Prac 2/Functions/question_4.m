@@ -22,10 +22,10 @@
 ## Author: root <root@quintin-Inspiron-15-3567>
 ## Created: 2018-08-30
 
-function [inverse] = question_4 ()
+function [F] = question_4 ()
   syms s;
-  numerator = 2.*(s+3).*(s+5).*(s+7);
-  denominator = s.*(s+8).*(s^2 +10 .*s +100);
+  numerator = 2*(s+3)*(s+5)*(s+7);
+  denominator = s*(s+8)*(s^2 +10 .*s +100);
   F = numerator/denominator;
   inverse = ilaplace(F);
   

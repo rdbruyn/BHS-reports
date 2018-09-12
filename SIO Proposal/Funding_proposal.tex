@@ -7,6 +7,8 @@
 \usepackage{caption}
 \usepackage[list=true]{subcaption}
 \usepackage{hyperref}
+\usepackage{appendix}
+\usepackage{siunitx}
 
 \hypersetup{colorlinks=true, linkcolor=black}
 
@@ -108,6 +110,15 @@
 		\label{sub:accuracy_of_gps_tracking}
 			The accuracy of the GPS coordinates are of utmost importance to ensure that accurate distance and speed can be derived from them. We plan to implement a Kalman Filter algorithm to enhance the accuracy of the GPS coordinates we track. This is fairly easy to achieve, as the errors in the GPS coordinates can be measured by letting the GPS unit be stationary, and logging several hundred samples for analysis. This will give us a credible and objective measure of error in GPS measurements. We will feed this error into the Kalman Filter to smooth out measurements and gain much more accurate estimations of instantaneous position. Furthermore, the velocity of the vehicle itself will also be tracked using the Kalman Filter, which will increase the accuracy of velocity estimation around curves.
 		% subsection accuracy_of_gps_tracking (end)
+
+		\subsection{Modifications}
+		\label{sub:modifications}
+			As part of the Shell Eco Marathon Chapter 1 Rules, the vehicle is required to have a crumple zone of atleast $100mm$ between the front of the car and the driver's feet. The Apex team has thus decided to add a front and back modification to the vehicle (see the appendices \ref{sec:front_modification} and \ref{sec:back_modification} for the design). The rules have also stated that sharp edge designs are prohibited. Having this restriction, our modification design have rounded edges.
+
+			Figure \ref{fig:front_view_dimensions} shows a green contour that represents the tickness of the shell to be attached to the front portion of the car that must be $40mm$ in width. Similarly Figure \ref{fig:back_view_dimensions} shows a similar contour with a similar thickness.
+
+			The material that will be used to to form the cones will be PETG plastic. This specific grade of plastic has been chossen as it is what the rest of the car has already been constructed with and is a plastic that offers good impact resistance. 
+		% subsection modifications (end)
 	% section technical (end)
 
 	\section{Cost} % (fold)
@@ -165,4 +176,44 @@
 		Team Apex are a group of dedicated and disciplined students, eager to succeed in this project. Most of the other teams from UJ that are enrolled in this race do not plan to have a true telemetry system, beyond a device that measures the speed and distance covered, while Apex are making a bespoke, novel solution using a Raspberry Pi and GPS module, that suits our goals and requirements, and will provide real time and logged race-relevant data to both the driver as well as the team in the race pits, for analysis during the event. We have carefully designed the circuitry in the vehicle, and are confident that our innovative attitude makes us a very strong competitor in this event.
 	% section conclusion (end)	
 	% section benefits_to_the_client (end)
+
+	\newpage
+	\begin{appendices}
+		\section{Front Modifications}
+		\label{sec:front_modification}
+
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width = 150mm]{img/Front_Side_View_Coned.png}
+				\caption{Coned front view}
+				\label{fig:front_side_view_coned}
+			\end{figure}
+
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width = 150mm]{img/Front_View_Dimensions.png}
+				\caption{Side view}
+				\label{fig:front_view_dimensions}
+			\end{figure}
+
+	
+
+		\section{Back Modification}
+		\label{sec:back_modification}
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width = 150mm]{img/Back_Side_View_Coned.png}
+			\caption{Coned back view}
+			\label{fig:coned_back_view}
+		\end{figure}
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width = 150mm]{img/Back_View_Dimensions.jpeg}
+			\caption{Dimensions of cone}
+			\label{fig:back_view_dimensions}
+		\end{figure}
+
+	\end{appendices}
 \end{document}
