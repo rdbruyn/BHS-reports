@@ -1,0 +1,198 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black
+}
+
+\begin{document}
+	\pagenumbering{gobble}
+	\begin{titlepage}
+		\centering
+		{\LARGE Controls Systems Practical 3 \par}
+		\vspace*{1.5cm}
+		{\large Q. Kruger, 216008466 \par}
+		{\large R. de Bruyn, 216054484 \par}
+		\vspace*{1.2cm}
+		{\large \today}
+		\vspace*{\fill}
+		% \includegraphics[width=\textwidth]{img/UJ.jpg}
+		\vspace*{\fill}
+	\end{titlepage}
+
+	\pagenumbering{roman}
+	\tableofcontents
+	\newpage
+	\pagenumbering{arabic}
+
+	\section{Prelab} % (fold)
+	\label{sec:prelab}
+		\subsection{Question 1} % (fold)
+		\label{sub:prelab_question_1}
+			The settling time for a first order transfer function of the form
+			\[
+				G(s) = \frac{a}{s + a}
+			\]
+			is given by the formula
+			\begin{equation}
+				T_s(a) = \frac{4}{a}
+				\label{eq:settle}
+			\end{equation}
+			Using \eqref{eq:settle}, we can easily find the settling time in seconds. Here follows the poles and settling times for various values of $a$
+			\[
+				T_s(1) = 4\,\text{s}
+			\]
+			\textit{Insert pole graph here}
+			\[
+				T_s(2) = 2\,\text{s}
+			\]
+			\textit{Insert pole graph here}
+			\[
+				T_s(3) = \frac{4}{3} \approx 1.33\,\text{s}
+			\]
+			\textit{Insert pole graph here}
+		% subsection prelab_question_1 (end)
+
+		\subsection{Question 2} % (fold)
+		\label{sub:prelab_question_2}
+			For this question, we will investigate how the time response of second order systems changes when the real and imaginary components of the poles are altered. The equation for the components of a pole are given by
+			\begin{equation}
+				\begin{array}{rcl}
+					s & = & -\zeta\omega_n \pm j\omega_n\sqrt{1 - \zeta^2} \\
+					& = & -\sigma_d \pm j\omega_d
+				\end{array}
+				\label{eq:pole_exp}
+			\end{equation}
+			and the parameters relating to its time response are
+			\begin{equation}
+				T_s(\sigma_d) = \frac{4}{\sigma_d}
+				\label{eq:2nd_ts}
+			\end{equation}
+			\begin{equation}
+				T_p(\omega_d) = \frac{\pi}{\omega_d}
+				\label{eq:2nd_tp}
+			\end{equation}
+			\begin{equation}
+				T_r(\omega_n, \zeta) = \tfrac{1}{\omega_n}(1.76\zeta^3 - 0.417\zeta^2 + 1.039 \zeta + 1)
+				\label{eq:2nd_tr}
+			\end{equation}
+			\begin{equation}
+				\%OS(\zeta) = \exp\left(-\frac{\zeta\pi}{\sqrt{1 - \zeta^2}}\right) \times 100
+				\label{eq:2nd_os}
+			\end{equation}
+
+			Since the real and imaginary components are both dependent on $\zeta$ and $\omega_n$, we have to derive a formula to leave the imaginary part of a pole the same after altering the aforementioned parameters, but alter the real part by some factor. Letting this factor be $K$, we can write the system of equations that govern this change as
+			\begin{equation}
+				\begin{array}{rcl}
+					\omega_d' & = & \omega_d \\
+					\omega_n'\sqrt{1 - \zeta'^2} & = & \omega_n\sqrt{1 - \zeta^2}
+				\end{array}
+				\label{eq:der_1}
+			\end{equation}
+			and
+			\begin{equation}
+				\begin{array}{rcl}
+					\sigma_d' & = & K\sigma_d \\
+					\zeta'\omega_n' & = & K \zeta\omega_n
+				\end{array}
+				\label{eq:der_2}
+			\end{equation}
+
+			By substituting $\omega_n' = \frac{K\zeta\omega_n}{\zeta'}$, derived from \eqref{eq:der_2}, into \eqref{eq:der_1}, we get
+			\begin{equation}
+				\begin{array}{rcl}
+					K\zeta\omega_n \frac{\sqrt{1 - \zeta'^2}}{\zeta'} & = & \omega_n\sqrt{1 - \zeta^2} \\
+					K\zeta \frac{\sqrt{1 - \zeta'^2}}{\zeta'} & = & \sqrt{1 - \zeta^2} \\
+					\frac{\sqrt{1 - \zeta'^2}}{\zeta'} & = & \frac{\sqrt{1 - \zeta^2}}{K\zeta} \\
+					\frac{1 - \zeta'^2}{\zeta'^2} & = & \frac{1 - \zeta^2}{K^2\zeta^2} \\
+					1 - \zeta'^2 & = & \left(\frac{1 - \zeta^2}{K^2\zeta^2}\right)\zeta'^2 \\
+					\left(\frac{1 - \zeta^2}{K^2\zeta^2} + 1\right) \zeta'^2 & = & 1 \\
+					\left(\frac{1 + (K^2 - 1) \zeta^2}{K^2\zeta^2}\right) \zeta'^2 & = & 1 \\
+					\zeta' & = & \sqrt{\frac{K^2\zeta^2}{1 + (K^2 - 1) \zeta^2}} \\
+					\zeta' & = & \frac{K\zeta}{\sqrt{1 + (K^2 - 1) \zeta^2}} \\
+				\end{array}
+				\label{eq:zeta_dash}
+			\end{equation}
+			and substituting this expression from \eqref{eq:zeta_dash} into \eqref{eq:der_2}, we get
+			\begin{equation}
+				\begin{array}{rcl}
+					\omega_n' & = & \frac{K \zeta \omega_n}{\zeta'} \\
+					& = & K\zeta\omega_n\frac{\sqrt{1 + (K^2 - 1)\zeta^2}}{K\zeta} \\
+					& = & \omega_n\sqrt{1 + (K^2 - 1)\zeta^2}
+				\end{array}
+				\label{eq:omega_dash}
+			\end{equation}
+
+			Now, if we consider the equation for a second order transfer function given by
+			\[
+				G(s) = \frac{\omega_n^2}{s^2 + 2\omega_n\zeta + \omega_n^2} = \frac{25}{s^2 + 4s + 25}
+			\]
+			we can easily calculate that $\omega_n = 5$ and $\zeta = \frac{2}{5}$, and thus that $\sigma_d = 2$ and $\omega_d = \sqrt{21}$. From this transfer function, then, the time response is
+			\[
+				\%OS = 25.38\%
+			\]
+
+			\[
+				T_s = 2 \,\text{s}
+			\]
+
+			\[
+				T_p = 0.6856\,\text{s}
+			\]
+
+			\[
+				T_r = 0.2923\,\text{s}
+			\]
+
+			Multiplying the real part of the poles of $G(s)$ with a factor of $K=2$, we use formulas \eqref{eq:zeta_dash} and \eqref{eq:omega_dash} to find our new parameters, denoted $\omega_n' = \sqrt{37}$, $\zeta' = \frac{4}{\sqrt{37}}$, $\sigma_d' = 4$, and $\omega_d' = \omega_d = \sqrt{21}$. Our modified time response to multiplying the real part of the pole by 2 is
+
+			\[
+				\%OS' = 6.44\%
+			\]
+
+			\[
+				T_s' = 1\,\text{s}
+			\]
+
+			\[
+				T_p' = 0.6856\,\text{s}
+			\]
+
+			\[
+				T_r' = 0.3294\,\text{s}
+			\]
+
+			Using the same process as above, multiplying the real part of the poles of $G(s)$ with a factor of $K=\frac{1}{2}$, we get $\omega_n' = \sqrt{37}$, $\zeta' = \frac{4}{\sqrt{37}}$, $\sigma_d' = 4$, and $\omega_d' = \omega_d = \sqrt{21}$. Our modified time response in this case is
+
+			\[
+				\%OS'' = 50.38\%
+			\]
+
+			\[
+				T_s'' = 4\,\text{s}
+			\]
+
+			\[
+				T_p'' = 0.6856\,\text{s}
+			\]
+
+			\[
+				T_r'' = 0.26\,\text{s}
+			\]
+
+		% subsection prelab_question_2 (end)
+	% section prelab (end)
+
+	\section{Lab} % (fold)
+	\label{sec:lab}
+		
+	% section lab (end)
+
+	\section{Postlab} % (fold)
+	\label{sec:postlab}
+		
+	% section postlab (end)
+
+\end{document}
