@@ -9,10 +9,15 @@
 \usepackage{hyperref}
 \usepackage{appendix}
 \usepackage{siunitx}
+\usepackage{sectsty}
+\usepackage{xcolor}
 
 \hypersetup{colorlinks=true, linkcolor=black}
+\definecolor{heading-red}{HTML}{C41127}
+\sectionfont{\color{heading-red}}
+\subsectionfont{\color{heading-red}}
 
-\newcommand{\company}{CKR Consulting Engineers}
+\newcommand{\company}{Wheel Collision}
 
 \begin{document}
 	\hypersetup{pageanchor=false}
@@ -26,15 +31,14 @@
 		\makebox[\textwidth][c]{
 			\includegraphics[width=0.4\linewidth]{img/shell.png}\hspace*{\fill}\includegraphics[width=0.4\linewidth]{img/uj.jpg}
 		}
-		{\large\centering Funding proposal for the development and construction of a prototype battery electric vehicle to successfully take part in the Shell Eco Marathon 2018\par}
+		{\large\centering Funding proposal for the development and construction of a prototype battery electric vehicle to successfully take part in the Shell Eco Marathon\par}
 		\vspace*{\fill}
-		\makebox[\textwidth][c]{\par\today}
+		{\centerline{\today}}
 	\end{titlepage}
 
 	\hypersetup{pageanchor=true}
 	\pagenumbering{roman}
 	\tableofcontents
-	\listoffigures
 	\newpage
 
 	% Signatory page
@@ -79,11 +83,9 @@
 	\newpage
 	\section{The Shell Eco Marathon} % (fold)
 	\label{sec:the_shell_eco_marathon}
-		The Shell Eco Marathon started out as a simple friendly bet between Shell scientists in the USA in 1939, who wanted to see who could drive their own cars the furthest on one gallon of fuel. Since then, this humble bet between friends and colleagues has become an institution. The Shell Eco Marathon is held all over the world, with nine events scheduled for 2018, including France, Turkey, China, South Africa. Teams compete in international events, and the best competitors get to compete in the Driver's World Championship.
+		The Shell Eco Marathon started out as a simple friendly bet between Shell scientists in the USA in 1939, who wanted to see who could drive their own cars the furthest on one gallon of fuel. Since then, this humble bet between friends and colleagues has become an institution. The Shell Eco Marathon is held all over the world, with nine events scheduled for 2018, including France, Turkey, China, and South Africa. Teams compete in international events, and the best competitors get to compete in the Driver's World Championship.
 
 		We as Apex are a group of engineering students from the University of Johannesburg. The group was created with the vision of designing and building a car for the Shell Eco-Marathon competition sponsored by the Shell Company. The main objective of this project is to design, build and test a battery-driven vehicle.
-
-		The competition allows students and other competitors to impart their knowledge and turn their vision of sustainable mobility into reality by building automotive vehicles to achieve the highest possible battery electric efficiency. The competition is split into two categories, the prototype class and the urban concept class; we will be building the prototype cars, which focuses on maximum efficiency using a battery driven propulsion system. The efficiency of the vehicle will be determined at the end of the race day event.
 	% section the_shell_eco_marathon (end)
 
 	\section{Technical} % (fold)
@@ -105,21 +107,21 @@
 				\item Recommended speed
 			\end{enumerate}
 
-			The current lap and distance traveled are useful metrics for the driver to have, as during our research phase, we have spoken to teams who have competed in previous years, and they claim that an unforeseen problem that they have encountered was that the drivers get confused during the race, and are unsure which lap they are on or how far they have driven. This uncertainty distracts the driver and negatively affects their performance. Providing the driver with this information allows them to focus on the cornerstone of our system; the speed regulation mechanisms. By using the positional data, we can easily calculate how far the driver still needs to drive, as well as how much time is left for the race attempt. Using this, we will display the driver a recommended speed that they need to travel that dynamically changes throughout the race. The driver must then make sure that their current speed matches the recommended speed, and maintain this throughout the race in order to maximize efficiency.
+			The driver must then make sure that their current speed matches the recommended speed, and maintain this throughout the race in order to maximize efficiency. In order to ensure accurate GPS coordinates, we plan to implement a filtering algorithm which will provide our system more reliable coordinates, without having to invest in a more expensive GPS tracker.
 		% subsection telemetry_solution (end)
 
-		\subsection{Accuracy of GPS tracking} % (fold)
-		\label{sub:accuracy_of_gps_tracking}
-			The accuracy of the GPS coordinates are of utmost importance to ensure that accurate distance and speed can be derived from them. We plan to implement a Kalman Filter algorithm to enhance the accuracy of the GPS coordinates we track. This is fairly easy to achieve, as the errors in the GPS coordinates can be measured by letting the GPS unit be stationary, and logging several hundred samples for analysis. This will give us a credible and objective measure of error in GPS measurements. We will feed this error into the Kalman Filter to smooth out measurements and gain much more accurate estimations of instantaneous position. Furthermore, the velocity of the vehicle itself will also be tracked using the Kalman Filter, which will increase the accuracy of velocity estimation around bends.
+		% \subsection{Accuracy of GPS tracking} % (fold)
+		% \label{sub:accuracy_of_gps_tracking}
+		% 	The accuracy of the GPS coordinates are of utmost importance to ensure that accurate distance and speed can be derived from them. We plan to implement a Kalman Filter algorithm to enhance the accuracy of the GPS coordinates we track. This is fairly easy to achieve, as the errors in the GPS coordinates can be measured by letting the GPS unit be stationary, and logging several hundred samples for analysis. This will give us a credible and objective measure of error in GPS measurements. We will feed this error into the Kalman Filter to smooth out measurements and gain much more accurate estimations of instantaneous position. Furthermore, the velocity of the vehicle itself will also be tracked using the Kalman Filter, which will increase the accuracy of velocity estimation around bends.
 		% subsection accuracy_of_gps_tracking (end)
 
-		\subsection{Modifications}
-		\label{sub:modifications}
-			As part of the Shell Eco Marathon Chapter 1 Rules, the vehicle is required to have a crumple zone of at least $100mm$ between the front of the car and the driver's feet. The Apex team has thus decided to add a front and back modification to the vehicle (see the appendices \ref{sec:front_modification} and \ref{sec:back_modification} for the design). The rules have also stated that sharp edge designs are prohibited. Having this restriction, our modification design has rounded edges.
+		% \subsection{Modifications}
+		% \label{sub:modifications}
+		% 	As part of the Shell Eco Marathon Chapter 1 Rules, the vehicle is required to have a crumple zone of at least $100mm$ between the front of the car and the driver's feet. The Apex team has thus decided to add a front and back modification to the vehicle (see the appendices \ref{sec:front_modification} and \ref{sec:back_modification} for the design). The rules have also stated that sharp edge designs are prohibited. Having this restriction, our modification design has rounded edges.
 
-			Figure \ref{fig:front_view_dimensions} shows a green contour that represents the thickness of the shell to be attached to the front portion of the car that must be $40mm$ in width. Similarly Figure \ref{fig:back_view_dimensions} shows a similar contour with a similar thickness.
+		% 	Figure \ref{fig:front_view_dimensions} shows a green contour that represents the thickness of the shell to be attached to the front portion of the car that must be $40mm$ in width. Similarly Figure \ref{fig:back_view_dimensions} shows a similar contour with a similar thickness.
 
-			The material that will be used to form the cones will be PETG plastic. This specific grade of plastic has been chosen as it is what the rest of the car has already been constructed with and is a plastic that offers good impact resistance. 
+		% 	The material that will be used to form the cones will be PETG plastic. This specific grade of plastic has been chosen as it is what the rest of the car has already been constructed with and is a plastic that offers good impact resistance. 
 		% subsection modifications (end)
 	% section technical (end)
 
@@ -152,14 +154,11 @@
 			\end{tabularx}
 		\end{table}
 
-		The battery is a single 48V unit that will be used to power the vehicle. The telemetry system will be used to track the coordinates of the vehicle in real time, and be used to provide the team and the driver with useful information like distance covered and current traveling speed, yielding the team greater control over the race. The safety equipment involves buying the driver a race suit, a 6-point safety harness, and a racing helmet.
-
-		In addition to this, we must also equip the vehicle with brakes, emergency stops, and a horn. This will allow the driver to race around the track safely, and is of utmost importance. Management reserve refers to the weekend of the race itself. It is a four day event, from 25 October to 28 October, and the entire team of 19 people needs to be transported to and from Swartkopz Raceway, as well as being kept fed throughout the day while working on the vehicles.\\
-
-		\noindent\textit{Note: we have, at the time of writing this proposal, not yet received a quotation from the transportation services we plan to use\footnote{Services are provided in the form of buses by the University of Johannesburg, although students and clubs of the university who wish to use it still need to provide payment.}. We have factored in an estimated cost while we wait for the quotation. If \company{} would like to provide us with alternatives regarding transportation, we would be open to such offers.}
+		All of the above items are required to get the vehicle into a race-ready condition. Note that the overhead includes transporting the vehicle and the entire team of 19 people to and from the event, and that the driver's gear includes a motorsports helmet and a one-piece racing suit, which complies to the Shell Eco Marathon safety rules and regulations.\vspace*{1em}\par\noindent
+		Note that this is the total amount that Team Apex requires to complete the project. Should \company{} only decide to sponsor a portion of the total amount, we would gladly accept it.
 	% section cost (end)
 
-	\section{Benefits to \company{}} % (fold)
+	\section{Why Sponsor Us?} % (fold)
 	\label{sec:benefits_to_the_client}
 		\subsection{Marketing} % (fold)
 		\label{sub:marketing}
@@ -172,52 +171,61 @@
 		% subsection exposure_to_future_employees (end)
 		\subsection{Public relations} % (fold)
 		\label{sub:public_relations}
-			This event poses a huge public relations opportunity for \company{}. By being involved with a student team during this event, you get to drop the fa\c{c}ade of men and women in suits and ties, whose sole concern is the bottom line. You show onlookers that you are open to investing in the local talent pool of engineers, who will one day go on to either build up South Africa, or represent it abroad. You show that \company{} cares about the environment, and moreover, involvement in fun events like this come across favorably in the public eye.
+			By choosing to be involved with a student team during this event, proves that your company is not only focused on short to medium term profits, but also willing to invest in the future of South Africa's engineering talent and that \company{} cares about a sustainable future.
 		% subsection public_relations (end)
 	
 	\section{Conclusion} % (fold)
 	\label{sec:conclusion}
-		Team Apex is a group of dedicated and disciplined students, eager to succeed in this project. Apex has gone to great lengths to research the development of a custom telemetry and tracking solution using a Raspberry Pi and GPS module, that suits our goals and requirements, and will provide real time and logged race-relevant data to both the driver as well as the team in the race pits, for analysis during the event. We have carefully designed the circuitry in the vehicle, and are confident that our innovative attitude makes us a very strong competitor in this event.
+		Team Apex is a group of dedicated and disciplined students, eager to succeed in this project. We have gone to great lengths to research the development of a custom telemetry and tracking solution using a Raspberry Pi and GPS module, that suits our goals and requirements, and will provide real time and logged race-relevant data to both the driver as well as the team in the race pits, for analysis during the event. This system is very innovative for a student team, and representative of our goal to prove ourselves as engineers. We would love to have \company{} as a sponsor to aid us in reaching this goal.
 	% section conclusion (end)	
 	% section benefits_to_the_client (end)
 
 	\newpage
-	\begin{appendices}
-		\section{Front Modifications}
-		\label{sec:front_modification}
+	\section{Contact Details} % (fold)
+	\label{sec:contact_details}
+		Ruan de Bruyn\par\noindent
+		Apex Electrical Company Chief Engineer\par\par\noindent\\
+		Cell: 074 496 9149\par\noindent
+		Email: 216054484@student.uj.ac.za
+	% section contact_details (end)
 
-			\begin{figure}[H]
-				\centering
-				\includegraphics[width = 150mm]{img/Front_Side_View_Coned.png}
-				\caption{Coned front view}
-				\label{fig:front_side_view_coned}
-			\end{figure}
+	% \newpage
+	% \begin{appendices}
+	% 	\section{Front Modifications}
+	% 	\label{sec:front_modification}
 
-			\begin{figure}[H]
-				\centering
-				\includegraphics[width = 150mm]{img/Front_View_Dimensions.png}
-				\caption{Side view}
-				\label{fig:front_view_dimensions}
-			\end{figure}
+	% 		\begin{figure}[H]
+	% 			\centering
+	% 			\includegraphics[width = 150mm]{img/Front_Side_View_Coned.png}
+	% 			\caption{Coned front view}
+	% 			\label{fig:front_side_view_coned}
+	% 		\end{figure}
+
+	% 		\begin{figure}[H]
+	% 			\centering
+	% 			\includegraphics[width = 150mm]{img/Front_View_Dimensions.png}
+	% 			\caption{Side view}
+	% 			\label{fig:front_view_dimensions}
+	% 		\end{figure}
 
 	
 
-		\section{Back Modification}
-		\label{sec:back_modification}
+	% 	\section{Back Modification}
+	% 	\label{sec:back_modification}
 
-		\begin{figure}[H]
-			\centering
-			\includegraphics[width = 150mm]{img/Back_Side_View_Coned.png}
-			\caption{Coned back view}
-			\label{fig:coned_back_view}
-		\end{figure}
+	% 	\begin{figure}[H]
+	% 		\centering
+	% 		\includegraphics[width = 150mm]{img/Back_Side_View_Coned.png}
+	% 		\caption{Coned back view}
+	% 		\label{fig:coned_back_view}
+	% 	\end{figure}
 
-		\begin{figure}[H]
-			\centering
-			\includegraphics[width = 150mm]{img/Back_View_Dimensions.jpeg}
-			\caption{Dimensions of cone}
-			\label{fig:back_view_dimensions}
-		\end{figure}
+	% 	\begin{figure}[H]
+	% 		\centering
+	% 		\includegraphics[width = 150mm]{img/Back_View_Dimensions.jpeg}
+	% 		\caption{Dimensions of cone}
+	% 		\label{fig:back_view_dimensions}
+	% 	\end{figure}
 
-	\end{appendices}
+	% \end{appendices}
 \end{document}
