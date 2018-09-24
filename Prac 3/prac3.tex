@@ -3,6 +3,8 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{booktabs}
+\usepackage{tabularx}
 
 
 \hypersetup{
@@ -28,6 +30,7 @@
 	\pagenumbering{roman}
 	\tableofcontents
 	\listoffigures
+	\listoftables
 	\newpage
 	\pagenumbering{arabic}
 
@@ -289,7 +292,25 @@
 
 	\section{Postlab} % (fold)
 	\label{sec:postlab}
-		
+		\begin{table}[H]
+			\begin{tabularx}{\textwidth}{X X X}
+				\toprule
+				$a$ & $T_r$ & $T_s$ \\
+				\midrule
+
+				\bottomrule
+			\end{tabularx}
+			\caption{Time response properties for different pole positions of first order systems}
+		\end{table}
+
+		\begin{table}[H]
+			\begin{tabularx}{\textwidth}{X X X X X X}
+			\toprule
+			$\omega_d$ & $\sigma_d$ & $T_r$ & $T_p$ & $T_s$ & $\%OS$ \\
+			\bottomrule
+			\end{tabularx}
+			\caption{Time response properties for different pole positions for second order systems}
+		\end{table}
 	% section postlab (end)
 
 \end{document}
