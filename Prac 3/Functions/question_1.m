@@ -22,20 +22,30 @@
 ## Author: root <root@quintin-Inspiron-15-3567>
 ## Created: 2018-09-22
 
-function [] = quetion_1()
+function [] = question_1()
   syms s;
   
-  g1 = tf([1],[1,1])
-  g2 = tf([2],[1,2])
-  g3 = tf([3],[1,3])
+  g1 = tf([1],[1,1]);
+  g2 = tf([2],[1,2]);
+  g3 = tf([3],[1,3]);
   
-  step(g1, 'r');
+  y1 = step(g1);
+  y2 = step(g2);
+  y3 = step(g3);
+  
+  step(g1,'r');
   hold on;
-  step(g2, 'g');
+  step(g2,'g');
   hold on;
-  step(g3, 'b');
+  step(g3,'b');
+  hold on;
+  
+   final = 1;
+  y = 0.63*final;
+  plot([0,5],[y,y]);
   hold off;
   
-  legend('g1','g2','g3')
+  legend('g1','g2','g3', 't_a')
+  
 
 endfunction
