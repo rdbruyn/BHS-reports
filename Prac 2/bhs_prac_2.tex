@@ -250,22 +250,21 @@
 
 	\texttt{syms s;}\par
   	\texttt{numerator = 2*(s+3)*(s+5)*(s+7);}\par
-  	\texttt{denominator = s*(s+8)*(s\^2 +10*s +100);}\par
+  	\texttt{denominator = s*(s+8)*(s\^{}2 +10*s +100);}\par
   	\texttt{F = numerator/denominator;}\par
   	\texttt{inverse = ilaplace(F);}\\
 
-  	This gave the results depicted in Figure \ref{fig:question_4} \\
-
-
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{question_4}
-		\caption{Results for Lab Question 4}
-		\label{fig:question_4}
-	\end{figure}
-
-
 	\subsection{Question 5}
+	By taking the \texttt{F} that was obtained in Question 4, we expanded it by running the following code:\\
+
+	\texttt{expand(F)}\\
+
+	\noindent This had the following results:
+
+	\[
+		F(s) = \frac{2s^3 + 30s^2 + 142s + 210}{s^4 + 18s^3 + 180s^2 + 800s}
+	\]
+
 
 	\subsection{Question 6}
 	Considering the circuit from Prelab 3, a matrix was found using mesh analysis. The terms that were obtained were entered into Octave according to the following code:\\

@@ -47,19 +47,50 @@
 				T_s(a) = \frac{4}{a}
 				\label{eq:settle}
 			\end{equation}
-			Using \eqref{eq:settle}, we can easily find the settling time in seconds. Here follows the poles and settling times for various values of $a$
+			and the rise time for the same transfer function is given by
+			\begin{equation}
+				T_r(a) = \frac{2.2}{a}
+				\label{eq:rise_1st}
+			\end{equation}
+			Using \eqref{eq:settle} and \eqref{eq:rise_1st}, we can easily find the settling time and rise time in seconds. Here follows the poles time response values for various values of $a$
 			\[
 				T_s(1) = 4\,\text{s}
 			\]
-			\textit{Insert pole graph here}
+			\[
+				T_r(1) = 2.2\,\text{s}
+			\]
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.7\textwidth]{img/1st1.png}
+				\caption{Pole plot for $a = 1$}
+				\label{fig:1}
+			\end{figure}
 			\[
 				T_s(2) = 2\,\text{s}
 			\]
-			\textit{Insert pole graph here}
+			\[
+				T_r(2) = 1.1\,\text{s}
+			\]
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.7\textwidth]{img/1st_2.png}
+				\caption{Pole plot for $a = 2$}
+				\label{fig:1}
+			\end{figure}
 			\[
 				T_s(3) = \frac{4}{3} \approx 1.33\,\text{s}
 			\]
-			\textit{Insert pole graph here}
+			\[
+				T_r(3) = \frac{2.2}{3} = 0.73\,\text{s}
+			\]
+
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=0.7\textwidth]{img/1st_3.png}
+				\caption{Pole plot for $a = 3$}
+				\label{fig:1}
+			\end{figure}
 		% subsection prelab_question_1 (end)
 
 		\subsection{Question 2} % (fold)
@@ -171,7 +202,7 @@
 				T_r' = 0.3294\,\text{s}
 			\]
 
-			Using the same process as above, multiplying the real part of the poles of $G(s)$ with a factor of $K=\frac{1}{2}$, we get $\omega_n'' = \sqrt{37}$, $\zeta'' = \frac{4}{\sqrt{37}}$, $\sigma_d'' = 4$, and $\omega_d'' = \omega_d = \sqrt{21}$. Our modified time response in this case is
+			Using the same process as above, multiplying the real part of the poles of $G(s)$ with a factor of $K=\frac{1}{2}$, we get $\omega_n'' = \sqrt{22}$, $\zeta'' = \frac{1}{\sqrt{22}}$, $\sigma_d'' = 1$, and $\omega_d'' = \omega_d = \sqrt{21}$. Our modified time response in this case is
 
 			\[
 				\%OS'' = 50.38\%
@@ -286,31 +317,46 @@
 			\label{plot_question_2_lab}
 		\end{figure}
 
-		\textit{stepinfo function equivalent in octave to give rise- and settling time}
+		\subsection{Stepinfo calculation} % (fold)
+		\label{sub:stepinfo_calculation}
+			We used the \texttt{stepinfo} function from Matlab in order to calculate the time response parameters for the second and first order systems. For the sake of brevity, the results have been tabulated for comparison in Table \ref{table:1st} and Table \ref{table:2nd} respectively.
+		% subsection stepinfo_calculation (end)
 
 	% section lab (end)
 
 	\section{Postlab} % (fold)
 	\label{sec:postlab}
 		\begin{table}[H]
-			\begin{tabularx}{\textwidth}{X X X}
+			\begin{tabularx}{\textwidth}{X X X X X X}
 				\toprule
-				$a$ & $T_r$ & $T_s$ \\
+				\multicolumn{2}{X}{$a$} & \multicolumn{2}{X}{$T_r$} & \multicolumn{2}{X}{$T_s$} \\
+				& & Exp. & Thr. & Exp. & Thr. \\
 				\midrule
-
+				1 & & 2.2 & 2.2 & 4 & 4 \\
+				2 & & 1.1 & 1.1 & 2 & 2 \\
+				3 & & 0.73 & 0.73 & 1.33 & 1.33 \\
 				\bottomrule
 			\end{tabularx}
 			\caption{Time response properties for different pole positions of first order systems}
+			\label{table:1st}
 		\end{table}
 
 		\begin{table}[H]
-			\begin{tabularx}{\textwidth}{X X X X X X}
+			\begin{tabularx}{\textwidth}{X X X X X X X X X X X X}
 			\toprule
-			$\omega_d$ & $\sigma_d$ & $T_r$ & $T_p$ & $T_s$ & $\%OS$ \\
+			\multicolumn{2}{X}{$\omega_d$} & \multicolumn{2}{X}{$\sigma_d$} & \multicolumn{2}{X}{$T_r$} & \multicolumn{2}{X}{$T_p$} & \multicolumn{2}{X}{$T_s$} & \multicolumn{2}{X}{$\%OS$} \\
+			 & & & & Exp & Thr & Exp & Thr & Exp & Thr & Exp & Thr \\
+			\midrule
+			$\sqrt{21}$ & & 2 & & 0.292 & 0.292 & 0.686 & 0.686 & 2 & 2 & 25.38 & 25.38 \\
+			$\sqrt{21}$ & & 4 & & 0.329 & 0.329 & 0.686 & 0.686 & 1 & 1 & 6.44 & 6.44 \\
+			$\sqrt{21}$ & & 1 & & 0.260 & 0.260 & 0.686 & 0.686 & 4 & 4 & 50.38 & 50.38 \\
 			\bottomrule
 			\end{tabularx}
 			\caption{Time response properties for different pole positions for second order systems}
+			\label{table:2nd}
 		\end{table}
+
+		Looking at the values in Table \ref{table:1st} and Table \ref{table:2nd}, we can see that the experimental values for the first and second order systems are very close to the theoretical values that were calculated using the formulae in the Prelab. We can thus conclude that the theoretical expectations are met by the experimental results, and that the theory is valid.
 	% section postlab (end)
 
 \end{document}
