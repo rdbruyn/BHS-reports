@@ -48,9 +48,9 @@
 	\subsection{Demodulator Circuit}
 		A demodulator circuit is one of the applications of a diode as a detector for amplitude modulated (AM) radio signals. An AM signal consists of a radio-frequency carrier wave whose amplitude varies with different audio frequencies.
 
-		The detector circuit circuit is essentially a half-wave rectifier circuit with an RC filter placed on the output as can be seen from the circuit of the modulator cicruit for this practical in Figure \ref{demodulator_circuit}.
+		The detector circuit circuit is essentially a half-wave rectifier circuit with an RC filter placed on the output as can be seen from the circuit of the modulator circuit for this practical in Figure \ref{demodulator_circuit}.
 
-		The RC time constant of the fitler should fall between 2 values
+		The RC time constant of the filter should fall between 2 values
 		\begin{equation}
 			\frac{1}{\omega_c} \le RC \le \frac{\sqrt{1-\mu^2}}{\omega_m\mu}
 		\end{equation}
@@ -59,9 +59,9 @@
 
 		This result comes from practical experience in the field of electronic engineering rather than from a mathematical principles.
 
-		If the $RC$ time constant is to small, there would be ripples of the carrier frequency on the ouput (this is to be avoided as we require the information sent rather than the disotrtion thereof with the carrier signal).
+		If the $RC$ time constant is too small, there would be ripples of the carrier frequency on the output (this is to be avoided as we require the information sent rather than the distortion thereof with the carrier signal).
 
-		If the $RC$ time constant is to big, it will significantly attenuate high frequencies 
+		If the $RC$ time constant is too big, it will significantly attenuate high frequencies 
 
 
 		\begin{figure}[H]
@@ -80,12 +80,38 @@
 
 \section{Results} % (fold)
 \label{sec:results}
-	
+	\begin{figure}[H]
+		\label{fig:carrier}
+		\centering
+		\includegraphics[width=.8\textwidth]{images/carrier.JPG}
+		\caption{20 MHz Carrier signal}
+	\end{figure}
+
+	\begin{figure}[H]
+		\label{fig:modulating}
+		\centering
+		\includegraphics[width=.8\textwidth]{images/modulating.JPG}
+		\caption{500 Hz input signal}
+	\end{figure}
+
+	\begin{figure}[H]
+		\label{fig:output_modulated}
+		\centering
+		\includegraphics[width=.8\textwidth]{images/output_modulated.JPG}
+		\caption{Modulator output}
+	\end{figure}
+
+	\begin{figure}[H]
+		\label{fig:output_demodulated}
+		\centering
+		\includegraphics[width=.8\textwidth]{images/output_demodulated.JPG}
+		\caption{Demodulated output}
+	\end{figure}
 % section results (end)
 
 \section{Discussion} % (fold)
 \label{sec:discussion}
-	
+	In this practical, we have chosen the carrier wave with a frequency of 50 MHz, and an amplitude of 5V. In order to simulate audio input, we simply chose a signal generator which generates a 500 Hz sine wave at an amplitude of 1V. 
 % section discussion (end)
 
 \section{Conclusion} % (fold)
