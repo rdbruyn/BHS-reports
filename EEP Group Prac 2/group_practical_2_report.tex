@@ -45,6 +45,25 @@
 \section{Theoretical Background}
 
 	\subsection{Modulator}
+		Amplitude modulation is the simplest modulation technique. A high frequency signal is modulated to carry a lower frequency signal (the lower frequency signal cannot be transmitted effectively as the antenna required to receive a signal with a low frequency is required to be long in lenght - he length of the antenna is inversely proportional to the frequency it is to receive).
+
+		The high frequency signal is knwon as the carrier signal while the signal that needs to be transmitted is called the message signal. 
+
+		To implement a modulator circuit, consider the 3 components that need to be made up by the circuit:
+		\begin{enumerate}
+			\item Carrier frequency generator
+			\item Message frequency generator
+			\item AM modulator
+		\end{enumerate}
+
+		The modulator circuit used for this experiment is shown in the figure 
+		\begin{figure}
+			\includegraphics{images/modulator_circuit.png}
+			\label{fig:modulator_circuit}
+			\caption{The circuit used to implement the modulator.}
+		\end{figure}
+
+		The figure shows a frequency equation given as $\frac{1}{2\pi\sqrt{LC}}$. This equation is used to find the value of the capacitor for the modulator circuit (as shown in Figure \ref{fig:modulator_circuit}).
 	\subsection{Demodulator Circuit}
 		A demodulator circuit is one of the applications of a diode as a detector for amplitude modulated (AM) radio signals. An AM signal consists of a radio-frequency carrier wave whose amplitude varies with different audio frequencies.
 
@@ -68,13 +87,14 @@
 			\centering
 			\includegraphics[width=0.7\textwidth]{images/Demodulator_circuit.png}
 			\caption{The demodulator circuit used for this experiment}
-			\label{demodulator_circuit}
+			\label{fig:demodulator_circuit}
 		\end{figure}
 
 	\subsection{}
 
 \section{Experimental Method} % (fold)
 \label{sec:experimental_method}
+
 	
 % section experimental_method (end)
 
