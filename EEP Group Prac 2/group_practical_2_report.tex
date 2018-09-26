@@ -46,9 +46,7 @@
 \label{sec:theoretical_background}
 
 	\subsection{Modulator}
-		Amplitude modulation is the simplest modulation technique. A high frequency signal is modulated to carry a lower frequency signal (the lower frequency signal cannot be transmitted effectively as the antenna required to receive a signal with a low frequency is required to be long in length - he length of the antenna is inversely proportional to the frequency it is to receive).
-
-		The high frequency signal is known as the carrier signal while the signal that needs to be transmitted is called the message signal. 
+		Amplitude modulation is the simplest modulation technique. A high frequency signal is modulated to carry a lower frequency signal (the lower frequency signal cannot be transmitted effectively as the antenna required to receive a signal with a low frequency is required to be long in length - he length of the antenna is inversely proportional to the frequency it is to receive). The high frequency signal is known as the carrier signal while the signal that needs to be transmitted is called the message signal. 
 
 		To implement a modulator circuit, consider the 3 components that need to be made up by the circuit:
 		\begin{enumerate}
@@ -67,23 +65,13 @@
 
 		The figure shows a frequency equation given as $\frac{1}{2\pi\sqrt{LC}}$. This equation is used to find the value of the capacitor for the modulator circuit (as shown in Figure \ref{fig:modulator_circuit}).
 	\subsection{Demodulator Circuit}
-		A demodulator circuit is one of the applications of a diode as a detector for amplitude modulated (AM) radio signals. An AM signal consists of a radio-frequency carrier wave whose amplitude varies with different audio frequencies.
-
-		The detector circuit circuit is essentially a half-wave rectifier circuit with an RC filter placed on the output as can be seen from the circuit of the modulator circuit for this practical in Figure \ref{demodulator_circuit}.
-
-		The RC time constant of the filter should fall between 2 values
+		A demodulator circuit is one of the applications of a diode as a detector for amplitude modulated (AM) radio signals. An AM signal consists of a radio-frequency carrier wave whose amplitude varies with different audio frequencies. The detector circuit is essentially a half-wave rectifier circuit with an RC filter placed on the output as can be seen from the circuit of the modulator circuit for this practical in Figure \ref{fig:demodulator_circuit}. The RC time constant of the filter should fall between 2 values
 		\begin{equation}
 			\label{eqn:time_const_demodulator_circuit}
 			\frac{1}{\omega_c} \le RC \le \frac{\sqrt{1-\mu^2}}{\omega_m\mu}
 		\end{equation}
 
-		where $\omega_c$ is the frequency of the carrier, $\omega_m$ is the angular frequency of the information and $\mu$ is the modulation index
-
-		This result comes from practical experience in the field of electronic engineering rather than from a mathematical principles.
-
-		If the $RC$ time constant is too small, there would be ripples of the carrier frequency on the output (this is to be avoided as we require the information sent rather than the distortion thereof with the carrier signal).
-
-		If the $RC$ time constant is too big, it will significantly attenuate high frequencies 
+		where $\omega_c$ is the frequency of the carrier, $\omega_m$ is the angular frequency of the information and $\mu$ is the modulation index. This result comes from practical experience in the field of electronic engineering rather than from a mathematical principles. If the $RC$ time constant is too small, there would be ripples of the carrier frequency on the output (this is to be avoided as we require the information sent rather than the distortion thereof with the carrier signal). If the $RC$ time constant is too big, it will significantly attenuate high frequencies.
 
 
 		\begin{figure}[H]
@@ -109,8 +97,8 @@
 
 	$C2$ was calculated according to the equation given as 
 	\begin{equation}
+		f =  \frac{1}{2\pi\sqrt{LC}} 
 		\label{eqn:capacitor_modulator_circuit}
-				f =  \frac{1}{2\pi\sqrt{LC}} 
 	\end{equation}
 
 	Where $L$ is given as $L = 10\times10^{-6}H$ and the frequency is given as $f= 20\times 10^6 $Hz.
@@ -178,7 +166,7 @@
 	\bibitem{Detector}
 	Phil Frost
 	\textit{RC time constant and diode detector}
-	\texttt{https://electronics.stackexchange.com/questions/100518/rc-time-constant-and-diode-detector}
+	\texttt{https://electronics.stackexchange.com/questions/100518/\\rc-time-constant-and-diode-detector}
 
 \end{thebibliography}
 
