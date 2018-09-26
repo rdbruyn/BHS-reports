@@ -43,8 +43,29 @@
 	\pagenumbering{arabic}
 
 \section{Theoretical Background}
+\label{sec:theoretical_background}
 
 	\subsection{Modulator}
+		Amplitude modulation is the simplest modulation technique. A high frequency signal is modulated to carry a lower frequency signal (the lower frequency signal cannot be transmitted effectively as the antenna required to receive a signal with a low frequency is required to be long in length - he length of the antenna is inversely proportional to the frequency it is to receive).
+
+		The high frequency signal is known as the carrier signal while the signal that needs to be transmitted is called the message signal. 
+
+		To implement a modulator circuit, consider the 3 components that need to be made up by the circuit:
+		\begin{enumerate}
+			\item Carrier frequency generator
+			\item Message frequency generator
+			\item AM modulator
+		\end{enumerate}
+
+		The modulator circuit used for this experiment is shown in the figure below
+
+		\begin{figure}[H]
+			\includegraphics[width=0.7\textwidth]{images/modulator_circuit.png}
+			\label{fig:modulator_circuit}
+			\caption{The circuit used to implement the modulator.}
+		\end{figure}
+
+		The figure shows a frequency equation given as $\frac{1}{2\pi\sqrt{LC}}$. This equation is used to find the value of the capacitor for the modulator circuit (as shown in Figure \ref{fig:modulator_circuit}).
 	\subsection{Demodulator Circuit}
 		A demodulator circuit is one of the applications of a diode as a detector for amplitude modulated (AM) radio signals. An AM signal consists of a radio-frequency carrier wave whose amplitude varies with different audio frequencies.
 
@@ -52,6 +73,7 @@
 
 		The RC time constant of the filter should fall between 2 values
 		\begin{equation}
+			\label{eqn:time_const_demodulator_circuit}
 			\frac{1}{\omega_c} \le RC \le \frac{\sqrt{1-\mu^2}}{\omega_m\mu}
 		\end{equation}
 
@@ -68,14 +90,36 @@
 			\centering
 			\includegraphics[width=0.7\textwidth]{images/Demodulator_circuit.png}
 			\caption{The demodulator circuit used for this experiment}
-			\label{demodulator_circuit}
+			\label{fig:demodulator_circuit}{}
 		\end{figure}
 
-	\subsection{}
+
 
 \section{Experimental Method} % (fold)
 \label{sec:experimental_method}
-	
+	The circuit constructed for this experiment is shown in Figure \ref{fig:circuit_1}
+	\begin{figure}[H]
+		\centering
+		\label{fig:circuit_1}
+		\includegraphics[width=0.7\textwidth]{images/circuit_1.png}
+		\caption{LTSpice circuit used for this experiment}
+	\end{figure}
+
+	The values for the capacitors for the modulator and the demodulator circuits were calculated according to the rules as laid out in the theoretical background section of this document.
+
+	$C2$ was calculated according to the equation given as 
+	\begin{equation}
+		\label{eqn:capacitor_modulator_circuit}
+				f =  \frac{1}{2\pi\sqrt{LC}} 
+	\end{equation}
+
+	Where $L$ is given as $L = 10\times10^{-6}H$ and the frequency is given as $f= 20\times 10^6 $Hz.
+
+	Substituting this into equation \ref{eqn:capacitor_modulator_circuit} we get that the capacitor needed for the modulator circuit is $C_2 = 6.33pF$.
+
+	$C_1$ was calculated using equation \ref{eqn:time_const_demodulator_circuit}. Taking $RC$ to be given as $\frac{1}{\omega_c}$, where $\omega_c$ is the angular frequency of the carrier signal given as $125.66 \times 10^6 $. Using these values we find that $C_1$ is given as $C_1 = 7.96 pF$.
+
+
 % section experimental_method (end)
 
 \section{Results} % (fold)
