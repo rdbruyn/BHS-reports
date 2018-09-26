@@ -3,6 +3,8 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{booktabs}
+\usepackage{tabularx}
 
 
 \hypersetup{
@@ -27,6 +29,8 @@
 
 	\pagenumbering{roman}
 	\tableofcontents
+	\listoffigures
+	\listoftables
 	\newpage
 	\pagenumbering{arabic}
 
@@ -194,26 +198,26 @@
 	\subsection{Question 1}
 	\label{sec:question_1_lab}
 		The transfer functions of interest in this Lab question are:
-			\begin{equation}
+			\begin{equation*}
 				\begin{array}{rcl}
 					g_1 = \frac{1}{s+1}\\
 					g_2 = \frac{2}{s+2}\\
 					g_3 = \frac{3}{s+3}
 				\end{array}
-			\end{equation}
-		$g_1$, $g_1$ and $g_1$ were captured in an Octave function and the step responses of these systems were obtained by executing the function given as:
-		\texttt{g1 = tf([1],[1,1])}
-		\texttt{g2 = tf([2],[1,2])}
-		\texttt{g3 = tf([3],[1,3])}
+			\end{equation*}
+		$g_1$, $g_2$ and $g_3$ were captured in an Octave function and the step responses of these systems were obtained by executing the function given as:\par
+		\texttt{g1 = tf([1],[1,1])}\par
+		\texttt{g2 = tf([2],[1,2])}\par
+		\texttt{g3 = tf([3],[1,3])}\par
 
-		\texttt{step(g1, 'r');}
-		\texttt{hold on;}
-		\texttt{step(g2, 'g');}
-		\texttt{hold on;}
-		\texttt{step(g3, 'b');}
-		\texttt{hold off;}
+		\texttt{step(g1, 'r');}\par
+		\texttt{hold on;}\par
+		\texttt{step(g2, 'g');}\par
+		\texttt{hold on;}\par
+		\texttt{step(g3, 'b');}\par
+		\texttt{hold off;}\par
 
-		\texttt{legend('g1','g2','g3')}
+		\texttt{legend('g1','g2','g3');}\par
 
 		The plot obtained for this function is given in Figure \ref{fig:plot_question_1_lab} which shows the step responses of the respective systems:
 
@@ -241,8 +245,8 @@
 		The poles of this transfer function is given as 
 		\begin{equation}
 			\begin{array}{rcl}
-				s_1 = -4 + \sqrt{21}i\\
-				s_2 = -4 - \sqrt{21}i\\
+				s_1 = -4 + i\sqrt{21}\\
+				s_2 = -4 - i\sqrt{21}\\
 			\end{array}
 		\end{equation}
 
@@ -259,36 +263,54 @@
 
 		Finding the step response of these transfer functions (\texttt{G\_1, G\_2 and G\_3}) by running the following code in Octave:
 
-		\texttt{g1 = tf([25],[1 4 25]);}
-		\texttt{g2 = tf([37],[1 8 37]);
-		\texttt{g3 = tf([22],[1 2 22]);}
+		\texttt{g1 = tf([25],[1 4 25]);}\par
+		\texttt{g2 = tf([37],[1 8 37]);}\par
+		\texttt{g3 = tf([22],[1 2 22]);}\par
 
-		\texttt{step(g1, 'r');}
-		\texttt{hold on;}
-		\texttt{step(g2, 'g');}
-		\texttt{hold on;}
-		\texttt{step(g3, 'b');}
-		\texttt{hold off;}
+		\texttt{step(g1, 'r');}\par
+		\texttt{hold on;}\par
+		\texttt{step(g2, 'g');}\par
+		\texttt{hold on;}\par
+		\texttt{step(g3, 'b');}\par
+		\texttt{hold off;}\par
 
 		\texttt{legend('g1','g2','g3')}
 
 
 
-		Gives a plot as shown in Figure \ref{plot_question_2_lab}:
+		gives a plot as shown in Figure \ref{plot_question_2_lab}:
 
 		\begin{figure}[H]
-			\includegraphics{img/Question_2_Lab_Plots.png}
-			\caption{Step reponse plots for the different systems described by respective transfer functions}
+			\includegraphics[width=\textwidth]{img/Question_2_Lab_Plots.png}
+			\caption{Step response plots for the different systems described by respective transfer functions}
 			\label{plot_question_2_lab}
 		\end{figure}
 
-		\textit{stepinfo function equicvalent in octave to give rise- and settling time}
+		\textit{stepinfo function equivalent in octave to give rise- and settling time}
 
 	% section lab (end)
 
 	\section{Postlab} % (fold)
 	\label{sec:postlab}
-		
+		\begin{table}[H]
+			\begin{tabularx}{\textwidth}{X X X}
+				\toprule
+				$a$ & $T_r$ & $T_s$ \\
+				\midrule
+
+				\bottomrule
+			\end{tabularx}
+			\caption{Time response properties for different pole positions of first order systems}
+		\end{table}
+
+		\begin{table}[H]
+			\begin{tabularx}{\textwidth}{X X X X X X}
+			\toprule
+			$\omega_d$ & $\sigma_d$ & $T_r$ & $T_p$ & $T_s$ & $\%OS$ \\
+			\bottomrule
+			\end{tabularx}
+			\caption{Time response properties for different pole positions for second order systems}
+		\end{table}
 	% section postlab (end)
 
 \end{document}
