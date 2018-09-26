@@ -44,9 +44,8 @@
 
 \section{Theoretical Background}
 \label{sec:theoretical_background}
-
 	\subsection{Modulator}
-		Amplitude modulation is the simplest modulation technique. A high frequency signal is modulated to carry a lower frequency signal (the lower frequency signal cannot be transmitted effectively as the antenna required to receive a signal with a low frequency is required to be long in length - he length of the antenna is inversely proportional to the frequency it is to receive). The high frequency signal is known as the carrier signal while the signal that needs to be transmitted is called the message signal. 
+		Amplitude modulation is the simplest modulation technique. A high frequency signal is modulated to carry a lower frequency signal (the lower frequency signal cannot be transmitted effectively as the antenna required to receive a signal with a low frequency is required to be long in length - he length of the antenna is inversely proportional to the frequency it is to receive). The high frequency signal is known as the carrier signal while the signal that needs to be transmitted is called the message signal.
 
 		To implement a modulator circuit, consider the 3 components that need to be made up by the circuit:
 		\begin{enumerate}
@@ -65,7 +64,9 @@
 
 		The figure shows a frequency equation given as $\frac{1}{2\pi\sqrt{LC}}$. This equation is used to find the value of the capacitor for the modulator circuit (as shown in Figure \ref{fig:modulator_circuit}).
 	\subsection{Demodulator Circuit}
+
 		A demodulator circuit is one of the applications of a diode as a detector for amplitude modulated (AM) radio signals. An AM signal consists of a radio-frequency carrier wave whose amplitude varies with different audio frequencies. The detector circuit is essentially a half-wave rectifier circuit with an RC filter placed on the output as can be seen from the circuit of the modulator circuit for this practical in Figure \ref{fig:demodulator_circuit}. The RC time constant of the filter should fall between 2 values
+
 		\begin{equation}
 			\label{eqn:time_const_demodulator_circuit}
 			\frac{1}{\omega_c} \le RC \le \frac{\sqrt{1-\mu^2}}{\omega_m\mu}
@@ -78,8 +79,20 @@
 			\centering
 			\includegraphics[width=0.7\textwidth]{images/Demodulator_circuit.png}
 			\caption{The demodulator circuit used for this experiment}
-			\label{fig:demodulator_circuit}{}
+			\label{fig:demodulator_circuit}
 		\end{figure}
+
+	\subsection{Amplifier Circuit} % (fold)
+	\label{sub:amplifier_circuit}
+	 An amplifier circuit will be used to amplify the demodulated signal which is the output of the demodulator circuit (as discussed in the previous section). 2 requirements are needed to amplify a signal.
+	 \begin{enumerate}
+	 	\item Gain
+	 	\item Filtering
+	 \end{enumerate}
+
+	 A gain will give the desired amplification needed while the filter filters out noise from the signal received before it is sent to the amplifier.
+	
+	% subsection amplifier_circuit (end)
 
 
 
