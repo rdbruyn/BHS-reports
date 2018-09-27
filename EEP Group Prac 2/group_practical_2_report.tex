@@ -183,11 +183,16 @@
 	In Figure \ref{fig:output_demodulated} shows the demodulated output of the circuit. By visual inspection, it can still be seen that the signal has an envelope of 500 Hz, as it is periodic, and repeats every $2ms$. From the envelope, however, it appears that the bottom half of the 500 Hz modulating signal is somewhat distorted.\linebreak
 
 	There is quite a difference in the amplitudes of the modulated and demodulated signals. We would expect, mathematically, that the two signals should have a maximum amplitude of $2V$, as the carrier and modulating signals peak at $2V$ and $1V$ respectively. However, the modulated output signal has a maximum output of around $700mV$, while the demodulated output signal has a maximum signal of approximately $250mV$. One reason for this reduction in voltage is due the modulating and demodulating process. The modulation process has an LC circuit, whose impedance acts to attenuate the voltage of the signal. A voltage drop across the diodes in the circuit also serve to reduce the maximum amplitude of the output voltage. It is clear that this signal will have to be at some stage during the encoding process, so that higher level signals can be obtained.
-% section discussion (end)
+
+	By adding a $12pF$ coupling capacitor to the demodulated signal, the new signal has a magnitude of $340mV$p-p (attenuated from the previous $500mV$\mbox{p-p}), while we require an output signal that is $5V$p-p.Therefore, the amount of voltage gain that is required from the amplification circuit is
+	\[
+		G = \frac{5}{340\times 10^{-3}} = 14.70588 \approx 15
+	\]
+	% section discussion (end)
 
 \section{Conclusion} % (fold)
 \label{sec:conclusion}
-	
+	It is possible to encode a modulating signal in a carrier signal using amplitude modulation. However, due to attenuation of the signal, it is advisable to amplify the signal at some stage in the circuit. In practice, the modulated signal should ideally be amplified before transmission, and amplified when demodulated as well. Designing a transistor circuit that amplifies the signal without distortion is difficult, and assumes a signal with a certain magnitude as input. In practice, an amplification circuit with variable gain would have to be implemented in order to provide the correct amount of amplification while reducing unnecessary distortion.
 % section conclusion (end)
 
 \begin{thebibliography}{500}
