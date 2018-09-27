@@ -44,11 +44,8 @@
 
 \section{Theoretical Background}
 \label{sec:theoretical_background}
-
-	\subsection{Modulator Circuit}
-		Amplitude modulation is the simplest modulation technique. A high frequency signal is modulated to carry a lower frequency signal (the lower frequency signal cannot be transmitted effectively as the antenna required to receive a signal with a low frequency is required to be long in length - he length of the antenna is inversely proportional to the frequency it is to receive).
-
-		The high frequency signal is known as the carrier signal while the signal that needs to be transmitted is called the message signal. 
+	\subsection{Modulator}
+		Amplitude modulation is the simplest modulation technique. A high frequency signal is modulated to carry a lower frequency signal (the lower frequency signal cannot be transmitted effectively as the antenna required to receive a signal with a low frequency is required to be long in length - he length of the antenna is inversely proportional to the frequency it is to receive). The high frequency signal is known as the carrier signal while the signal that needs to be transmitted is called the message signal.
 
 		To implement a modulator circuit, consider the 3 components that need to be made up by the circuit:
 		\begin{enumerate}
@@ -60,6 +57,7 @@
 		The modulator circuit used for this experiment is shown in the figure below
 
 		\begin{figure}[H]
+			\centering
 			\includegraphics[width=0.7\textwidth]{images/modulator_circuit.png}
 			\label{fig:modulator_circuit}
 			\caption{The circuit used to implement the modulator.}
@@ -67,23 +65,15 @@
 
 		The figure shows a frequency equation given as $\frac{1}{2\pi\sqrt{LC}}$. This equation is used to find the value of the capacitor for the modulator circuit (as shown in Figure \ref{fig:modulator_circuit}).
 	\subsection{Demodulator Circuit}
-		A demodulator circuit is one of the applications of a diode as a detector for amplitude modulated (AM) radio signals. An AM signal consists of a radio-frequency carrier wave whose amplitude varies with different audio frequencies.
 
-		The detector circuit circuit is essentially a half-wave rectifier circuit with an RC filter placed on the output as can be seen from the circuit of the modulator circuit for this practical in Figure \ref{fig:demodulator_circuit}.
+		A demodulator circuit is one of the applications of a diode as a detector for amplitude modulated (AM) radio signals. An AM signal consists of a radio-frequency carrier wave whose amplitude varies with different audio frequencies. The detector circuit is essentially a half-wave rectifier circuit with an RC filter placed on the output as can be seen from the circuit of the modulator circuit for this practical in Figure \ref{fig:demodulator_circuit}. The RC time constant of the filter should fall between 2 values
 
-		The RC time constant of the filter should fall between 2 values
 		\begin{equation}
 			\label{eqn:time_const_demodulator_circuit}
 			\frac{1}{\omega_c} \le RC \le \frac{\sqrt{1-\mu^2}}{\omega_m\mu}
 		\end{equation}
 
-		where $\omega_c$ is the frequency of the carrier, $\omega_m$ is the angular frequency of the information and $\mu$ is the modulation index
-
-		This result comes from practical experience in the field of electronic engineering rather than from a mathematical principles.
-
-		If the $RC$ time constant is too small, there would be ripples of the carrier frequency on the output (this is to be avoided as we require the information sent rather than the distortion thereof with the carrier signal).
-
-		If the $RC$ time constant is too big, it will significantly attenuate high frequencies 
+		where $\omega_c$ is the frequency of the carrier, $\omega_m$ is the angular frequency of the information and $\mu$ is the modulation index. This result comes from practical experience in the field of electronic engineering rather than from a mathematical principles. If the $RC$ time constant is too small, there would be ripples of the carrier frequency on the output (this is to be avoided as we require the information sent rather than the distortion thereof with the carrier signal). If the $RC$ time constant is too big, it will significantly attenuate high frequencies.
 
 
 		\begin{figure}[H]
@@ -164,15 +154,34 @@
 
 	$C2$ was calculated according to the equation given as 
 	\begin{equation}
+		f =  \frac{1}{2\pi\sqrt{LC}} 
 		\label{eqn:capacitor_modulator_circuit}
-				f =  \frac{1}{2\pi\sqrt{LC}} 
 	\end{equation}
 
-	Where $L$ is given as $L = 10\times10^{-6}H$ and the frequency is given as $f= 20\times 10^6 $Hz.
+	Where $L$ is given as $L = 10\times10^{-6}H$ and the frequency is given as $f= 20\times 10^6 $Hz. Substituting this into equation \ref{eqn:capacitor_modulator_circuit} we get that the capacitor needed for the modulator circuit is
+	\[
+		\begin{array}{rcl}
+			f & = & \frac{1}{2\pi\sqrt{LC_2}} \\
+			2\pi f \sqrt{L} & = & \frac{1}{\sqrt{C_2}} \\
+			\sqrt{C_2} & = & \frac{1}{2\pi f \sqrt{L}} \\
+			C_2 & = & \left(\frac{1}{2\pi f \sqrt{L}}\right)^2 \\
+			& = & \left(\frac{1}{2\pi(20\times 10^6)\sqrt{10\times 10^{-6}}}\right)^2 \\
+			& = & 6.33257 \times 10^{-12} \\
+			& \approx & 6.33 pF 
+		\end{array}
+	\]
 
-	Substituting this into equation \ref{eqn:capacitor_modulator_circuit} we get that the capacitor needed for the modulator circuit is $C_2 = 6.33pF$.
+	$C_1$ was calculated using equation \ref{eqn:time_const_demodulator_circuit}. Taking $RC$ to be given as $\frac{1}{\omega_c}$, where $\omega_c$ is the angular frequency of the carrier signal given as $125.66 \times 10^6 $. Using these values we find that $C_1$ is given as
 
-	$C_1$ was calculated using equation \ref{eqn:time_const_demodulator_circuit}. Taking $RC$ to be given as $\frac{1}{\omega_c}$, where $\omega_c$ is the angular frequency of the carrier signal given as $125.66 \times 10^6 $. Using these values we find that $C_1$ is given as $C_1 = 7.96 pF$.
+	\[
+		\begin{array}{rcl}
+			RC_1 & = & \frac{1}{\omega_c} \\
+			C_1 & = & \frac{1}{\omega_c R} \\
+			& = & \frac{1}{2\pi (20\times 10^6)(1000)} \\
+			& = & 7.95775 \times 10^{-12} \\
+			& \approx & 7.96 pF
+		\end{array}
+	\]
 
 
 % section experimental_method (end)
@@ -181,28 +190,28 @@
 \label{sec:results}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=.8\textwidth]{images/carrier.JPG}
+		\includegraphics[width=\textwidth]{images/carrier.JPG}
 		\caption{20 MHz Carrier signal}
 		\label{fig:carrier}
 	\end{figure}
 
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=.8\textwidth]{images/modulating.JPG}
+		\includegraphics[width=\textwidth]{images/modulating.JPG}
 		\caption{500 Hz input signal}
 		\label{fig:modulating}
 	\end{figure}
 
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=.8\textwidth]{images/output_modulated.JPG}
+		\includegraphics[width=\textwidth]{images/output_modulated.JPG}
 		\caption{Modulator output}
 		\label{fig:output_modulated}
 	\end{figure}
 
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=.8\textwidth]{images/output_demodulated.JPG}
+		\includegraphics[width=\textwidth]{images/output_demodulated.JPG}
 		\caption{Demodulated output}
 		\label{fig:output_demodulated}
 	\end{figure}
@@ -210,13 +219,13 @@
 
 \section{Discussion} % (fold)
 \label{sec:discussion}
-	In this practical, we have chosen the carrier wave with a frequency of 20 MHz, and an amplitude of $5V$. In order to simulate audio input, we simply chose a signal generator which generates a 500 Hz sine wave at an amplitude of $1V$. These two signals can be seen in Figure \ref{fig:carrier} and Figure \ref{fig:modulating}. What we expect at the modulated output of the circuit, theoretically, is to have a 20 MHz signal that has the envelope of the 500 Hz sine wave input. From Figure \ref{fig:output_modulated} we can see that this is indeed the case.
+	In this practical, we have chosen the carrier wave with a frequency of 20 MHz, and an amplitude of $2V$. In order to simulate audio input, we simply chose a signal generator which generates a 500 Hz sine wave at an amplitude of $1V$. These two signals can be seen in Figure \ref{fig:carrier} and Figure \ref{fig:modulating}. What we expect at the modulated output of the circuit, theoretically, is to have a 20 MHz signal that has the envelope of the 500 Hz sine wave input. From Figure \ref{fig:output_modulated} we can see that this is indeed the case.
 
 	The signal looks ``solid'' due to the large difference between the frequencies of the carrier and modulating waves. It is instructive to note that, due to the constraints of the practical, we had to choose a carrier signal that would require the capacitor $C_2$ in the circuit to have a value of $3pF \le C_2 \le 40pF$. Now, since the modulating signal is 500 Hz, we expect the envelope of the carrier signal to have a period once every 2$ms$. By inspecting the voltage values of Figure \ref{fig:output_modulated}, we see that the modulated signal at 0$ms$ is approximately $514mV$. The value of the modulated signal at $2ms$ is also $514mV$. Therefore we can conclude that the envelope of the carrier signal is indeed correct.
 
-	In Figure \ref{fig:output_demodulated} shows the demodulated output of the circuit. By visual inspection, it can still be seen that the signal has an envelope of 500 Hz, as it is periodic, and repeats every $2ms$. From the envelope, however, it appears that the bottom half of the 500 Hz modulating signal is somewhat distorted.
+	In Figure \ref{fig:output_demodulated} shows the demodulated output of the circuit. By visual inspection, it can still be seen that the signal has an envelope of 500 Hz, as it is periodic, and repeats every $2ms$. From the envelope, however, it appears that the bottom half of the 500 Hz modulating signal is somewhat distorted.\linebreak
 
-	There is quite a difference in the amplitudes of the modulated and demodulated signals. We would expect, mathematically, that the two signals should have a maximum amplitude of $5V$, as the carrier and modulating signals peak at $5V$ and $1V$ respectively. However, the modulated output signal has a maximum output of around $700mV$, while the demodulated output signal has a maximum signal of approximately $250mV$. One reason for this reduction in voltage is due the modulating and demodulating process. The modulation process has an LC circuit, whose impedance acts to attenuate the voltage of the signal. A voltage drop across the diodes in the circuit also serve to reduce the maximum amplitude of the output voltage. It is clear that this signal will have to be at some stage during the encoding process, so that higher level signals can be obtained.
+	There is quite a difference in the amplitudes of the modulated and demodulated signals. We would expect, mathematically, that the two signals should have a maximum amplitude of $2V$, as the carrier and modulating signals peak at $2V$ and $1V$ respectively. However, the modulated output signal has a maximum output of around $700mV$, while the demodulated output signal has a maximum signal of approximately $250mV$. One reason for this reduction in voltage is due the modulating and demodulating process. The modulation process has an LC circuit, whose impedance acts to attenuate the voltage of the signal. A voltage drop across the diodes in the circuit also serve to reduce the maximum amplitude of the output voltage. It is clear that this signal will have to be at some stage during the encoding process, so that higher level signals can be obtained.
 % section discussion (end)
 
 \section{Conclusion} % (fold)
@@ -233,7 +242,7 @@
 	\bibitem{Detector}
 	Phil Frost
 	\textit{RC time constant and diode detector}
-	\texttt{https://electronics.stackexchange.com/questions/100518/rc-time-constant-and-diode-detector}
+	\texttt{https://electronics.stackexchange.com/questions/100518/\\rc-time-constant-and-diode-detector}
 
 \end{thebibliography}
 
