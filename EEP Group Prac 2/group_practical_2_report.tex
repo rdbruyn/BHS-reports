@@ -102,7 +102,50 @@
 	 \end{enumerate}
 
 	 A gain will give the desired amplification needed while the filter filters out noise from the signal received before it is sent to the amplifier.
-	
+
+	 A common-emitter configuration of the transistor is desired in this practical as it provides us with a high voltage gain. 
+
+	 Consider the circuit given in Figure \ref{fig:transistor_configuration_circuit} which shows the transistor configuration to be used in this experiment.
+
+
+	 \begin{figure}
+	 	\centering
+		\label{fig:transistor_configuration_circuit}
+		\includegraphics[width=0.7\textwidth]{images/transistor_configuration_circuit.png}
+		\caption{Transistor configuration to be used for this experiment}
+	 \end{figure}
+
+ 	The voltage at the collector terminal of the circuit has to be half that of the source voltage, thus $V_C = \frac{1}{2}V_{CC}$ where $V_{CC}$ is the source voltage.
+
+ 	Using ohms law, the collector resistor $R_1$ (as shown in Figure \ref{fig:transistor_configuration_circuit}) can be calculated
+ 	\begin{equation}
+ 		R_c = R_1 = \frac{V_{CC}-V_C}{I_C}
+ 	\end{equation}
+
+ 	Where the collector current $I_C$ is current through the collector. The collector current is transistor specified and is calculated using the data sheet provided for the transistor in question. 
+
+ 	The voltage gain of the circuit is given as $G = \frac{R_1}{R_e}$ where $R_e$ is the internal resistance of the transistor and is once again transistor specific. The value of $R_e$ is calculated from the equation given as 
+
+ 	\begin{equation}
+ 		R_e = \frac{0.026}{I_e}
+ 	\end{equation}
+
+ 	and is based on the assumption that the collector and the emitter currents are approximately the same.
+
+ 	The internal resistance of a transistor is highly unstable (that is its resistance value changes based on changes in the temperature of the material), to account for this instability in the internal resistance of the transistor an additional resistance needs to be included in the transistor circuit. The gain is then given as 
+
+ 	\begin{equation}
+ 		G = \frac{R_1}{R_2 + R_e}
+ 	\end{equation} 
+
+ 	The circuit that incorporates the second resistor is shown in Figure \ref{fig:transistor_configuration_circuit_added_R2}
+
+ 	\begin{figure}
+ 		\centering
+		\label{fig:transistor_configuration_circuit_added_R2}
+		\includegraphics[width=0.7\textwidth]{images/transistor_configuration_circuit_added_R2.png}
+		\caption{Changed transistor circuit that accounts for fluctuating R_e}
+ 	\end{figure}
 	% subsection amplifier_circuit (end)
 
 
