@@ -3,6 +3,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{hyperref}
+\usepackage{siunitx}
 
 \hypersetup{
 	colorlinks=true,
@@ -98,7 +99,7 @@
 	 Consider the circuit given in Figure \ref{fig:transistor_configuration_circuit} which shows the transistor configuration to be used in this experiment.
 
 
-	 \begin{figure}
+	 \begin{figure}[H]
 	 	\centering
 		\label{fig:transistor_configuration_circuit}
 		\includegraphics[width=0.7\textwidth]{images/transistor_configuration_circuit.png}
@@ -130,12 +131,51 @@
 
  	The circuit that incorporates the second resistor is shown in Figure \ref{fig:transistor_configuration_circuit_added_R2}
 
- 	\begin{figure}
+ 	\begin{figure}[H]
  		\centering
 		\label{fig:transistor_configuration_circuit_added_R2}
 		\includegraphics[width=0.7\textwidth]{images/transistor_configuration_circuit_added_R2.png}
-		\caption{Changed transistor circuit that accounts for fluctuating R_e}
+		\caption{Changed transistor circuit that accounts for fluctuating R\_e}
  	\end{figure}
+
+ 	To rectify the change in the gain, a capacitor needs to be added in parallel with the $R_2$ resistor. This essentially makes the resistor 'disappear' - this is done by applying impedance addition in parallel (a reduced impedance results from a parallel configuration of impedances).
+
+ 	The $RC$ network on the emitter is also a high pass filter which filters out frequencies lower than a specified frequency (this is desired to prevent amplification of noise introduced in the circuit).
+
+ 	The value of the capacitor is calculated using the equation given as 
+ 	\begin{equation}
+ 	 	f = \frac{1}{2\pi RC}
+ 	\end{equation}
+
+ 	where $f$ is the frequency below which filtering must be applied
+
+ 	An additional capacitor needs to be introduced to the input terminal of the transistor to rid the input signal of the DC offset to keep the circuit stable. A capacitor of 1 $\mu$F will suffice. 
+
+ 	The circuit showing this is given in Figure \ref{fig:final_transistor_circuit}
+
+ 	\begin{figure}[H]
+ 		\centering
+		\label{fig:final_transistor_circuit}
+		\includegraphics[width=0.7\textwidth]{images/final_transistor_circuit.png}
+		\caption{Final circuit to be implemented in the experiment}
+ 	\end{figure}
+
+ 	The final changes to be made to the circuit as shown in the figure (Figure \ref{fig:final_transistor_circuit}) is to add resistors for biasing of the transistor.
+
+ 	To bias the transistor in the active mode, we require the voltage at the base to be 0.6V higher than the voltage at $V_e$. For the circuit we are biasing it with a base voltage of $V_b = 1.6V$. The circuit with the biasing voltage is shown in the figure below 
+
+ 	\begin{figure}[H]
+ 		\centering
+		\label{fig:biasing_transistor}
+		\includegraphics[width=0.7\textwidth]{images/biasing_transistor_circuit.png}
+		\caption{Final circuit implementing biasing of the transistor}
+ 	\end{figure}
+
+ 	The resistor values are governed by the equation given below.
+
+ 	\[
+ 		\frac{R_1R_2}{R_1+R_2} \le 25000
+ 	\]
 	% subsection amplifier_circuit (end)
 
 
@@ -170,6 +210,7 @@
 			& \approx & 6.33 pF 
 		\end{array}
 	\]
+	
 
 	$C_1$ was calculated using equation \ref{eqn:time_const_demodulator_circuit}. Taking $RC$ to be given as $\frac{1}{\omega_c}$, where $\omega_c$ is the angular frequency of the carrier signal given as $125.66 \times 10^6 $. Using these values we find that $C_1$ is given as
 
@@ -182,6 +223,17 @@
 			& \approx & 7.96 pF
 		\end{array}
 	\]
+
+	Consider the amplifier portion of the circuit given in Figure \ref{fig:circuit_1}. The value of the $C_3$ capacitor was taken to be any arbitrary value (for this experiment taken to be $12 pF$). The $C_4$ capacitor was calculated using the theory as explained in the theoretical background section of this report. Using a resistor of 1 K \si{\ohm}. 
+	\[
+		\begin{array}{rcl}
+			f &= & \frac{1}{2\pi RC} \\
+			300 &=& \frac{1}{2\pi 1000C} \\
+			C &=& 20 \mu F \\
+		\end{array}
+	\]
+
+
 
 
 % section experimental_method (end)
@@ -235,7 +287,7 @@
 
 \begin{thebibliography}{500}
 
-	\bibitem{lamport94}
+	\bibitem{Microelectronics}
 	  Donald A. Neamen,
 	  \textit{Microelectronics: Circuit Analysis and Design}
 
@@ -243,6 +295,11 @@
 	Phil Frost
 	\textit{RC time constant and diode detector}
 	\texttt{https://electronics.stackexchange.com/questions/100518/\\rc-time-constant-and-diode-detector}
+
+	\bibitem{TransistorCircuits}
+	Backyard Brains
+	\textit{Experiment: Transistor Circuit}
+	\texttt{https://backyardbrains.com/experiments/transistorDesign}
 
 \end{thebibliography}
 
