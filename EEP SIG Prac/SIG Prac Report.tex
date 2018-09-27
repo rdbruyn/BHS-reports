@@ -6,6 +6,11 @@
 \usepackage[page, toc]{appendix}
 \usepackage{hyperref}
 
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black
+}
+
 \begin{document}
 	\pagenumbering{gobble}
 	\begin{titlepage}
@@ -228,7 +233,14 @@
 			\end{array}
 		\]
 
-		These results were confirmed to be correct by using a scientific calculator on the internet.
+		These results were confirmed to be correct by using a scientific calculator on the Internet.
+		\section{Direct DFT vs. FFT} % (fold)
+		\label{sec:direct_dft_vs_fft}
+			In this section, we compare the direct DFT method and the Fast Fourier Transform. We start by generating 1024 samples of $\sin(2\pi t)$, with the bounds of $t$ between 0 and 2. In a discrete sampling sense, this input can be given as
+			\begin{equation}
+				\sin\left(2\pi \cdot \frac{2n}{1024}\right) = \sin\left(\frac{\pi n}{256}\right),\quad 0 \le n \le 1024, k\in \mathbb{Z}
+			\end{equation}
+		% section direct_dft_vs_fft (end)
 	% chapter discrete_fourier_transform_and_fast_fourier_transform (end)
 
 	\appendix
