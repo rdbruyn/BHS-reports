@@ -6,6 +6,11 @@
 \usepackage[page, toc]{appendix}
 \usepackage{hyperref}
 
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black
+}
+
 \begin{document}
 	\pagenumbering{gobble}
 	\begin{titlepage}
@@ -228,7 +233,33 @@
 			\end{array}
 		\]
 
-		These results were confirmed to be correct by using a scientific calculator on the internet.
+		These results were confirmed to be correct by using a scientific calculator on the Internet.
+		\section{Direct DFT vs. FFT} % (fold)
+		\label{sec:direct_dft_vs_fft}
+			In this section, we compare the direct DFT method and the Fast Fourier Transform. We start by generating 1024 samples of $\sin(2\pi t)$, with the bounds of $t$ between 0 and 2. In a discrete sampling sense, this input can be given as
+			\begin{equation}
+				\sin\left(2\pi \cdot \frac{2n}{1024}\right) = \sin\left(\frac{\pi n}{256}\right),\quad 0 \le n \le 1024, k\in \mathbb{Z}
+				\label{eq:2_sin}
+			\end{equation}
+
+			In figure \ref{fig:2_dft}, we show the values of the \texttt{DFTdir} method on the input given in \eqref{eq:2_sin}. The values were simply plotted as indices of the Fourier Transform, as we do not need to shift the output and correct the scaling for frequency in order to draw a comparison. In figure \ref{fig:2_fft}, we see the results of using Octave's built-in \texttt{fft} function with the same input. As can easily be seen, the two functions provide the same output.
+
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=.7\textwidth]{img/2_1.png}
+				\label{fig:2_dft}
+				\caption{\texttt{DFTdir} results for \eqref{eq:2_sin}}
+			\end{figure}
+
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=.7\textwidth]{img/2_2.png}
+				\label{fig:2_fft}
+				\caption{Octave's \texttt{fft} results for \eqref{eq:2_sin}}
+			\end{figure}
+
+			At this point, we perform a performance comparison of the two methods. By modifying the \texttt{DFTdir} method as in \textit{add new code to appendix}, we see that the time it takes to compute the output in figure \ref{fig:2_dft} is 10.43 seconds. Performing the function given by \textit{add code to appendix} the time is drastically reduced to 3.57 milliseconds.
+		% section direct_dft_vs_fft (end)
 	% chapter discrete_fourier_transform_and_fast_fourier_transform (end)
 
 	\appendix
