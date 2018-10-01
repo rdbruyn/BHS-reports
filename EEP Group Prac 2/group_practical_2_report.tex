@@ -61,8 +61,8 @@
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.7\textwidth]{images/modulator_circuit.png}
-			\label{fig:modulator_circuit}
 			\caption{The circuit used to implement the modulator.}
+			\label{fig:modulator_circuit}
 		\end{figure}
 
 		The figure shows a frequency equation given as $\frac{1}{2\pi\sqrt{LC}}$. This equation is used to find the value of the capacitor for the modulator circuit (as shown in Figure \ref{fig:modulator_circuit}).
@@ -100,9 +100,9 @@
 
 	 \begin{figure}[H]
 	 	\centering
-		\label{fig:transistor_configuration_circuit}
 		\includegraphics[width=0.7\textwidth]{images/transistor_configuration_circuit.png}
 		\caption{Transistor configuration to be used for this experiment}
+		\label{fig:transistor_configuration_circuit}
 	 \end{figure}
 
  	The voltage at the collector terminal of the circuit has to be half that of the source voltage, thus $V_C = \frac{1}{2}V_{CC}$ where $V_{CC}$ is the source voltage. Using ohms law, the collector resistor $R_1$ (as shown in Figure \ref{fig:transistor_configuration_circuit}) can be calculated
@@ -126,9 +126,9 @@
 
  	\begin{figure}[H]
  		\centering
-		\label{fig:transistor_configuration_circuit_added_R2}
 		\includegraphics[width=0.7\textwidth]{images/transistor_configuration_circuit_added_R2.png}
 		\caption{Changed transistor circuit that accounts for fluctuating R\_e}
+		\label{fig:transistor_configuration_circuit_added_R2}
  	\end{figure}
 
  	To rectify the change in the gain, a capacitor needs to be added in parallel with the $R_2$ resistor. This essentially makes the resistor 'disappear' - this is done by applying impedance addition in parallel (a reduced impedance results from a parallel configuration of impedances). The $RC$ network on the emitter is also a high pass filter which filters out frequencies lower than a specified frequency (this is desired to prevent amplification of noise introduced in the circuit). The value of the capacitor is calculated using the equation given as 
@@ -140,18 +140,18 @@
 
  	\begin{figure}[H]
  		\centering
-		\label{fig:final_transistor_circuit}
 		\includegraphics[width=0.7\textwidth]{images/final_transistor_circuit.png}
 		\caption{Final circuit to be implemented in the experiment}
+		\label{fig:final_transistor_circuit}
  	\end{figure}
 
  	The final changes to be made to the circuit as shown in the figure (Figure \ref{fig:final_transistor_circuit}) is to add resistors for biasing of the transistor. To bias the transistor in the active mode, we require the voltage at the base to be 0.6V higher than the voltage at $V_e$. For the circuit we are biasing it with a base voltage of $V_b = 1.6V$. The circuit with the biasing voltage is shown in the figure below 
 
  	\begin{figure}[H]
  		\centering
-		\label{fig:biasing_transistor}
 		\includegraphics[width=0.7\textwidth]{images/biasing_transistor_circuit.png}
 		\caption{Final circuit implementing biasing of the transistor}
+		\label{fig:biasing_transistor}
  	\end{figure}
 
  	The resistor values are governed by the equation given below.
@@ -168,9 +168,9 @@
 	The circuit constructed for this experiment is shown in Figure \ref{fig:circuit_1}
 	\begin{figure}[H]
 		\centering
-		\label{fig:circuit_1}
-		\includegraphics[width=0.7\textwidth]{images/circuit_1.png}
+		\includegraphics[width=\textwidth]{images/Circuit_2.JPG}
 		\caption{LTSpice circuit used for this experiment}
+		\label{fig:circuit_1}
 	\end{figure}
 
 	The values for the capacitors for the modulator and the demodulator circuits were calculated according to the rules as laid out in the theoretical background section of this document.
