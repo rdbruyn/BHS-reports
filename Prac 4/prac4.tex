@@ -10,7 +10,7 @@
 	\pagenumbering{gobble}
 		\begin{titlepage}
 			\centering
-			{\LARGE Controls Systems Practical 3 \par}
+			{\LARGE Controls Systems Practical 4 \par}
 			\vspace*{1.5cm}
 			{\large Q. Kruger, 216008466 \par}
 			{\large R. de Bruyn, 216054484 \par}
@@ -24,7 +24,6 @@
 		\pagenumbering{roman}
 		\tableofcontents
 		\listoffigures
-		\listoftables
 		\newpage
 		\pagenumbering{arabic}
 
@@ -166,6 +165,68 @@
 			Once again, the value of $b$ corresponding to a pole location the furthest away from the imaginary axis is the value $b=40$ thus the pole corresponding to this value of $b$ is $s=-40$. This value of $b$ makes the effect of the pole on the system the smallest of all the other values of $b$.
 			
 			% subsection question_4 (end)
+
+	\section{Lab} % (fold)
+	\label{sec:lab}
+	Making use of MATLAB's \texttt{stepinfo} function we were able to obtain the step response information relevant to the addition of a zeros at the respective locations at $s=-200$, $s=-50$, $s=-10$, $s=-2$. The transfer functions corresponding to these zeros are those of prelab question 1b and question 1c ($G_2$-$G_5$).
+
+	The information for the respective transfer functions are given as:
+
+	\begin{enumerate}
+		\item For $G_6$ \\
+		Rise Time: 0.2928 \\
+		Settling Time: 1.6769 \\
+		Settling Min: 0.9187 \\
+		Settling Max: 1.2536 \\
+		Oversjoot: 25.3577 \\
+		Undershoot: 0 \\
+		Peak: 1.2536 \\
+		Peak Time: 0.6908 \\
+
+		\item For $G_7$ \\
+		Rise Time: 0.2909 \\
+		Settling Time: 1.6617 \\
+		Settling Min: 0.9005 \\
+		Settling Max: 1.2551 \\
+		Oversjoot: 25.5136 \\
+		Undershoot: 0 \\
+		Peak: 1.2551 \\
+		Peak Time: 0.6677 \\
+
+		\item For $G_8$ \\
+		Rise Time: 0.2448 \\
+		Settling Time: 1.5831 \\
+		Settling Min: 0.9255 \\
+		Settling Max: 1.2936 \\
+		Oversjoot: 29.3613 \\
+		Undershoot: 0 \\
+		Peak: 1.2936 \\
+		Peak Time: 0.5756 \\
+
+		\item For $G_9$ \\
+		Rise Time: 0.0716 \\
+		Settling Time: 2.0247 \\
+		Settling Min: 0.7072 \\
+		Settling Max: 2.1543 \\
+		Oversjoot: 115.4281 \\
+		Undershoot: 0 \\
+		Peak: 2.1543 \\
+		Peak Time: 0.3454 \\
+		
+	\end{enumerate}
+
+
+
+
+	
+	
+	% section lab (end)
+
+	\section{Post Lab} % (fold)
+	\label{sec:post_lab}
+	As was mentioned in the prelab section of this report, as the additional pole moves closer to the dominant pole, the step response drastically gets influeced as can be seen from Figure \ref{fig:step_pre_q1c} of the prelab.
+	
+	% section post_lab (end)
 
 			
 	% section prelab (end)
