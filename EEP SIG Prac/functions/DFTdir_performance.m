@@ -1,6 +1,6 @@
 function [avg_time, data_arr] = DFTdir_performance(input)
   total = 0;
-  k = 1;
+  k = 3;
   data_arr = zeros(1, k);
   for i = 1:k
     t = DFTdir_time(input);
