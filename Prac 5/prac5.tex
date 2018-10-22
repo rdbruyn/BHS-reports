@@ -30,7 +30,7 @@
 		\section{Pre Lab} % (fold)
 		\label{sec:pre_lab}
 
-		\subsubsection{Question 1} % (fold)
+		\subsection{Question 1} % (fold)
 		\label{ssub:question_1}
 		Considering 3 cascaded blocks each with a transfer function given as $G_1 = \frac{1}{s+1}$, $G_2 = \frac{1}{s+4}$ and $G_3 = \frac{s+3}{s+5}$ respectively. The equivalent transfer function of this system is given below
 
@@ -57,6 +57,32 @@
 			\end{array}
 		\end{equation}		
 		% subsection question_2 (end)
+
+		\subsection{Question 3} % (fold)
+		\label{sub:question_3}
+			\[
+				\begin{array}{rcl}
+					T(S) & = & \frac{G(s)}{1 + G(s)H(s)} \\
+					& = & \frac{s+1}{s(s+2)} \,\div\, \left(1 + \frac{(s+1)(s+3)}{s(s+2)(s+4)} \right) \\
+					& = & \frac{s+1}{s(s+2)} \,\cdot\, \left(\frac{s(s+2)(s+4)}{s(s^2 + 4s + 8) + s^2 + 4s + 3} \right) \\
+					& = & \frac{s^2 + 5s + 4}{s^3 + 7s^2 + 12s + 3}
+				\end{array}
+			\]
+		% subsection question_3 (end)
+
+		\subsection{Question 4} % (fold)
+		\label{sub:question_4}
+			\[
+				T(s) = \frac{G(s)H(s)}{1 + G(s)}
+			\]
+		% subsection question_4 (end)
+
+		\subsection{Question 5} % (fold)
+		\label{sub:question_5}
+			\[
+				T(s) = \frac{G(s)H(s)}{1 + G(s)}
+			\]
+		% subsection question_5 (end)
 		
 		% section pre_lab (end)
 
