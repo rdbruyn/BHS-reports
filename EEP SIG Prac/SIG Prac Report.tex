@@ -284,13 +284,46 @@
 					$N$ & Average (s) & $\rho_{DFT}$ & Average (s) & $\rho_{fft}$ \\
 					\midrule
 					2048 & 38.51 & 0.107 & $3.65 \times 10^{-4}$ & $1.43 \times 10^{-3}$ \\
-					4096 & 152.6 & 0.38 & $2.75 \times 10^{-4}$ & $1.05 \times 10^{-3}$ \\
-					8192 & - & - & $3.7 \times 10^{-4}$ & $1.44 \times 10^{-3}$ \\
+					4096 & 152.60 & 0.38 & $2.75 \times 10^{-4}$ & $1.05 \times 10^{-3}$ \\
+					8192 & 617.77 & 1.23 & $3.70 \times 10^{-4}$ & $1.44 \times 10^{-3}$ \\
 					\bottomrule
 				\end{tabularx}
 				\caption{Results for different values of $N$ for each algorithm}
+				\label{table:2_1}
 			\end{table}
+
+			It can easily be seen from table \ref{table:2_1} that the FFT algorithm is faster than the DFT one by several orders of magnitude. The FFT is a much faster algorithm due to the fact that it uses symmetry and other mathematical simplifications to calculate the Fourier Transform, whereas the DFT manually calculates each entry from first principles.
 		% section direct_dft_vs_fft (end)
+
+		\section{The Inverse Fourier Transform} % (fold)
+		\label{sec:section_name}
+			In this section we compare the DFT and inverse DFT performance of various functions. Consider the discrete signal
+			\begin{equation}
+				x(nT) = \{3, 6, 4, 7, 2, 5, 8, 1\}
+				\label{eq:2_2}
+			\end{equation}
+			
+
+			The result using all of the above mentioned algorithms is
+
+			\[
+				\begin{array}{rcl}
+					y & = & \{36, -2.5355 - j0.9497, -7 - j3, 4.5355 - j8.9497, \\
+					&  & -2, 4.5355 + j8.9497, -7 + j3, -2.5355 + j0.9497\}
+				\end{array}
+			\]
+
+			By using Octave's \texttt{ifft} function, we can find the inverse transform of Fourier transforms. If we take the inverse transform of $y$, we expect to find the sequence $x(nT)$ back in return. This is indeed the case, and the result of the \texttt{ifft} is exactly what we started with in \eqref{eq:2_2}. But how could we easily find the inverse DFT of a function using only what we know so far? With some algebraic manipulation, we can see that
+
+			\begin{equation}
+				X(k) = \sum^{N-1}_{n=0} x(n) e^{-j 2 \pi k n / N}\quad \Rightarrow \quad x(n) = \tfrac{1}{N} \sum^{N-1}_{n=0} X(k) e^{j 2 \pi k n / N}
+			\end{equation}
+
+			This implies that the inverse DFT of a signal can be given by the DFT of the signal's complex conjugate, and then divided by its number of entries $N$. Implementing our own function \texttt{IDFT}, the code of which can be seen in Appendix \ref{cha:idft_code}, we have an output of
+			\[
+				\texttt{IDFT(y) = \{3, 6, 4, 7, 2, 5, 8, 1\}} 
+			\]
+		% section section_name (end)
 	% chapter discrete_fourier_transform_and_fast_fourier_transform (end)
 
 	\appendix
@@ -308,4 +341,11 @@
 		\texttt{endfor}\par
 		\noindent\texttt{endfunction}\par
 	% section dftdir_code (end)
+    \chapter{IDFT code} % (fold)
+    \label{cha:idft_code}
+    	\texttt{function out = IDFT(input)}\par
+    	\indent\texttt{N = length(input);}\par
+    	\indent\texttt{out = DFTdir(conj(input)) / N;}\par\noindent
+    	\texttt{endfunction}
+    % chapter idft_code (end)
 \end{document}
