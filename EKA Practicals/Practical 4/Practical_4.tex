@@ -90,7 +90,6 @@
 				& = & \frac{50\times10^{-3}}{12}\\
 				& = & 10.64 \times 10^{-3}A
 			\end{array}
-		  	
 		\end{equation}  
 
 		This is the current that should flow through the zener diode. Using this and the zener voltage of $V_Z = 4.7V$, the resistor $R_1$ can be calculated as shown below
@@ -99,9 +98,8 @@
 			\begin{array}{rcl}
 				R_1 & = & \frac{V1 - V_Z}{I}\\
 				& = & \frac{7.3}{10.64\times10^{3}}\\
-				& = & 686.09
+				& = & 686.09 \si{\ohm}
 			\end{array}
-		  	
 		\end{equation}  
 	% section equations (end)
 
@@ -134,6 +132,8 @@
 	\section{Conclusion} % (fold)
 	\label{sec:conclusion}
 		With the addition of the transistor, the voltage changed from $4.66V$ to $4.25V$. As discussed in the theoretical background section of this report, the reason for the altered value of $V_{out}$ is explained by the equation given as $V_{out} = V_Z - V_{be}$. $V_be$ is the voltage drop inside the transistor due to the resistance of the base-emitter junction.
+
+		The exact zener voltage was not obtained during this experiment (part 1), this is true because the resistor value that was chosen was chosen close to the calculated value of $686.09 \si{\ohm}$ and not the exact value (done so as to make use of resistor values that are supplied in the lab)
 	
 	% section conclusion (end)
 
