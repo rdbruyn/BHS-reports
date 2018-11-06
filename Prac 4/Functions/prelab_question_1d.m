@@ -14,7 +14,7 @@
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## -*- texinfo -*- 
-## @deftypefn {} {@var{retval} =} prelab_question_1b (@var{input1}, @var{input2})
+## @deftypefn {} {@var{retval} =} prelab_question_1d (@var{input1}, @var{input2})
 ##
 ## @seealso{}
 ## @end deftypefn
@@ -22,16 +22,27 @@
 ## Author: root <root@quintin-Inspiron-15-3567>
 ## Created: 2018-10-01
 
-function [] = prelab_question_1b()
-  g1 = tf([25], [1 4 25]);
+function [] = prelab_question_1d ()
+  syms s;
+  g1 = tf([25], [1 4 25])
   
-  normalization_factor = 200;
-  g2 = tf([(25)*200], [1 204 825 5000]);
-
-  step(g1, 'r')
+  g6 = tf([25 5000] * (1/200), [1 4 25]);
+  g7 = tf([25 1250] * (1/50), [1 4 25]);
+  g8 = tf([25 250]  * (1/10), [1 4 25]);
+  g9 = tf([25 50]   * (1/2), [1 4 25]);
+  
+  step(g1,'r');
   hold on;
-  step(g2, 'g')
+  step(g6,'g');
+  hold on;
+  step(g7,'b');
+  hold on;
+  step(g8,'c');
+  hold on;
+  step(g7,'m');
+  hold off;
   
-  legend('G1', 'G2')
+  legend('G1', 'G6', 'G7', 'G8', 'G9');
+  
 
 endfunction

@@ -1,4 +1,4 @@
-## Copyright (C) 2018 root
+## Copyright (C) 2018 Quintin
 ## 
 ## This program is free software; you can redistribute it and/or modify it
 ## under the terms of the GNU General Public License as published by
@@ -14,24 +14,17 @@
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## -*- texinfo -*- 
-## @deftypefn {} {@var{retval} =} prelab_question_1b (@var{input1}, @var{input2})
+## @deftypefn {} {@var{retval} =} pre_prac_1 (@var{input1}, @var{input2})
 ##
 ## @seealso{}
 ## @end deftypefn
 
-## Author: root <root@quintin-Inspiron-15-3567>
-## Created: 2018-10-01
+## Author: Quintin <quintin@quintin-Inspiron-15-3567>
+## Created: 2018-11-05
 
-function [] = prelab_question_1b()
-  g1 = tf([25], [1 4 25]);
-  
-  normalization_factor = 200;
-  g2 = tf([(25)*200], [1 204 825 5000]);
-
-  step(g1, 'r')
-  hold on;
-  step(g2, 'g')
-  
-  legend('G1', 'G2')
+function [] = pre_prac_1 (K)
+  F = tf([K],[1 2 4 K])
+  routhhur(F)
+  step(F)
 
 endfunction

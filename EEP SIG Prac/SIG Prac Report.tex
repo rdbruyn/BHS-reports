@@ -3,6 +3,8 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{tabularx}
+\usepackage{booktabs}
 \usepackage[page, toc]{appendix}
 \usepackage{hyperref}
 
@@ -69,105 +71,105 @@
 
 			Plotting \ref{eq:digital} with $f=1$ Hz, we have
 			\begin{figure}[H]
-				\label{fig:1}
 				\includegraphics[width=\textwidth]{img/1_1.png}
 				\caption{$x(n, 1)$}
+				\label{fig:1}
 			\end{figure}
 
 			Closely inspecting figure \ref{fig:1}, it is exactly what we expect it to be, and looks identical to a continuous sine wave, with no visible effects from discrete samples. We will inspect more samples in the following figures.
 
 			\begin{figure}[H]
-				\label{fig:2}
 				\includegraphics[width=\textwidth]{img/1_2.png}
 				\caption{$x(n, 2)$}
+				\label{fig:2}
 			\end{figure}
 
 			\begin{figure}[H]
-				\label{fig:3}
 				\includegraphics[width=\textwidth]{img/1_3.png}
 				\caption{$x(n, 4)$}
+				\label{fig:3}
 			\end{figure}
 
 			In figure \ref{fig:3}, when $f=4$ Hz, we can start seeing the first signs of sampling artifacts toward the peaks of the sine wave. However, it is still easily verifiable by inspection that the signal is in fact a sine wave which has 4 periods in the span of a second, thereby having a frequency of 4 Hz.
 
 			\begin{figure}[H]
-				\label{fig:4}
 				\includegraphics[width=\textwidth]{img/1_4.png}
 				\caption{$x(n, 5)$}
+				\label{fig:4}
 			\end{figure}
 
 			\begin{figure}[H]
-				\label{fig:5}
 				\includegraphics[width=\textwidth]{img/1_5.png}
 				\caption{$x(n, 10)$}
+				\label{fig:5}
 			\end{figure}
 
 			In figure \ref{fig:5} we can start seeing a more pronounced sampling effect, as the sampling period now misses the peaks of the sine wave entirely.
 
 			\begin{figure}[H]
-				\label{fig:6}
 				\includegraphics[width=\textwidth]{img/1_6.png}
 				\caption{$x(n, 20)$}
+				\label{fig:6}
 			\end{figure}
 
 			\begin{figure}[H]
-				\label{fig:7}
 				\includegraphics[width=\textwidth]{img/1_7.png}
 				\caption{$x(n, 25)$}
+				\label{fig:7}
 			\end{figure}
 
 			\begin{figure}[H]
-				\label{fig:8}
 				\includegraphics[width=\textwidth]{img/1_8.png}
 				\caption{$x(n, 40)$}
+				\label{fig:8}
 			\end{figure}
 
 			Looking at figure \ref{fig:8}, it is no longer possible to visually identify the sample being a sine wave, although one may allude so from its clear and consistent periodicity. This is at $f=40$ Hz, fast approaching the Nyquist frequency $f_n = 50$ Hz.
 
 			\begin{figure}[H]
-				\label{fig:9}
 				\includegraphics[width=\textwidth]{img/1_9.png}
 				\caption{$x(n, 49)$}
+				\label{fig:9}
 			\end{figure}
 
 			\begin{figure}[H]
-				\label{fig:10}
 				\includegraphics[width=\textwidth]{img/1_10.png}
 				\caption{$x(n, 50)$}
+				\label{fig:10}
 			\end{figure}
 
 			In figure \ref{fig:9} there are significant deviations from the original signal. In figure \ref{fig:10}, the resulting signal is completely unrecognizable. Unlike all of the previous figures, figure \ref{fig:10} bears no resemblance to a sine wave, and does not even appear to be periodic. Its amplitude is also much smaller, as can easily be seen. While the sine wave we are sampling has a maximum amplitude of 1, by inspection we estimate that the signal in this figure has a maximum amplitude of $3\times10^{-14}$, which is incredibly small. One might wonder where the rest of the signal has been lost, as we do receive those peaks as input. Slightly shifting the signal by $1/200$ of a second, we sample the peaks of the input signal once more, as seen in figure \ref{fig:11}.
 
 			\begin{figure}[H]
-				\label{fig:11}
 				\includegraphics[width=\textwidth]{img/1_11_shift.png}
 				\caption{Time-shifted sine wave}
+				\label{fig:11}
 			\end{figure}
 
 			In order to see further explore the phenomena we have seen so far, we inspect the sampled frequencies for $\pm f, f \in \{25, 75\}$. The results for $f = -25$ Hz is given in \ref{fig:12}. Predictably, since $f < f_n$, the signal is sampled adequately. Notice that we have already sampled $f = 25$ Hz in \ref{fig:7}, and the two signals look almost identical, except for a phase shift of $\pi$ rad. To illustrate the difference between the function, we look to \ref{fig:13} and \ref{fig:14}, whose respective peak amplitudes imply that the signals reinforce each other, despite being $\pi$ radians out of phase. However, this is if the numerical difference between them is taken. Adding them, then, should intuitively have the opposite effect, and have them cancel out. Figure \ref{fig:15} confirms this intuition, and the signals cancel out.
 
 			\begin{figure}[H]
-				\label{fig:12}
 				\includegraphics[width=\textwidth]{img/1_12_-25.png}
 				\caption{$x(n, -25)$}
+				\label{fig:12}
 			\end{figure}
 
 			\begin{figure}[H]
-				\label{fig:13}
 				\includegraphics[width=\textwidth]{img/1_13_diff.png}
 				\caption{$x(n, -25) - x(n, 25)$}
+				\label{fig:13}
 			\end{figure}
 
 			\begin{figure}[H]
-				\label{fig:14}
 				\includegraphics[width=\textwidth]{img/1_14_diff.png}
 				\caption{$x(n, 25) - x(n, -25)$}
+				\label{fig:14}
 			\end{figure}
 
 			\begin{figure}[H]
-				\label{fig:15}
 				\includegraphics[width=\textwidth]{img/1_15_cancel.png}
 				\caption{$x(n, 25) + x(n, -25)$}
+				\label{fig:15}
 			\end{figure}
 
 			For the sake of brevity, we have avoided adding the results for repeating all of the above experiments with a cosine function, as the results are the same, except all signals are shifted $\pi/2$ radians to the right. However, what if we repeat them using $f=\pm75$ Hz, where $|f| > f_n$? If we compare figure \ref{fig:12} and \ref{fig:16}, something truly interesting arises. Both signals appear to be the exact same. Even though $f=75$ Hz should oscillate three times as fast as $f=-25$ Hz, these oscillations are completely lost during the sampling process. It is also interesting to note that, 75 Hz is equivalent to -25 Hz, which implies that -75 Hz would be the same as 25 Hz. A comparison of figure \ref{fig:17} and figure \ref{fig:7} confirms that this is indeed the case.
@@ -175,15 +177,15 @@
 			It can be seen, then, that aliasing is the artifact that arises when sampled analog input signals to a system cannot be accurately reconstructed.
 
 			\begin{figure}[H]
-				\label{fig:16}
 				\includegraphics[width=\textwidth]{img/1_16.png}
 				\caption{$x(n, 75)$}
+				\label{fig:16}
 			\end{figure}
 
 			\begin{figure}[H]
-				\label{fig:17}
 				\includegraphics[width=\textwidth]{img/1_17.png}
 				\caption{$x(n, -75)$}
+				\label{fig:17}
 			\end{figure}
 		% section sampling_and_aliasing (end)
 
@@ -202,15 +204,15 @@
 			Letting $f_1=10 \text{ Hz},\, f_2 = 30 \text{ Hz}$, we can sketch the spectra of $s(n, 10, 30)$, as shown in \ref{fig:18}. As can be clearly seen, the frequency content is what we expect, as we have frequency components at 10 Hz and 30 Hz, as well as -10 Hz and -30 Hz due to. In theory, however, if we should choose one of our frequency components to be above the Nyquist frequency $f_s/2 = 50$ Hz, then that part of the signal should be aliased. By changing the second frequency component to $f_2 = 60$ Hz, we get the resulting figure \ref{fig:19}. Notice that our second frequency component does not appear as 60 Hz, but rather as 40 Hz, which is obviously not correct. It seems that the aliasing frequencies seem to ``reflect'' around the Nyquist frequency, as $f_2$ is 10 Hz more than the Nyquist frequency of 50 Hz, but the resulting frequency component $f_2'$ is 10 Hz less than the sampling frequency.
 
 			\begin{figure}[H]
-				\label{fig:18}
 				\includegraphics[width=\textwidth]{img/1_18.png}
 				\caption{FFT of $s(n, 10, 30)$}
+				\label{fig:18}
 			\end{figure}
 
 			\begin{figure}[H]
-				\label{fig:19}
 				\includegraphics[width=\textwidth]{img/1_19.png}
 				\caption{FFT of $s(n, 10, 60)$}
+				\label{fig:19}
 			\end{figure}
 		% section sampling_superposition_of_trigonometric_functions (end)
 	% chapter discrete_time_signals_and_systems (end)
@@ -247,34 +249,231 @@
 			\begin{figure}[H]
 				\centering
 				\includegraphics[width=.7\textwidth]{img/2_1.png}
-				\label{fig:2_dft}
 				\caption{\texttt{DFTdir} results for \eqref{eq:2_sin}}
+				\label{fig:2_dft}
 			\end{figure}
 
 			\begin{figure}[H]
 				\centering
 				\includegraphics[width=.7\textwidth]{img/2_2.png}
-				\label{fig:2_fft}
 				\caption{Octave's \texttt{fft} results for \eqref{eq:2_sin}}
+				\label{fig:2_fft}
 			\end{figure}
 
-			At this point, we perform a performance comparison of the two methods. By modifying the \texttt{DFTdir} method as in \textit{add new code to appendix}, we see that the time it takes to compute the output in figure \ref{fig:2_dft} is 10.43 seconds. Performing the function given by \textit{add code to appendix} the time is drastically reduced to 3.57 milliseconds.
+			At this point, we perform a performance comparison of the two methods. By modifying the \texttt{DFTdir} method as in appendex \ref{sec:dftdir_performance_code}, we compute the average time taken to compute 20 runs of the \texttt{DFT\_dir} of \eqref{eq:2_sin}, and see that the time it takes to compute the output in figure \ref{fig:2_dft} is approximately 9.64 seconds, with a standard deviation of $\rho_{DFT} = 0.21$ seconds. Performing the function given by appendix \ref{sec:fft_performance} the time is drastically reduced to $87.92 \,\mu$s, with a standard deviation of $\rho_{fft} = 28.19 \,\mu s$. The results for individual runs of the functions can be seen in figures \ref{fig:2_dft_performance} and \ref{fig:2_fft_performance}.
+
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=.8\textwidth]{img/2_3.png}
+				\caption{\texttt{DFTdir} algorithm runtimes with \eqref{eq:2_sin} as input}
+				\label{fig:2_dft_performance}
+			\end{figure}
+
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=.8\textwidth]{img/2_4.png}
+				\caption{\texttt{fft} algorithm runtimes with \eqref{eq:2_sin} as input}
+				\label{fig:2_fft_performance}
+			\end{figure}
+
+			The following table are results for values of \eqref{eq:2_sin} for larger values of $N$, the number of samples given to be computer
+			\begin{table}[H]
+				\begin{tabularx}{\textwidth}{X X X X X}
+					\toprule
+					& \multicolumn{2}{c}{\texttt{DFTdir}} & \multicolumn{2}{c}{\texttt{fft}} \\
+					$N$ & Average (s) & $\rho_{DFT}$ & Average (s) & $\rho_{fft}$ \\
+					\midrule
+					2048 & 38.51 & 0.107 & $3.65 \times 10^{-4}$ & $1.43 \times 10^{-3}$ \\
+					4096 & 152.60 & 0.38 & $2.75 \times 10^{-4}$ & $1.05 \times 10^{-3}$ \\
+					8192 & 617.77 & 1.23 & $3.70 \times 10^{-4}$ & $1.44 \times 10^{-3}$ \\
+					\bottomrule
+				\end{tabularx}
+				\caption{Results for different values of $N$ for each algorithm}
+				\label{table:2_1}
+			\end{table}
+
+			It can easily be seen from table \ref{table:2_1} that the FFT algorithm is faster than the DFT one by several orders of magnitude. The FFT is a much faster algorithm due to the fact that it uses symmetry and other mathematical simplifications to calculate the Fourier Transform, whereas the DFT manually calculates each entry from first principles.
 		% section direct_dft_vs_fft (end)
+
+		\section{DFT Using a Butterfly Diagram Implementation} % (fold)
+		\label{sec:dft_using_a_butterfly_diagram}
+			By implementing the code of the \texttt{reordering} and \texttt{butterflies} function given in the practical guide, we have implemented a DFT method which follows a ``Butterfly diagram.'' This diagram actually stems from a derivation of the DFT that uses several useful properties of the Fourier transform, like symmetry and periodicity, to simplify calculation of the DFT. The derivation for the formula lies outside the scope of this report, but the resulting mathematical equation is given by equation \ref{eq:DIT}:
+
+			\begin{equation}
+				X(k) = G(k) + W_N^k H(k), \quad k = 0, 1, \ldots, N-1
+				\label{eq:DIT}
+			\end{equation}
+
+			\noindent where
+
+			\[
+				G(k) = \sum_{r = 0}^{N/2 - 1} x(2r) W_{N/2}^{rk},
+			\]
+			\[
+				H(k) = \sum_{r = 0}^{N/2 - 1} x(2r + 1) W_{N/2}^{rk},
+			\]
+			\noindent and
+			\[
+				W_N = e^{-j2 \pi/N}
+			\]
+
+			The \texttt{FFTij} function implements this function directly. The \texttt{reordering} function reorders the even and odd inputs for the Butterfly diagram, and the \texttt{butterflies} function implements equation \ref{eq:DIT}. The code for \texttt{FFTij} is given in appendix \ref{sec:fftij_code}. Generating 1024 random numbers with \texttt{randn}, we see that it has the exact same outputs, thereby confirming that the \texttt{FFTij} implementation works.
+
+			Now, in order to evaluate the performance of the \texttt{FFTij} function, we can refer to table \ref{table:2_1}, which contains time averages for the \texttt{fft} function. Using a similar performance benchmark (running the algorithm 20 times, and then taking the average execution time), we can see the results tabulated in table \ref{table:dit_vs_fft}. We can see that \texttt{FFTij} is a considerable improvement over the \texttt{DFTdir} implementation of the direct DFT from first principles. However, the native \texttt{fft} function is still several orders of magnitude faster than \texttt{FFTij}. It is also worthy of noting that the \texttt{FFTij} algorithm seems to have a much greater time variance when computing larger input arrays, whereas the \texttt{fft} function has a fairly consistent variance, at least for the input ranges of $N$.
+
+			\begin{table}[H]
+				\begin{tabularx}{\textwidth}{X X X X X}
+					\toprule
+					& \multicolumn{2}{c}{\texttt{FFTij}} & \multicolumn{2}{c}{\texttt{fft}} \\
+					$N$ & Average (s) & $\rho_{FFTij}$ & Average (s) & $\rho_{fft}$ \\
+					\midrule
+					2048 & 0.46 & $1.75 \times 10^{-3}$ & $3.65 \times 10^{-4}$ & $1.43 \times 10^{-3}$ \\
+					4096 & 1.01 & $9.52 \times 10^{-3}$ & $2.75 \times 10^{-4}$ & $1.05 \times 10^{-3}$ \\
+					8192 & 2.12 & $35.3 \times 10^{-3}$ & $3.70 \times 10^{-4}$ & $1.44 \times 10^{-3}$ \\
+					\bottomrule
+				\end{tabularx}
+				\caption{Comparison of \texttt{FFTij} and the \texttt{fft} algorithm}
+				\label{table:dit_vs_fft}
+			\end{table}
+		% section dft_using_a_butterfly_diagram (end)
+
+		\section{The Inverse Fourier Transform} % (fold)
+		\label{sec:section_name}
+			In this section we compare the DFT and inverse DFT performance of various functions. Consider the discrete signal
+			\begin{equation}
+				x(nT) = \{3, 6, 4, 7, 2, 5, 8, 1\}
+				\label{eq:2_2}
+			\end{equation}
+			
+
+			The result using all of the above mentioned algorithms is
+
+			\[
+				\begin{array}{rcl}
+					y & = & \{36, -2.5355 - j0.9497, -7 - j3, 4.5355 - j8.9497, \\
+					&  & -2, 4.5355 + j8.9497, -7 + j3, -2.5355 + j0.9497\}
+				\end{array}
+			\]
+
+			By using Octave's \texttt{ifft} function, we can find the inverse transform of Fourier transforms. If we take the inverse transform of $y$, we expect to find the sequence $x(nT)$ back in return. This is indeed the case, and the result of the \texttt{ifft} is exactly what we started with in \eqref{eq:2_2}. But how could we easily find the inverse DFT of a function using only what we know so far? With some algebraic manipulation, we can see that
+
+			\begin{equation}
+				X(k) = \sum^{N-1}_{n=0} x(n) e^{-j 2 \pi k n / N}\quad \Rightarrow \quad x(n) = \tfrac{1}{N} \sum^{N-1}_{n=0} X(k) e^{j 2 \pi k n / N}
+			\end{equation}
+
+			This implies that the inverse DFT of a signal can be given by the DFT of the signal's complex conjugate, and then divided by its number of entries $N$. Implementing our own function \texttt{IDFT}, the code of which can be seen in Appendix \ref{sec:idft_code}, we have an output of
+			\[
+				\texttt{IDFT(y) = \{3, 6, 4, 7, 2, 5, 8, 1\}} 
+			\]
+		% section section_name (end)
 	% chapter discrete_fourier_transform_and_fast_fourier_transform (end)
 
 	\appendix
-	\chapter{DFTdir code} % (fold)
+	\chapter{Code functions} % (fold)
 	\label{sec:dftdir_code}
-		\texttt{function out = DFTdir (input);}\par
-		\texttt{out = zeros(1, length(input));}\par
-		\indent\texttt{N = length(input);}\par
-		\texttt{for k = 0:N-1}\par
-		\hspace*{2em}\texttt{temp = 0;}\par
-		\hspace*{2em}\texttt{for n = 0:N-1}\par
-		\hspace*{4em}\texttt{temp += input(n + 1) * exp(-i*2*pi*k*n/N);}\par
-		\hspace*{2em}\texttt{endfor}\par
-		\hspace*{2em}\texttt{out(k + 1) = temp;}\par
-		\texttt{endfor}\par
-		\noindent\texttt{endfunction}\par
+		\section{DFTdir} % (fold)
+		\label{sec:dftdir}
+			\texttt{function out = DFTdir (input);}\par
+			\texttt{out = zeros(1, length(input));}\par
+			\indent\texttt{N = length(input);}\par
+			\texttt{for k = 0:N-1}\par
+			\hspace*{2em}\texttt{temp = 0;}\par
+			\hspace*{2em}\texttt{for n = 0:N-1}\par
+			\hspace*{4em}\texttt{temp += input(n + 1) * exp(-i*2*pi*k*n/N);}\par
+			\hspace*{2em}\texttt{endfor}\par
+			\hspace*{2em}\texttt{out(k + 1) = temp;}\par
+			\texttt{endfor}\par
+			\noindent\texttt{endfunction}\par
+		% section dftdir (end)
+
+		\section{DFTdir\_time} % (fold)
+		\label{sec:dftdir_time_code}
+			\texttt{function out = DFTdir\_time(input)}\par{}
+			\texttt{tic();}\par
+			\texttt{DFTdir(input);}\par
+			\texttt{out = toc();}\par
+			\texttt{endfunction}\par
+		% section dftdir_time_code (end)
+
+		\newpage
+		\section{DFTdir\_performance} % (fold)
+		\label{sec:dftdir_performance_code}
+			\texttt{function [avg\_time, data\_arr] = DFTdir\_performance(input)}\par
+			\texttt{total = 0;}\par
+			\texttt{k = 3;}\par
+			\texttt{data\_arr = zeros(1, k);}\par
+			\texttt{for i = 1:k}\par
+			\hspace*{2em}\texttt{t = DFTdir\_time(input);}\par
+			\hspace*{2em}\texttt{total += t;}\par
+			\texttt{data\_arr(i) = t;}\par
+			\texttt{endfor}\par
+			\texttt{avg\_time = total / k;}\par
+			\noindent\texttt{endfunction}
+		% section dftdir_performance_code (end)
+
+		\section{fft\_time} % (fold)
+		\label{sec:fft_time}
+			\texttt{function out = fft\_time(input)}\par{}
+			\texttt{tic();}\par
+			\texttt{fft(input);}\par
+			\texttt{out = toc();}\par
+			\texttt{endfunction}\par
+		% section fft_time (end)
+
+		\section{fft\_performance} % (fold)
+		\label{sec:fft_performance}
+			\texttt{function [avg\_time, data\_arr] = fft\_performance(input)}\par
+			\texttt{total = 0;}\par
+			\texttt{k = 3;}\par
+			\texttt{data\_arr = zeros(1, k);}\par
+			\texttt{for i = 1:k}\par
+			\hspace*{2em}\texttt{t = fft\_time(input);}\par
+			\hspace*{2em}\texttt{total += t;}\par
+			\texttt{data\_arr(i) = t;}\par
+			\texttt{endfor}\par
+			\texttt{avg\_time = total / k;}\par
+			\noindent\texttt{endfunction}
+		% section fft_performance (end)
+
+		\newpage
+		\section{FFTij} % (fold)
+		\label{sec:fftij_code}
+			\texttt{function out = FFTij(input)}\par
+			\texttt{reordered = reordering(input);}\par
+			\texttt{out = butterflies(reordered);}\par\noindent
+			\texttt{endfunction}
+		% section fftij_code (end)
+
+		\section{FFTij\_time} % (fold)
+		\label{sec:fftij_time}
+			\texttt{function out = FFTij\_time(input)}\par{}
+			\texttt{tic();}\par
+			\texttt{FFTij(input);}\par
+			\texttt{out = toc();}\par
+			\texttt{endfunction}\par
+		% section fftij_time (end)
+
+		\section{FFTij\_performance} % (fold)
+		\label{sec:fftij_performance}
+			\texttt{function [avg\_time, data\_arr] = FFTij\_performance(input)}\par
+			\texttt{total = 0;}\par
+			\texttt{k = 3;}\par
+			\texttt{data\_arr = zeros(1, k);}\par
+			\texttt{for i = 1:k}\par
+			\hspace*{2em}\texttt{t = FFTij\_time(input);}\par
+			\hspace*{2em}\texttt{total += t;}\par
+			\texttt{data\_arr(i) = t;}\par
+			\texttt{endfor}\par
+			\texttt{avg\_time = total / k;}\par
+			\noindent\texttt{endfunction}
+		% section fftij_performance (end)
+
+		\section{IDFT} % (fold)
+		\label{sec:idft_code}
+			\texttt{function out = IDFT(input)}\par
+	    	\indent\texttt{N = length(input);}\par
+    		\indent\texttt{out = DFTdir(conj(input)) / N;}\par\noindent
+    		\texttt{endfunction}
+		% section idft_code (end)
 	% section dftdir_code (end)
 \end{document}

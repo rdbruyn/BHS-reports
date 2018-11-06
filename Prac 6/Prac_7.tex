@@ -1,0 +1,87 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{amsmath}
+
+\begin{document}
+	\pagenumbering{gobble}
+		\begin{titlepage}
+			\centering
+			{\LARGE Controls Systems Practical 6\par}
+			\vspace*{1.5cm}
+			{\large Q. Kruger, 216008466 \par}
+			{\large R. de Bruyn, 216054484 \par}
+			\vspace*{1.2cm}
+			{\large \today}
+			\vspace*{\fill}
+			% \includegraphics[width=\textwidth]{img/UJ.jpg}
+			\vspace*{\fill}
+		\end{titlepage}
+
+		\pagenumbering{roman}
+		\tableofcontents
+		\listoffigures
+		\newpage
+		\pagenumbering{arabic}
+
+	\section{Prelab} % (fold)
+	\label{sec:prelab}
+		\subsection{Prelab 1} % (fold)
+		\label{sub:prelab_1}
+		Given the transfer function $G(s) = \frac{K}{s(s+2)^2}$ the equivalent negative feedback transfer function id given below
+		\begin{equation}
+			\begin{array}{rcl}
+				F(s) & = & \frac{G(s)}{1+G(s)}\\
+					 & = & \frac{K}{s(s+2)^2} \times \frac{s(s+2)^2}{s(s+2)^2+K}\\
+					 & = & \frac{K}{s^3+2s^2+4s+K}
+			\end{array}
+		\end{equation}
+
+	
+	% subsection prelab_1 (end)
+
+		\subsection{Prelab 2} % (fold)
+		\label{sub:prelab_2}
+		By writing a function in Octave that implements the transfer function in prelab 1 and using the \texttt{step} function, the values of K that gave an overdamped system are $K=\frac{1}{2}$ and $K=1$.
+
+		The same function gives an underdamped system if the values for $K$ are chosen to be $K=10$ and $K=12$.
+		
+		% subsection prelab_2 (end)
+
+		\subsection{Prelab 3} % (fold)
+		\label{sub:prelab_3}
+		
+		% subsection prelab_3 (end)
+
+		\subsection{Prelab 4} % (fold)
+		\label{sub:prelab_4}
+		By drawing up a Routh Hurwitz table for the transfer function of prelab 1, we find that using a value for $K$ given as $K=16$, an even polynomial is a factor of the denominator of $F(s)$. The system is also marginally stable for this value of $K$ according to the Routh Hurwitz rules (no sign chnages occur for the even polynomial down until $s^0$).
+
+		The frequency of oscillation of the marginally stable system is obtained by considering the even polynomial, setting it to 0 and determining $\omega_n $(the natural frequency is the imaginary component of the even polynomial)
+
+		\begin{equation}
+			\begin{array}{rcl}
+				P(s) & = & 4s^2 +16\\
+				s^2	 & = &-4\\
+				s    & = & 2j
+			\end{array}
+		\end{equation}
+
+		Thus the natural frequency of oscillation of the even polynomial is $\omega_n = 2$ rad/s.
+		
+		% subsection prelab_4 (end)
+	% section prelab (end)
+
+	\section{Lab} % (fold)
+	\label{sec:lab}
+	
+	% section lab (end)
+
+	\section{Lab} % (fold)
+	\label{sec:lab}
+	
+	% section lab (end)
+\end{document}
