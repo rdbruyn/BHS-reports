@@ -9,7 +9,7 @@
 \usepackage[]{graphicx}
 
 \title{Control Systems 4A Practical 1 Report}
-\author{Ruan de Bruyn}
+\author{Ruan de Bruyn, 216054484 \and Quintin Kruger, VERANDER HIERDIE}
 
 \begin{document}
 
@@ -82,11 +82,12 @@ possible as well, because a large overshoot could very well result in the ball
 falling off the beam too, especially if the commanding signal desires the
 location of the ball to be near one of the edges of the beam.
 
-From theory, we would hypothesize that the we should have a large $K_p$ and
-$K_d$, as a large $K_p$ would result in a quick rise time and a large $K_d$
-would prevent large amounts of overshoot. $K_i$, then, should be the variable
-to keep small in relation to $K_p$ and $K_d$, as $K_i$ contributes to a quick
-rise time, but also to overshoot. With this in mind, we choose our variables as follows:
+From theory, we would hypothesize that we should have a large $K_p$ and $K_d$,
+as a large $K_p$ would result in a quick rise time and a large $K_d$ would
+prevent large amounts of overshoot. $K_i$, then, should be the variable to keep
+small in relation to $K_p$ and $K_d$, as $K_i$ contributes to a quick rise
+time, but also to overshoot. With this in mind, we choose our variables as
+follows:
 
 \begin{equation}
   \begin{array}{rcl}
@@ -105,5 +106,22 @@ The response given by this system of constants is
 	\caption{System response with constants chosen in \eqref{eq:pid_constants}}
 	\label{fig:response}
 \end{figure}
+
+If we decide to let the rise time for this system be defined as the time it
+takes the response to reach 0.1\% of it's final value, then the rise time $t_r
+= 0.67s$. The overshoot is 0.9997, which means that $\%OS = 0.03$. Finally, if
+we take the settling time to be the time it takes the transfer function to
+reach 0.0001 of its final value, then we have $t_s = 7.33s$. The final values
+are then summarised below as
+
+\begin{equation}
+  \begin{array}{rcl}
+    t_r & = & 0.67 \\
+    t_s & = & 7.33 \\
+    \%OS & = & 0.03 \\
+  \end{array}
+  \label{eq:finalstats}
+\end{equation}
+
 % endsecion Implementation and Analysis
 \end{document}
