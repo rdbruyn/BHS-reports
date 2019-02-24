@@ -7,9 +7,11 @@
 \usepackage{amssymb}
 \usepackage{float}
 \usepackage[]{graphicx}
+\usepackage{subfig}
+\usepackage{caption}
 
 \title{Control Systems 4A Practical 1 Report}
-\author{Ruan de Bruyn, 216054484 \and Quintin Kruger, VERANDER HIERDIE}
+\author{Ruan de Bruyn, 216054484 \and Quintin Kruger, 216008466}
 
 \begin{document}
 
@@ -41,7 +43,7 @@
 	  \label{eq:system_simplified}
 	\end{equation}
 
-	From here, we can a Laplace transform to calculate the transfer function of
+	From here, we can apply a Laplace transform to calculate the transfer function of
 	our system, using \eqref{eq:system_simplified}:
 
 	\begin{equation*}
@@ -64,7 +66,7 @@
 
 \section{Implementation and Analysis}
 	The Octave code that was used to design the PID controller in the rest of
-	this report are given below\\\\\noindent
+	this report is given below\\\\\noindent
 	\texttt{function plotsys(Kp, Ki, Kd)\\\noindent
   ts = - 5 * 9.8 / (7 * tf('s'));\\\noindent
   sys = feedback(ts * pid(Kp, Ki, Kd))\\\noindent
@@ -124,4 +126,24 @@ are then summarised below as
 \end{equation}
 
 % endsecion Implementation and Analysis
+\section{Discussion} % (fold)
+\label{sec:discussion}
+By varying the value of the proportional constant $K_p$, we see that a decrease in rise time is evident (see the plots for different $K_p$ values below)
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.4\linewidth]{K_p_7.png}
+	\caption{The step function plot for $K_p = 7$}
+	\label{fig:K_p_7}
+\end{figure}%
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.4\linewidth]{K_p_700.png}
+	\caption{The step function plot for $K_p = 700$}
+	\label{fig:K_p_700}
+\end{figure}
+
+Notice that $K_p$ has no effect on an improvement on the steady state value of the system. By including increasing the integral proportion $K_p$ eliminates the steady state error of the system
+
+% section discussion (end)
+
 \end{document}
