@@ -128,21 +128,54 @@ are then summarised below as
 % endsecion Implementation and Analysis
 \section{Discussion} % (fold)
 \label{sec:discussion}
-By varying the value of the proportional constant $K_p$, we see that a decrease in rise time is evident (see the plots for different $K_p$ values below)
+The controller is used to achieve a desired output. 3 classes of controllers were used in conjunction with one another to arrive at the final step response as illustrated by Figure \ref{fig:response}
+
+As a consideration of the PID controller established in this experiment we first look at the effect of a proportional controller. By using an integrator system defined by the transfer function $H = \frac{1}{s}$ we plot the step response with its associated pole zero plot to show the stability.
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.4\linewidth]{K_p_7.png}
-	\caption{The step function plot for $K_p = 7$}
-	\label{fig:K_p_7}
-\end{figure}%
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=.4\linewidth]{K_p_700.png}
-	\caption{The step function plot for $K_p = 700$}
-	\label{fig:K_p_700}
+	\includegraphics[width=\textwidth]{integrator_system.png}
+	\caption{Step response of an integrator system}
+	\label{fig:integrator_system}
 \end{figure}
 
-Notice that $K_p$ has no effect on an improvement on the steady state value of the system. By including increasing the integral proportion $K_p$ eliminates the steady state error of the system
+The desired response of this system is to be fed an input, to achieve this input and remain at the desired input value for the duration of another successive input. We first used a proportional controller to achieve this (the proportion was chosen to be $K_p = 1$ for purposes of illustration). The response with the addition of the controller as described is shown below.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{integrator_system_proportional_controller.png}
+	\caption{Integrator system with the addition of a proportional controller}
+	\label{fig:integrator_system_proportional_controller}
+\end{figure}
+
+The figure shows a system that reaches a steady state value, which is the desired response but with a steady state error as can be seen from Figure \ref{fig:integrator_system_proportional_controller}. To get rid of the steady state error we introduce the PI controller or the proportional integral controller
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{integrator_system_proportional_integral_controller.png}
+	\caption{Integrator system with the addition of a integral proportional controller}
+	\label{fig:integrator_system_proportional_integral_controller}
+\end{figure}
+
+Notice that the steady state error has been rectified but a transient response has now been introduced. To rectify this a proportional derivative too has to be added in addition to the 2 previously discussed controller. The settling time has increased from a settling time of $5$ seconds to a settling time of $10$ seconds and the rise time went from $2.5$ seconds to $1$ seconds
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{integrator_system_proportional_integral_derivative_controller.png}
+	\caption{Application of the PID controller to an integrator system}
+	\label{fig:integrator_system_proportional_integral_derivative_controller}
+\end{figure}
+
+Notice the reduction in the percent overshoot from $1.3$ to $1.2$ and still another increase in the settling time from $10$ seconds to $20$ seconds. The rise time increased from $1$ second to $2.5$ seconds.
+
+In summary we can see that the proportional controller allows the system to reach a steady state value and decreases the settling time. The proportional integral controller rids the system of steady state error and decreases the rise time and the derivative controller decreases the percent overshoot of the system.
+
+Thus the use of the PID controller results in the desired system with reference to the improvement with the rise time, settling time and steady state error as discussed previously.
+
+By increasing the various proportionalities $K_p, K_i$ and $K_d$ the optimal system was obtained by using trial and error and the pole zero plot illustrated by each figure from Figure \ref{fig:integrator_system} through Figure \ref{fig:integrator_system_proportional_integral_derivative_controller} to ensure a stable system for the varies constants.
+
+
+
 
 % section discussion (end)
 
