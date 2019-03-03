@@ -1,0 +1,198 @@
+%        File: prac2.tex
+%     Created: Sun Mar 03 05:00  2019 S
+% Last Change: Sun Mar 03 05:00  2019 S
+%
+\documentclass[a4paper, 12pt]{article}
+\usepackage[]{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage[]{graphicx}
+\usepackage{subfig}
+\usepackage{caption}
+
+\title{Control Systems 4A Practical 2 Report}
+\author{Ruan de Bruyn, 216054484 \and Quintin Kruger, 216008466}
+
+\begin{document}
+
+\pagenumbering{gobble}
+\begin{titlepage}
+  \maketitle
+\end{titlepage}
+
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\section{Question 1}
+\subsection{Input-Output form}
+From the schematic representation of a DC motor, we can use KVL in order to
+find the input-output relationships of all the components in the circuit
+expressed as voltages. This leaves us with
+
+\begin{equation}
+  \begin{array}{rcl}
+    v & = & V_R + V_L + e \\
+    & = & Ri + L\dot i + K \dot\theta
+  \end{array}
+  \label{eq:KVL}
+\end{equation}
+
+\noindent Note that \eqref{eq:KVL} is a better representation for us to solve
+the input-output equations; the current through the DC Motor is also the
+same current through the other components. From theory, we can relate the
+back-emf of the motor to its rotational speed $\dot\theta$ with the constant
+$K$, as well as expressing the current in the DC Motor with the following
+equation:
+
+\begin{equation}
+  J\ddot\theta + b\dot\theta = Ki \Rightarrow i = \tfrac{J}{K} \ddot\theta + \tfrac{b}{K}\dot\theta
+  \label{eq:dc_current}
+\end{equation}
+
+From \eqref{eq:KVL} and \eqref{eq:dc_current}, and letting $\dot\theta = \omega$, we get
+
+\begin{equation}
+  Kv = LJ\ddot\omega + (Lb + RJ)\dot\omega + (Rb + K^2)\omega
+  \label{eq:final_voltage}
+\end{equation}
+
+From \eqref{eq:final_voltage}, if we want to express the equation in terms of
+in input reference rotational speed $\omega_r$, then we can evaluate equation
+\eqref{eq:final_voltage} by assuming that $\omega_r$ is steady state, and thus
+that its derivatives are zero. We then come to an expression for voltage in
+terms of $\omega_r$ as:
+
+\begin{equation}
+  \begin{array}{rcl}
+    Kv & = & (Rb + K^2)\omega_r \\
+    v & = & \frac{(Rb + K^2)\omega_r}{K}
+  \end{array}
+  \label{eq:ref_omega}
+\end{equation}
+
+Finally, substituting equation \eqref{eq:ref_omega} into
+\eqref{eq:final_voltage}, we get our final input-output equation as
+
+\begin{equation}
+  (Rb + K^2)\omega_r = LJ\ddot\omega + (Lb + RJ)\dot\omega + (Rb + K^2)\omega
+  \label{eq:final_ref_omega}
+\end{equation}
+
+\subsection{State-variable Matrix form}
+In order to represent our system in state-variable matrix form, we choose to
+model it with parameters $\omega$ and $i$. For the first equation of the
+state-variable representation, we require $\dot\omega$ and $\dot i$. We get the
+former by rearranging \eqref{eq:dc_current}, taking $\dot\theta = \omega$,
+which yields
+
+\begin{equation}
+  \dot\omega = \frac{K}{J} i - \frac{b}{J} \omega
+  \label{eq:ss_omega_dot}
+\end{equation}
+
+Similarly, we rearrange \eqref{eq:KVL}, and substitute \eqref{eq:ref_omega} to
+get
+
+\begin{equation}
+  \begin{array}{rcl}
+    Ri + L\dot i + K\omega & = & v \\
+    Ri + L\dot i + K\omega & = & \frac{(Rb + K^2)}{K}\omega_r \\
+    \dot i & = & \frac{(Rb + K^2)}{KL}\omega_r - \frac{R}{L} i - \frac{K}{L}\omega \\
+  \end{array}
+  \label{eq:ss_i_dot}
+\end{equation}
+
+Now we can get the state-variable equations as
+
+\begin{equation}
+  \left[
+  \begin{array}{c}
+    \dot \omega \\
+    \dot i
+  \end{array}
+  \right]
+  =
+  \left[
+  \begin{array}{cc}
+    -\frac{b}{J} & \frac{K}{J} \\
+    -\frac{K}{L} & -\frac{R}{L}
+  \end{array}
+  \right]
+  \left[
+  \begin{array}{c}
+    \omega \\
+    i
+  \end{array}
+  \right]
+  +
+  \left[
+  \begin{array}{c}
+    0 \\
+    \frac{Rb + K^2}{LK}
+  \end{array}
+  \right]
+  \left[
+  \begin{array}{c}
+    \omega_r
+  \end{array}
+  \right]
+  \label{eq:ss_eq1}
+\end{equation}
+
+\begin{equation}
+  y =
+  \left[
+  \begin{array}{cc}
+    1 & 0
+  \end{array}
+  \right]
+  \left[
+  \begin{array}{c}
+    \omega \\
+    i
+  \end{array}
+  \right]
+  +
+  \left[
+  \begin{array}{c}
+    0
+  \end{array}
+  \right]
+  \left[
+  \begin{array}{c}
+    \omega_r
+  \end{array}
+  \right]
+  \label{<+label+>}
+\end{equation}
+
+\subsection{Transfer Function form}
+
+From equation \eqref{eq:final_ref_omega}, we can derive the transfer function
+of the system in terms of reference angular velocity by taking the Laplace
+Transform:
+
+\begin{equation}
+  \begin{array}{rcl}
+    \mathcal{L}[(Rb + K^2)\omega_r] & = & \mathcal{L}[LJ\ddot\omega + (Lb + RJ)\dot\omega + (Rb + K^2)\omega] \\
+    (Rb + K^2)\Omega_r & = & [LJs^2 + (Lb + RJ)s + (Rb + K^2)]\Omega \\
+  \end{array}
+  \label{eq:ts_initial}
+\end{equation}
+
+From equation \eqref{eq:ts_initial}, we can get the transfer function as
+
+\begin{equation}
+  T(s) = \frac{\Omega}{\Omega_r} = \frac{Rb + K^2}{LJs^2 + (Lb + RJ)s + Rb + K^2}
+  \label{eq:ts_final}
+\end{equation}
+
+\subsection{Block Form}
+
+Why would you even make us do this on an actual report?
+
+
+\end{document}
+
