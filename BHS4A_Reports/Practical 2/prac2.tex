@@ -197,14 +197,14 @@ Why would you even make us do this on an actual report?
 
 
 \section{Question 2}
-In order to have position control for a motor as well, we simply add an
-additional state variable, $\theta$, and then go back to expressing all the
-equations in the previous section in terms of $\theta$, instead of $\omega$. In
-Question 1, we used the substitution $\omega = \dot\theta$ because there were
-no terms of the equation that actually contained $\theta$ as is. So, for
-brevity, we omit the derivation, as it is virtually the same as for Question 1,
-and alter our existing state-variable equations to accommodate $\theta$, and
-applying $\dot\theta = \omega$ to get
+In order to have position control for a motor as well, we simply add another
+state variable, $\theta$, and then go back to expressing all the equations in
+the previous section in terms of $\theta$, instead of $\omega$. In Question 1,
+we used the substitution $\omega = \dot\theta$ because there were no terms of
+the equation that actually contained $\theta$ as is. So, for brevity, we omit
+the derivation, as it is virtually the same as for Question 1, and alter our
+existing state-variable equations to accommodate $\theta$, and applying
+$\dot\theta = \omega$ to get
 
 \begin{equation}
   \left[
@@ -373,14 +373,14 @@ By implementing this in Octave with the code that follows, the reponse changes t
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Images/question_3_output_response_kp_1.png}
-	\caption{Output response with the addition of proportional control where $K_p = 1$to a step input}
+	\caption{Output response with the addition of proportional control where $K_p = 1$ to a step input}
 	\label{fig:question_3_output_response_kp_1}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Images/question_3_output_response_kp_01.png}
-	\caption{Output response with the addition of proportional control where $K_p = 0.1$to a step input}
+	\caption{Output response with the addition of proportional control where $K_p = 0.1$ to a step input}
 	\label{fig:question_3_output_response_kp_01}
 \end{figure}
 
@@ -406,7 +406,7 @@ The step response to a proportional constant and a integral constant of 10 is sh
 	\label{fig:question_4_output_response_pi}
 \end{figure}
 
-For a proportional and derivative controller the code used to produce the proportional and integral controller can be modified as follows below to give the response as shown by Figure (reference)\\
+For a proportional and derivative controller the code used to produce the proportional and integral controller can be modified as follows below to give the response as shown by Figure \ref{fig:question_4_output_response_pd}\\
 \noindent
 \texttt{G = tf([R\*b+K\^2],[J\*L (L\*b+R\*J) R\*b+K]);}
 \texttt{D = tf([Kd Kp],[1])}
@@ -420,7 +420,7 @@ For a proportional and derivative controller the code used to produce the propor
 	\label{fig:question_4_output_response_pd}
 \end{figure}
 
-Again the code can be modified to include an integral term as well to form the PID controller substituting \texttt{D = tf([Kd Kp Ki],[1 0])} in the code above. The response that is then produced is given by Figure (reference)
+Again the code can be modified to include an integral term as well to form the PID controller substituting \texttt{D = tf([Kd Kp Ki],[1 0])} in the code above. The response that is then produced is given by Figure \ref{fig:question_4_output_response_pid}:
 
 \begin{figure}[H]
 	\centering
