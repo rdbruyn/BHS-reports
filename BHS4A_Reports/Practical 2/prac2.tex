@@ -165,7 +165,7 @@ Now we can get the state-variable equations as
     \omega_r
   \end{array}
   \right]
-  \label{<+label+>}
+  \label{eq:ss_eq2}
 \end{equation}
 
 \subsection{Transfer Function form}
@@ -193,6 +193,148 @@ From equation \eqref{eq:ts_initial}, we can get the transfer function as
 
 Why would you even make us do this on an actual report?
 
+
+
+\section{Question 2}
+In order to have position control for a motor as well, we simply add an
+additional state variable, $\theta$, and then go back to expressing all the
+equations in the previous section in terms of $\theta$, instead of $\omega$. In
+Question 1, we used the substitution $\omega = \dot\theta$ because there were
+no terms of the equation that actually contained $\theta$ as is. So, for
+brevity, we omit the derivation, as it is virtually the same as for Question 1,
+and alter our existing state-variable equations to accommodate $\theta$, and
+applying $\dot\theta = \omega$ to get
+
+\begin{equation}
+  \left[
+  \begin{array}{c}
+    \dot \theta \\
+    \dot \omega \\
+    \dot i
+  \end{array}
+  \right]
+  =
+  \left[
+  \begin{array}{ccc}
+    0 & 1 & 0 \\
+    0 & -\frac{b}{J} & \frac{K}{J} \\
+    0 & -\frac{K}{L} & -\frac{R}{L}
+  \end{array}
+  \right]
+  \left[
+  \begin{array}{c}
+    \theta \\
+    \omega \\
+    i
+  \end{array}
+  \right]
+  +
+  \left[
+  \begin{array}{c}
+    0 \\
+    0 \\
+    \frac{Rb + K^2}{LK}
+  \end{array}
+  \right]
+  \left[
+  \begin{array}{c}
+    \omega_r
+  \end{array}
+  \right]
+  \label{eq:ss_position_eq1}
+\end{equation}
+
+\begin{equation}
+  y =
+  \left[
+  \begin{array}{rcl}
+	  y_1 \\
+	  y_2
+  \end{array}
+  \right]
+  =
+  \left[
+  \begin{array}{ccc}
+    1 & 0 & 0 \\
+    0 & 1 & 0
+  \end{array}
+  \right]
+  \left[
+  \begin{array}{c}
+    \theta \\
+    \omega \\
+    i
+  \end{array}
+  \right]
+  +
+  \left[
+  \begin{array}{c}
+    0 \\
+    0
+  \end{array}
+  \right]
+  \left[
+  \begin{array}{c}
+    \omega_r
+  \end{array}
+  \right]
+  \label{eq:ss_position_eq2}
+\end{equation}
+
+\section{Question 3}
+
+As given in the practical, the equation for current is slightly modified by
+letting $\omega_r$ be evaluated as an error instead, due to the negative
+feedback loop, thus replacing $\omega_r$ with $K_p[\omega_r(t) - \omega(t)]$.
+The current equation then simply becomes
+
+\begin{equation}
+	\dot i = -\left[ \frac{K}{L} + \frac{K_P(Rb + K^2)}{LK} \right]\omega - \frac{R}{l}i + \frac{K_P(Rb + K^2)}{LK}\omega_r
+	\label{eq:3_current}
+\end{equation}
+
+We can modify equation \eqref{eq:ss_position_eq1} to be
+
+\begin{equation}
+  \left[
+  \begin{array}{c}
+    \dot \theta \\
+    \dot \omega \\
+    \dot i
+  \end{array}
+  \right]
+  =
+  \left[
+  \begin{array}{ccc}
+    0 & 1 & 0 \\
+    0 & -\frac{b}{J} & \frac{K}{J} \\
+    0 & -\left[ \frac{K}{L} + \frac{K_P(Rb + K^2)}{LK} \right] & -\frac{R}{L}
+  \end{array}
+  \right]
+  \left[
+  \begin{array}{c}
+    \theta \\
+    \omega \\
+    i
+  \end{array}
+  \right]
+  +
+  \left[
+  \begin{array}{c}
+    0 \\
+    0 \\
+    \frac{K_P(Rb + K^2)}{LK}
+  \end{array}
+  \right]
+  \left[
+  \begin{array}{c}
+    \omega_r
+  \end{array}
+  \right]
+  \label{eq:3_ss_position}
+\end{equation}
+
+The output system is exactly the same as in equation \eqref{eq:ss_position_eq2}.
 
 \end{document}
 
