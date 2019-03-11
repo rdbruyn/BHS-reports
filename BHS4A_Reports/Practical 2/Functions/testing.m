@@ -14,7 +14,7 @@
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## -*- texinfo -*- 
-## @deftypefn {} {@var{retval} =} question_3 (@var{input1}, @var{input2})
+## @deftypefn {} {@var{retval} =} testing (@var{input1}, @var{input2})
 ##
 ## @seealso{}
 ## @end deftypefn
@@ -22,19 +22,9 @@
 ## Author: Quintin <quintin@quintin-Inspiron-15-3567>
 ## Created: 2019-03-10
 
-function [retval] = question_3 (Kp)
-J = 0.01;
-b = 0.1;
-K = 0.01;
-R = 1;
-L = 0.5;
-A = [0,1,0;0,(-b/J),(K/J); 0 -((K/L)+(Kp*(R*b+K^2)/L*K)),-(R/L)]
-B = [0;0;Kp*(R*b + K^2)/(L*K)]
-C = [1,0,0;0,1,0]
-D = [0;0]
-[num,den] = ss2tf(A,B,C,D);
-H = tf(num,den)
-step(H);
-
-
+function [retval] = testing (J,b,K,R,L,Kp)
+  G = tf([R*b+K^2],[J*L (L*b+R*J) R*b+K]);
+  D = tf([Kp],[1])
+  H = feedback(D * G)
+  step(H)
 endfunction

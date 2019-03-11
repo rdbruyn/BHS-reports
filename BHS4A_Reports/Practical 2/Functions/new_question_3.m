@@ -14,15 +14,16 @@
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## -*- texinfo -*- 
-## @deftypefn {} {@var{retval} =} question_3 (@var{input1}, @var{input2})
+## @deftypefn {} {@var{retval} =} new_question_3 (@var{input1}, @var{input2})
 ##
 ## @seealso{}
 ## @end deftypefn
 
 ## Author: Quintin <quintin@quintin-Inspiron-15-3567>
-## Created: 2019-03-10
+## Created: 2019-03-11
 
-function [retval] = question_3 (Kp)
+function new_question_3(Kp)
+pkg load control;
 J = 0.01;
 b = 0.1;
 K = 0.01;
@@ -33,8 +34,8 @@ B = [0;0;Kp*(R*b + K^2)/(L*K)]
 C = [1,0,0;0,1,0]
 D = [0;0]
 [num,den] = ss2tf(A,B,C,D);
-H = tf(num,den)
-step(H);
-
+H = tf(num,den);
+feedback(H);
+%step(H);
 
 endfunction
