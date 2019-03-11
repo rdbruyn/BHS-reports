@@ -10,6 +10,7 @@
 \usepackage{subfig}
 \usepackage{caption}
 
+
 \title{Control Systems 4A Practical 2 Report}
 \author{Ruan de Bruyn, 216054484 \and Quintin Kruger, 216008466}
 
@@ -196,14 +197,14 @@ Why would you even make us do this on an actual report?
 
 
 \section{Question 2}
-In order to have position control for a motor as well, we simply add an
-additional state variable, $\theta$, and then go back to expressing all the
-equations in the previous section in terms of $\theta$, instead of $\omega$. In
-Question 1, we used the substitution $\omega = \dot\theta$ because there were
-no terms of the equation that actually contained $\theta$ as is. So, for
-brevity, we omit the derivation, as it is virtually the same as for Question 1,
-and alter our existing state-variable equations to accommodate $\theta$, and
-applying $\dot\theta = \omega$ to get
+In order to have position control for a motor as well, we simply add another
+state variable, $\theta$, and then go back to expressing all the equations in
+the previous section in terms of $\theta$, instead of $\omega$. In Question 1,
+we used the substitution $\omega = \dot\theta$ because there were no terms of
+the equation that actually contained $\theta$ as is. So, for brevity, we omit
+the derivation, as it is virtually the same as for Question 1, and alter our
+existing state-variable equations to accommodate $\theta$, and applying
+$\dot\theta = \omega$ to get
 
 \begin{equation}
   \left[
@@ -281,6 +282,29 @@ applying $\dot\theta = \omega$ to get
   \label{eq:ss_position_eq2}
 \end{equation}
 
+By using octave's \texttt{ss2tf} function and giving it as parameters matrices A through D which is the state space represenation of the DC motor using the code that follows, the step response is shown by Figure \ref{fig:question_2_output_response}\par
+
+\noindent
+\texttt{A = [0,1,0;0,(-b/J),(K/J); 0 -(K/L),-(R/L)];}\\
+\texttt{B = [0;0;(R\*b + K\^2)/(L\*K)];}\\
+\texttt{C = [1,0,0;0,1,0];}\\
+\texttt{D = [0;0];}\\
+\texttt{[num,den] = ss2tf(A,B,C,D);}\\
+\texttt{H = tf(num,den);}\\
+\texttt{step(H);}\\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Images/question_2_output_response.png}
+	\caption{Output response to a step input}
+	\label{fig:question_2_output_response}
+\end{figure}
+
+Figure \ref{fig:question_2_output_response} shows the reponse of the sytem where $y_1$ is the angular displacement of the motor and $y_2$ is the angular speed of the motor. $y_1$ follows a linear relationship with time after transients of $y_2$ die out. This is expected seeing as though $y_2$ illustrates the rate of change of $y_1$, a constant rate of change (after roughly $2.5$ seconds) gives a linear relationship of the displacement. 
+
+Before the transients die out, the displacement output $y_1$ shows to have a parabolic relationship with time. This is expected as the rate of change of disaplacement increases between the time $t=0$ seconds and $t=2.5$ seconds.    
+
+
 \section{Question 3}
 
 As given in the practical, the equation for current is slightly modified by
@@ -335,6 +359,82 @@ We can modify equation \eqref{eq:ss_position_eq1} to be
 \end{equation}
 
 The output system is exactly the same as in equation \eqref{eq:ss_position_eq2}.
+
+By implementing this in Octave with the code that follows, the reponse changes to settle at a value of the proportional gain as shown by Figure \ref{fig:question_3_output_response_kp_1} and Figure \ref{fig:question_3_output_response_kp_01}\\
+\noindent
+\texttt{A = [0,1,0;0,(-b/J),(K/J); 0 -((K/L)+(Kp\*(R\*b+K\^2)/L\*K)),-(R/L)];}\\
+\texttt{B = [0;0;Kp\*(R\*b + K\^2)/(L*K)];}\\
+\texttt{C = [1,0,0;0,1,0];}\\
+\texttt{D = [0;0];}\\
+\texttt{[num,den] = ss2tf(A,B,C,D);}\\
+\texttt{H = tf(num,den);}\\
+\texttt{step(H);}\\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Images/question_3_output_response_kp_1.png}
+	\caption{Output response with the addition of proportional control where $K_p = 1$ to a step input}
+	\label{fig:question_3_output_response_kp_1}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Images/question_3_output_response_kp_01.png}
+	\caption{Output response with the addition of proportional control where $K_p = 0.1$ to a step input}
+	\label{fig:question_3_output_response_kp_01}
+\end{figure}
+
+Figures \ref{fig:question_3_output_response_kp_1} and \ref{fig:question_3_output_response_kp_01} show responses that increase the settling time of the response but gives a steady state error that is unacceptable (the settling value of the speed of the motor seems to take on the value of the proportional constant $K_p$). 
+
+Why is it that the error is so bad ?
+
+\section{Question 4} % (fold)
+\label{sec:question_4}
+The code that produces the proportional and integral controller applied to the system with transfer function $\frac{Rb+K^2}{(JL)s^3+(Lb+RJ)s+Rb+K}$ is shown below \\ 
+\noindent
+\texttt{G = tf([R*b+K\^2],[J*L (L\*b+R\*J) R\*b+K]);}\\
+\texttt{D = tf([Kp Ki],[1 0])}\\
+\texttt{H = feedback(D \* G)}\\
+\texttt{step(H)}\\
+
+The step response to a proportional constant and a integral constant of 10 is shown by Figure \ref{fig:question_4_output_response_pi}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Images/question_4_output_response_PI.png}
+	\caption{Output response of system with $K_p=K_i=10$}
+	\label{fig:question_4_output_response_pi}
+\end{figure}
+
+For a proportional and derivative controller the code used to produce the proportional and integral controller can be modified as follows below to give the response as shown by Figure \ref{fig:question_4_output_response_pd}\\
+\noindent
+\texttt{G = tf([R\*b+K\^2],[J\*L (L\*b+R\*J) R\*b+K]);}
+\texttt{D = tf([Kd Kp],[1])}
+\texttt{H = feedback(D \* G)}
+\texttt{step(H)}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Images/question_4_output_response_PD.png}
+	\caption{Output response of system with $K_p=K_d=10$}
+	\label{fig:question_4_output_response_pd}
+\end{figure}
+
+Again the code can be modified to include an integral term as well to form the PID controller substituting \texttt{D = tf([Kd Kp Ki],[1 0])} in the code above. The response that is then produced is given by Figure \ref{fig:question_4_output_response_pid}:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Images/question_4_output_response_PID.png}
+	\caption{Output response of system with $K_p=K_d=K_d=10$}
+	\label{fig:question_4_output_response_pid}
+\end{figure}
+
+\begin{center}
+	\textit{Throughout the use of the different controllers, gains were chosen to be equal and given as 10 for demonstration purposes of the effect of the different controllers}
+\end{center}
+
+% section question_4 (end)
+
 
 \end{document}
 
