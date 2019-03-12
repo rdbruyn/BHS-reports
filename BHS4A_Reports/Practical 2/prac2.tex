@@ -192,8 +192,14 @@ From equation \eqref{eq:ts_initial}, we can get the transfer function as
 
 \subsection{Block Form}
 
-Why would you even make us do this on an actual report?
+Now from the transfer function representation of the system, we can derive the block diagram representation of the system relating the input and the output with one another and the system.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{Images/Question_1_3_Block_Diagram.png}
+  \caption{Block diagram representation of the system}
+  \label{fig:question_1_3_block_diagram}
+\end{figure}
 
 
 \section{Question 2}
@@ -358,7 +364,7 @@ We can modify equation \eqref{eq:ss_position_eq1} to be
   \label{eq:3_ss_position}
 \end{equation}
 
-The output system is exactly the same as in equation \eqref{eq:ss_position_eq2}.
+The output system is exactly the same as in equation \eqref{eq:ss_position_eq2}. The code below implements the new system that we can use to see the effect on the speed and the angular position with the addition of the proportional controller 
 
 \noindent
 \texttt{J = 0.01;}\\
@@ -410,6 +416,12 @@ then send this control signal into the $T(s)$, which will be equal to equation
 \eqref{eq:ts_final}. Finally, the error is obtained with means of a negative
 feedback loop. Thus, our output system in block diagram would look like this:
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{Images/Block_Diagram_Question_4.png}
+  \caption{Block diagram of the system with error control}
+  \label{fig:block_diagram_question_4}
+\end{figure}
 % lekker fokken diagram hier
 
 with $E(s), U(s), D(s)$ being the laplace transform of our error signal,
