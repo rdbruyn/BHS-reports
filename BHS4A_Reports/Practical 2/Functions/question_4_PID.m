@@ -22,7 +22,12 @@
 ## Author: Quintin <quintin@quintin-Inspiron-15-3567>
 ## Created: 2019-03-10
 
-function [retval] = question_4_PID (J,b,K,R,L,Kd,Kp,Ki)
+function [retval] = question_4_PID (Kp,Ki,Kd)
+  J = 0.012;
+  b = 0.105;
+  K = 0.01;
+  R = 1;
+  L = 0.505;
   G = tf([R*b+K^2],[J*L (L*b+R*J) R*b+K]);
   D = tf([Kd Kp Ki],[1 0])
   H = feedback(D * G)
