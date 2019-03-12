@@ -390,14 +390,37 @@ Why is it that the error is so bad ?
 
 \section{Question 4} % (fold)
 \label{sec:question_4}
-The code that produces the proportional and integral controller applied to the system with transfer function $\frac{Rb+K^2}{(JL)s^3+(Lb+RJ)s+Rb+K}$ is shown below \\ 
+
+The derivation for the transfer function of this DC Motor has been derived in a
+previous section, and given by equation \eqref{eq:ts_final}, which relates
+input reference speed to the output speed of the motor. However, this is a
+simple transfer function, and doesn't incorporate our control system. From
+theory, the proper way to implement a control system with a contoller is to
+feed it the error between the reference (commanding) signal and the actual
+value being controlled from the system; in our case, $\omega_r - \omega$, and
+then send this control signal into the $T(s)$, which will be equal to equation
+\eqref{eq:ts_final}. Finally, the error is obtained with means of a negative
+feedback loop. Thus, our output system in block diagram would look like this:
+
+% lekker fokken diagram hier
+
+with $E(s), U(s), D(s)$ being the laplace transform of our error signal,
+control signal, and controller respectively, $\Omega_r(s)$ is the Laplace
+transform of the reference speed, and $\Omega(s)$ is the Laplace transform of
+the actual output speed of the motor.
+\\
+
+The code that produces the proportional and integral controller applied to the
+system with transfer function $\frac{Rb+K^2}{(JL)s^3+(Lb+RJ)s+Rb+K}$ is shown
+below \\ 
 \noindent
 \texttt{G = tf([R*b+K\^2],[J*L (L\*b+R\*J) R\*b+K]);}\\
 \texttt{D = tf([Kp Ki],[1 0])}\\
 \texttt{H = feedback(D \* G)}\\
 \texttt{step(H)}\\
 
-The step response to a proportional constant and a integral constant of 10 is shown by Figure \ref{fig:question_4_output_response_pi}
+The step response to a proportional constant and a integral constant of 10 is
+shown by Figure \ref{fig:question_4_output_response_pi}
 
 \begin{figure}[H]
 	\centering
@@ -406,7 +429,9 @@ The step response to a proportional constant and a integral constant of 10 is sh
 	\label{fig:question_4_output_response_pi}
 \end{figure}
 
-For a proportional and derivative controller the code used to produce the proportional and integral controller can be modified as follows below to give the response as shown by Figure \ref{fig:question_4_output_response_pd}\\
+For a proportional and derivative controller the code used to produce the
+proportional and integral controller can be modified as follows below to give
+the response as shown by Figure \ref{fig:question_4_output_response_pd}\\
 \noindent
 \texttt{G = tf([R\*b+K\^2],[J\*L (L\*b+R\*J) R\*b+K]);}
 \texttt{D = tf([Kd Kp],[1])}
@@ -420,7 +445,10 @@ For a proportional and derivative controller the code used to produce the propor
 	\label{fig:question_4_output_response_pd}
 \end{figure}
 
-Again the code can be modified to include an integral term as well to form the PID controller substituting \texttt{D = tf([Kd Kp Ki],[1 0])} in the code above. The response that is then produced is given by Figure \ref{fig:question_4_output_response_pid}:
+Again the code can be modified to include an integral term as well to form the
+PID controller substituting \texttt{D = tf([Kd Kp Ki],[1 0])} in the code
+above. The response that is then produced is given by Figure
+\ref{fig:question_4_output_response_pid}:
 
 \begin{figure}[H]
 	\centering

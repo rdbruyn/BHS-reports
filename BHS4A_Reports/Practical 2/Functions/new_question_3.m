@@ -23,7 +23,9 @@
 ## Created: 2019-03-11
 
 function new_question_3(Kp)
+
 pkg load control;
+pkg load signal;
 J = 0.01;
 b = 0.1;
 K = 0.01;
@@ -33,9 +35,13 @@ A = [0,1,0;0,(-b/J),(K/J); 0 -((K/L)+(Kp*(R*b+K^2)/L*K)),-(R/L)];
 B = [0;0;Kp*(R*b + K^2)/(L*K)];
 C = [1,0,0;0,1,0];
 D = [0;0];
-[num,den] = ss2tf(A,B,C,D)
+[num,den] = ss2tf(A,B,C,D);
 pos = tf(num(1),den(1));
 speed = tf(num(2),den(2));
 step(feedback(speed));
+
+s = tf('s');
+figure;
+step(feedback(speed) * 1/s);
 
 endfunction
