@@ -292,7 +292,7 @@ By using octave's \texttt{ss2tf} function and giving it as parameters matrices A
 
 \noindent
 \texttt{A = [0,1,0;0,(-b/J),(K/J); 0 -(K/L),-(R/L)];}\\
-\texttt{B = [0;0;(R\*b + K\^2)/(L\*K)];}\\
+\texttt{B = [0;0;(R*b + K\^{}2)/(L*K)];}\\
 \texttt{C = [1,0,0;0,1,0];}\\
 \texttt{D = [0;0];}\\
 \texttt{[num,den] = ss2tf(A,B,C,D);}\\
@@ -372,15 +372,15 @@ The output system is exactly the same as in equation \eqref{eq:ss_position_eq2}.
 \texttt{K = 0.01;}\\
 \texttt{R = 1;}\\
 \texttt{L = 0.5;}\\
-\texttt{A = [0,1,0;0,(-b/J),(K/J); 0 -((K/L)+(Kp\*(R\*b+K\^2)/L\*K)),-(R/L)];}\\
-\texttt{B = [0;0;Kp\*(R\*b + K\^2)/(L\*K)];}\\
+\texttt{A = [0,1,0;0,(-b/J),(K/J); 0 -((K/L)+(Kp*(R*b+K\^{}2)/L*K)),-(R/L)];}\\
+\texttt{B = [0;0;Kp*(R*b + K\^{}2)/(L*K)];}\\
 \texttt{C = [1,0,0;0,1,0];}\\
 \texttt{D = [0;0];}\\
 \texttt{[num,den] = ss2tf(A,B,C,D)}\\
 \texttt{speed = tf(num(2),den(2));}\\
 \texttt{step(feedback(speed));}\\
 \texttt{s = tf('s');}\\
-\texttt{position = feedback(speed) \* 1/s;}\\
+\texttt{position = feedback(speed) * 1/s;}\\
 \texttt{figure;}\\
 \texttt{step(position);}\\
 
@@ -440,9 +440,9 @@ below \\
 \texttt{K = 0.01;}\\
 \texttt{R = 1;}\\
 \texttt{L = 0.505;}\\
-\texttt{G = tf([R\*b+K\^2],[J\*L (L\*b+R\*J) R\*b+K]);}\\
+\texttt{G = tf([R*b+K\^{}2],[J*L (L*b+R*J) R*b+K]);}\\
 \texttt{D = tf([Kd Kp Ki],[1 0])}\\
-\texttt{H = feedback(D \* G)}\\
+\texttt{H = feedback(D * G)}\\
 \texttt{step(H)}\\
 
 Now applying the PI, PD and the PID controllers to the system with the desired design parameters.
@@ -458,7 +458,8 @@ By feeding the function (containing the code discussed in the beginning of this 
 	\label{fig:question_4_pi}
 \end{figure}
 
-This system gave us the specifications as defined below within spec of the design to be met
+This system gave us the specifications as defined below within specification of
+the design to be met
 \begin{enumerate}
 	\item $OS = 13\%$
 	\item $t_s = 0.733$
@@ -478,7 +479,7 @@ By feeding the function (containing the code discussed in the beginning of this 
 	\label{fig:question_4_pd}
 \end{figure}
 
-This system gave us the specifications as defined below within spec of the design to be met
+This system gave us the specifications as defined below within specification of the design to be met
 \begin{enumerate}
 	\item $OS = 0\%$
 	\item $t_s = 0.07$
@@ -489,7 +490,9 @@ This system gave us the specifications as defined below within spec of the desig
 
 \subsection{PID Controller} % (fold)
 \label{sub:pid_controller}
-By feeding the function (containing the code discussed in the beginning of this section) the values $K_p = 5, K_I = 10$ and $K_d = 0.8$ gave the response shown in Figure \ref{fig:question_4_pid}
+By feeding the function (containing the code discussed in the beginning of this
+section) the values $K_p = 5, K_I = 10$ and $K_d = 0.8$ gave the response shown
+in Figure \ref{fig:question_4_pid}
 
 \begin{figure}[H]
 	\centering
@@ -498,7 +501,8 @@ By feeding the function (containing the code discussed in the beginning of this 
 	\label{fig:question_4_pid}
 \end{figure}
 
-This system gave us the specifications as defined below within spec of the design to be met
+This system gave us the specifications as defined below within specification of
+the design to be met
 \begin{enumerate}
 	\item $OS = 2\%$
 	\item $t_s = 0.489$
