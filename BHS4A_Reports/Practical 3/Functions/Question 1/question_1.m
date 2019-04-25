@@ -25,9 +25,14 @@
 function [retval] = question_1 ()
 # student number 216008466 uses M = 16Kg, m = 0.6kg and l = 3.5m
 
-A = [0 1 0 0;2.905 0 0 0;0 0 0 1;-0.3675 0 0 0];
-B = [0 ;-1/56; 0; 1/16];
-C = [1 0 0 0;0 0 1 0];
+A = [0 1 0 0;0.302 0 0 0;0 0 0 1;-0.56 0 0 0];
+B = [0 ;-5/59; 0; 1/2.8];
+C = [1 0 0 0;0 0 1 0]
 sys = ss(A,B,C)
-step(sys)
+step(sys);
+[NUM,DEN] = ss2tf(A,B,C)
+T = tf(NUM,DEN)
+
+# Need to implemenent a controller giving stability 
+
 endfunction
