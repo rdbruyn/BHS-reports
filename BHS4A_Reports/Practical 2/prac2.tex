@@ -192,8 +192,14 @@ From equation \eqref{eq:ts_initial}, we can get the transfer function as
 
 \subsection{Block Form}
 
-Why would you even make us do this on an actual report?
+Now from the transfer function representation of the system, we can derive the block diagram representation of the system relating the input and the output with one another and the system.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{Images/Question_1_3_Block_Diagram.png}
+  \caption{Block diagram representation of the system}
+  \label{fig:question_1_3_block_diagram}
+\end{figure}
 
 
 \section{Question 2}
@@ -286,7 +292,7 @@ By using octave's \texttt{ss2tf} function and giving it as parameters matrices A
 
 \noindent
 \texttt{A = [0,1,0;0,(-b/J),(K/J); 0 -(K/L),-(R/L)];}\\
-\texttt{B = [0;0;(R\*b + K\^2)/(L\*K)];}\\
+\texttt{B = [0;0;(R*b + K\^{}2)/(L*K)];}\\
 \texttt{C = [1,0,0;0,1,0];}\\
 \texttt{D = [0;0];}\\
 \texttt{[num,den] = ss2tf(A,B,C,D);}\\
@@ -358,80 +364,152 @@ We can modify equation \eqref{eq:ss_position_eq1} to be
   \label{eq:3_ss_position}
 \end{equation}
 
-The output system is exactly the same as in equation \eqref{eq:ss_position_eq2}.
+The output system is exactly the same as in equation \eqref{eq:ss_position_eq2}. The code below implements the new system that we can use to see the effect on the speed and the angular position with the addition of the proportional controller 
 
-By implementing this in Octave with the code that follows, the reponse changes to settle at a value of the proportional gain as shown by Figure \ref{fig:question_3_output_response_kp_1} and Figure \ref{fig:question_3_output_response_kp_01}\\
 \noindent
-\texttt{A = [0,1,0;0,(-b/J),(K/J); 0 -((K/L)+(Kp\*(R\*b+K\^2)/L\*K)),-(R/L)];}\\
-\texttt{B = [0;0;Kp\*(R\*b + K\^2)/(L*K)];}\\
+\texttt{J = 0.01;}\\
+\texttt{b = 0.1;}\\
+\texttt{K = 0.01;}\\
+\texttt{R = 1;}\\
+\texttt{L = 0.5;}\\
+\texttt{A = [0,1,0;0,(-b/J),(K/J); 0 -((K/L)+(Kp*(R*b+K\^{}2)/L*K)),-(R/L)];}\\
+\texttt{B = [0;0;Kp*(R*b + K\^{}2)/(L*K)];}\\
 \texttt{C = [1,0,0;0,1,0];}\\
 \texttt{D = [0;0];}\\
-\texttt{[num,den] = ss2tf(A,B,C,D);}\\
-\texttt{H = tf(num,den);}\\
-\texttt{step(H);}\\
+\texttt{[num,den] = ss2tf(A,B,C,D)}\\
+\texttt{speed = tf(num(2),den(2));}\\
+\texttt{step(feedback(speed));}\\
+\texttt{s = tf('s');}\\
+\texttt{position = feedback(speed) * 1/s;}\\
+\texttt{figure;}\\
+\texttt{step(position);}\\
+
+Shown below are the responses of the speed and the position of the DC motor respectively
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{Images/question_3_output_response_kp_1.png}
-	\caption{Output response with the addition of proportional control where $K_p = 1$ to a step input}
-	\label{fig:question_3_output_response_kp_1}
+	\includegraphics[width=\textwidth]{Images/question_3_speed.png}
+	\caption{Output response of the speed of the DC motor}
+	\label{fig:question_3_speed}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{Images/question_3_output_response_kp_01.png}
-	\caption{Output response with the addition of proportional control where $K_p = 0.1$ to a step input}
-	\label{fig:question_3_output_response_kp_01}
+	\includegraphics[width=\textwidth]{Images/question_3_pos.png}
+	\caption{Output response of the position of the DC motor}
+	\label{fig:question_3_pos}
 \end{figure}
 
-Figures \ref{fig:question_3_output_response_kp_1} and \ref{fig:question_3_output_response_kp_01} show responses that increase the settling time of the response but gives a steady state error that is unacceptable (the settling value of the speed of the motor seems to take on the value of the proportional constant $K_p$). 
-
-Why is it that the error is so bad ?
+From these figures we deduce that the speed was achieved in a faster time frame (i.e. $t_s$ increased) which is the expected result of the addition of a proportional controller. The position plot of the motor (shown by Figure \ref{fig:question_3_pos}) has a linear relationship with time only after roughly $0.2$ seconds. This happens after this time due to the transients from the speed of the motor (Figure \ref{fig:question_3_speed}) that die out after $0.2$ seconds. 
 
 \section{Question 4} % (fold)
 \label{sec:question_4}
-The code that produces the proportional and integral controller applied to the system with transfer function $\frac{Rb+K^2}{(JL)s^3+(Lb+RJ)s+Rb+K}$ is shown below \\ 
+
+The derivation for the transfer function of this DC Motor has been derived in a
+previous section, and given by equation \eqref{eq:ts_final}, which relates
+input reference speed to the output speed of the motor. However, this is a
+simple transfer function, and doesn't incorporate our control system. From
+theory, the proper way to implement a control system with a contoller is to
+feed it the error between the reference (commanding) signal and the actual
+value being controlled from the system; in our case, $\omega_r - \omega$, and
+then send this control signal into the $T(s)$, which will be equal to equation
+\eqref{eq:ts_final}. Finally, the error is obtained with means of a negative
+feedback loop. Thus, our output system in block diagram would look like this:
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{Images/Block_Diagram_Question_4.png}
+  \caption{Block diagram of the system with error control}
+  \label{fig:block_diagram_question_4}
+\end{figure}
+% lekker fokken diagram hier
+
+with $E(s), U(s), D(s)$ being the laplace transform of our error signal,
+control signal, and controller respectively, $\Omega_r(s)$ is the Laplace
+transform of the reference speed, and $\Omega(s)$ is the Laplace transform of
+the actual output speed of the motor.
+\\
+
+The code that produces the proportional and integral controller applied to the
+system with transfer function $\frac{Rb+K^2}{(JL)s^3+(Lb+RJ)s+Rb+K}$ is shown
+below \\ 
+
 \noindent
-\texttt{G = tf([R*b+K\^2],[J*L (L\*b+R\*J) R\*b+K]);}\\
-\texttt{D = tf([Kp Ki],[1 0])}\\
-\texttt{H = feedback(D \* G)}\\
+\texttt{J = 0.012;}\\
+\texttt{b = 0.105;}\\
+\texttt{K = 0.01;}\\
+\texttt{R = 1;}\\
+\texttt{L = 0.505;}\\
+\texttt{G = tf([R*b+K\^{}2],[J*L (L*b+R*J) R*b+K]);}\\
+\texttt{D = tf([Kd Kp Ki],[1 0])}\\
+\texttt{H = feedback(D * G)}\\
 \texttt{step(H)}\\
 
-The step response to a proportional constant and a integral constant of 10 is shown by Figure \ref{fig:question_4_output_response_pi}
+Now applying the PI, PD and the PID controllers to the system with the desired design parameters.
+
+\subsection{PI Controller} % (fold)
+\label{sub:pi_controller}
+By feeding the function (containing the code discussed in the beginning of this section) the values $K_p = 5, K_I = 8$ and $K_d = 0$ gave the response shown in Figure \ref{fig:question_4_pi}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{Images/question_4_output_response_PI.png}
-	\caption{Output response of system with $K_p=K_i=10$}
-	\label{fig:question_4_output_response_pi}
+	\includegraphics[width=\textwidth]{Images/question_4_PI.png}
+	\caption{PI implementation with $K_p = 5, K_I = 8$ and $K_d = 0$}
+	\label{fig:question_4_pi}
 \end{figure}
 
-For a proportional and derivative controller the code used to produce the proportional and integral controller can be modified as follows below to give the response as shown by Figure \ref{fig:question_4_output_response_pd}\\
-\noindent
-\texttt{G = tf([R\*b+K\^2],[J\*L (L\*b+R\*J) R\*b+K]);}
-\texttt{D = tf([Kd Kp],[1])}
-\texttt{H = feedback(D \* G)}
-\texttt{step(H)}
+This system gave us the specifications as defined below within specification of
+the design to be met
+\begin{enumerate}
+	\item $OS = 13\%$
+	\item $t_s = 0.733$
+	\item $\varepsilon = 0$
+\end{enumerate}
+
+% subsection pi_controller (end)
+
+\subsection{PD Controller} % (fold)
+\label{sub:pd_controller}
+By feeding the function (containing the code discussed in the beginning of this section) the values $K_p = 29, K_I = 0$ and $K_d = 5$ gave the response shown in Figure \ref{fig:question_4_pd}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{Images/question_4_output_response_PD.png}
-	\caption{Output response of system with $K_p=K_d=10$}
-	\label{fig:question_4_output_response_pd}
+	\includegraphics[width=\textwidth]{Images/question_4_PD.png}
+	\caption{PD implementation with $K_p = 29, K_I = 0$ and $K_d = 5$}
+	\label{fig:question_4_pd}
 \end{figure}
 
-Again the code can be modified to include an integral term as well to form the PID controller substituting \texttt{D = tf([Kd Kp Ki],[1 0])} in the code above. The response that is then produced is given by Figure \ref{fig:question_4_output_response_pid}:
+This system gave us the specifications as defined below within specification of the design to be met
+\begin{enumerate}
+	\item $OS = 0\%$
+	\item $t_s = 0.07$
+	\item $\varepsilon = 4\%$
+\end{enumerate}
+
+% subsection pd_controller (end)
+
+\subsection{PID Controller} % (fold)
+\label{sub:pid_controller}
+By feeding the function (containing the code discussed in the beginning of this
+section) the values $K_p = 5, K_I = 10$ and $K_d = 0.8$ gave the response shown
+in Figure \ref{fig:question_4_pid}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{Images/question_4_output_response_PID.png}
-	\caption{Output response of system with $K_p=K_d=K_d=10$}
-	\label{fig:question_4_output_response_pid}
+	\includegraphics[width=\textwidth]{Images/question_4_PID.png}
+	\caption{PID implementation with $K_p = 5, K_I = 10$ and $K_d = 0.8$}
+	\label{fig:question_4_pid}
 \end{figure}
 
-\begin{center}
-	\textit{Throughout the use of the different controllers, gains were chosen to be equal and given as 10 for demonstration purposes of the effect of the different controllers}
-\end{center}
+This system gave us the specifications as defined below within specification of
+the design to be met
+\begin{enumerate}
+	\item $OS = 2\%$
+	\item $t_s = 0.489$
+	\item $\varepsilon = 0$
+\end{enumerate}
+% subsection id_controller (end)
+
 
 % section question_4 (end)
 

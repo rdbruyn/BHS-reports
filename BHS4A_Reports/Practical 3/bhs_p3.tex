@@ -1,0 +1,203 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage{IEEEtrantools}
+\usepackage[]{amsmath}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage[]{graphicx}
+\usepackage{subfig}
+\usepackage{caption}
+
+
+\title{Control Systems 4A Practical 2 Report}
+\author{Ruan de Bruyn, 216054484 \and Quintin Kruger, 216008466}
+
+\begin{document}
+
+\pagenumbering{gobble}
+\begin{titlepage}
+  \maketitle
+\end{titlepage}
+
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\section{Question 1}
+
+<+DO THINGS HERE+>
+
+% endsection Question 1
+
+\section{Question 2}
+
+In this question, we consider the following circuit:
+
+<+IMAGE OF CIRCUIT HERE+>
+
+\subsection{State-space Representation}
+
+In order to find the general state-space equations of this circuit, we start
+with a few preliminary equations.
+
+\begin{equation}
+  i_{C1} = C_1 \dot{V_{C1}}
+  \label{eq:ic1}
+\end{equation}
+
+\begin{equation}
+  i_{C2} = C_2 \dot{V_{C2}}
+  \label{eq:ic2}
+\end{equation}
+
+Then, we use Kirchoff's current law to get the following equation:
+
+\begin{IEEEeqnarray}{rCl}
+  i_1 & = & i_{C1} + i_{C2} \nonumber \\
+  & = & C_1 \dot{V_{C1}} + C_2 \dot{V_{C2}}
+  \label{eq:kcl}
+\end{IEEEeqnarray}
+
+Using Kirchoff's Voltage law at the right-most loop, and substituting from
+\eqref{eq:kcl}, we get
+
+\begin{IEEEeqnarray}{rCl}
+  V_{C1} & = & V_{R2} + V_{C2} \nonumber \\
+  & = & i_{C2}R_2 + V_{C2} \nonumber \\
+  & = & R_2 C_2 \dot{V}_{C2} + V_{C2} \nonumber \\
+  R_2 C_2 \dot{V}_{C2} & = & V_{C1} - V_{C2} \nonumber \\
+  \dot{V}_{C2} & = & \frac{1}{R_2 C_2} V_{C1} - \frac{1}{R_2 C_2} V_{C2}
+  \label{eq:kvl2}
+\end{IEEEeqnarray}
+
+Then, using the results from \eqref{eq:kcl} and \eqref{eq:kvl2}, and performing
+Kirchoff's Voltage Law at the loop with the input voltage, we get
+
+\begin{IEEEeqnarray}{rCl}
+  V_i & = & V_{R1} + V_{C1} \nonumber \\
+  & = & i_1 R_1 + V_{C1} \nonumber \\
+  & = & R_1 \left[ C_1 \dot{V}_{C1} + C_2 \dot{V}_{C2} \right] + V_{C1} \nonumber \\
+  & = & R_1 C_1 \dot{V}_{C1} + R_1 C_2 \dot{V}_{C2} + V_{C1} \nonumber \\
+  & = & R_1 C_1 \dot{V}_{C1} + R_1 C_2 \left( \frac{1}{R_2 C_2} V_{C1} - \frac{1}{R_2 C_2} V_{C2} \right) + V_{C1} \nonumber \\
+  R_1 C_1 \dot{V}_{C1} & = & - \left( \frac{R_1 + R_2}{R_2} \right) V_{C1} +  \frac{R_1}{R_2} V_{C2} + V_i \nonumber \\
+  \dot{V}_{C1} & = & -\frac{R_1 + R_2}{R_1 R_2 C_1} V_{C1} + \frac{1}{R_2 C_2} V_{C2} + \frac{1}{R_1 C_1} V_i
+\end{IEEEeqnarray}
+
+This leaves us with the following state-space matrices:
+
+\begin{equation}
+  A = \left[
+  \begin{array}{cc}
+    -\frac{R_1 + R_2}{R_1 R_2 C_1} & \frac{1}{R_2 C_2} \\
+    \frac{1}{R_2 C_2} & -\frac{1}{R_2 C_2}
+  \end{array}
+  \right]
+  \label{eq:ss_A}
+\end{equation}
+
+\begin{equation}
+  B = \left[
+  \begin{array}{c}
+    \frac{1}{R_1 C_1} \\
+    0
+  \end{array}
+  \right]
+  \label{eq:ss_B}
+\end{equation}
+
+Assuming that we take our output across capacitor $C_2$, we have
+
+\begin{equation}
+  C = \left[
+  \begin{array}{c c}
+    0 & 1
+  \end{array}
+  \right]
+  \label{eq:ss_C}
+\end{equation}
+
+and finally,
+
+\begin{equation}
+  D = \left[ 0 \right]
+  \label{eq:ss_D}
+\end{equation}
+
+\subsection{Controllability and Observability}
+
+Let us take the following values for our components: $R_1 = R_2 = 50\omega$,
+$C_1 = 3.9 \mu F$, $C_2 = 4.7 \mu F$. Then we have
+
+\begin{equation}
+  A = \left[
+  \begin{array}{cc}
+    -1.03 \times 10^4 & 5.13 \times 10^3 \\
+    4.26 \times 10^3 & -4.26 \times 10^3
+  \end{array}
+  \right]
+  \label{eq:q_A}
+\end{equation}
+
+\noindent and
+
+\begin{equation}
+  B = \left[
+  \begin{array}{c}
+    5.13 \times 10^3 \\
+    0
+  \end{array}
+  \right]
+  \label{eq:q_B}
+\end{equation}
+
+Then we have controllability matrix
+
+\begin{equation}
+  C_M = \left[
+  \begin{array}{c c}
+    0 & 1 \\
+    4.26 \times 10^3 & 4.26 \times 10^3
+  \end{array}
+  \right]
+  \label{eq:q_cm}
+\end{equation}
+
+and observability matrix
+
+\begin{equation}
+  O_M = \left[
+  \begin{array}{c c}
+    5.13 \times 10^3 & -5.26 \times 10^7 \\
+    0 & 2.18 \times 10^7
+  \end{array}
+  \right]
+  \label{eq:q_om}
+\end{equation}
+
+Now, it is easy to see that both of these matrices have a non-zero determinant,
+and therefore that they are invertible. This leads us to conclude that the
+system is, in fact, controllable and observable.
+
+\subsection{Transfer Function}
+
+If we want to get the transfer function of our system, we can use our
+previously obtained matrices, and use the equation
+
+\begin{equation}
+  T(s) = C\left( sI - A \right) B + D
+  \label{eq:2_tf}
+\end{equation}
+
+We omit the specific steps for brevity, and obtain the expression
+
+\begin{IEEEeqnarray}{rCl}
+  T(s) & = & \frac{C \text{adj}\left( sI - A \right) B}{\text{det}\left( sI - A \right)} \nonumber \\
+  & = & \frac{2.19 \times 10^7}{s^2 + 6.04 \times 10^3 s - 2.2 \times 10^7}
+  \label{eq:2_tf_answer}
+\end{IEEEeqnarray}
+
+% endsection Controllability and Observability
+% endsection Question 2
+
+\end{document}

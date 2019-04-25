@@ -14,22 +14,20 @@
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## -*- texinfo -*- 
-## @deftypefn {} {@var{retval} =} question_4_PID (@var{input1}, @var{input2})
+## @deftypefn {} {@var{retval} =} question_1 (@var{input1}, @var{input2})
 ##
 ## @seealso{}
 ## @end deftypefn
 
 ## Author: Quintin <quintin@quintin-Inspiron-15-3567>
-## Created: 2019-03-10
+## Created: 2019-04-24
 
-function [retval] = question_4_PID (Kp,Ki,Kd)
-  J = 0.012;
-  b = 0.105;
-  K = 0.01;
-  R = 1;
-  L = 0.505;
-  G = tf([R*b+K^2],[J*L (L*b+R*J) R*b+K]);
-  D = tf([Kd Kp Ki],[1 0])
-  H = feedback(D * G)
-  step(H)
+function [retval] = question_1 ()
+# student number 216008466 uses M = 16Kg, m = 0.6kg and l = 3.5m
+
+A = [0 1 0 0;2.905 0 0 0;0 0 0 1;-0.3675 0 0 0];
+B = [0 ;-1/56; 0; 1/16];
+C = [1 0 0 0;0 0 1 0];
+sys = ss(A,B,C)
+step(sys)
 endfunction
