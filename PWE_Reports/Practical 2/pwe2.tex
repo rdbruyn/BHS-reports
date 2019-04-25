@@ -1,0 +1,194 @@
+%        File: pwe2.tex
+%     Created: Thu Apr 25 10:00  2019 S
+% Last Change: Thu Apr 25 10:00  2019 S
+%
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage[]{amsmath, amssymb}
+\usepackage[]{graphicx}
+\usepackage{float}
+\usepackage[toc, page]{appendix}
+\usepackage[]{hyperref}
+
+\title{Power Electronics: Designing and Building a Single Switch Flyback Converter}
+\author{Ruan de Bruyn \and 216054484 \and Quintin Kruger \and 216008466}
+
+\begin{document}
+
+\pagenumbering{gobble}
+\maketitle
+\newpage
+\pagenumbering{roman}
+\tableofcontents
+\listoffigures
+\newpage
+\pagenumbering{arabic}
+
+\section{Introduction}
+
+% endsection Introduction
+
+\section{Design}
+
+% endsection Design
+
+\subsection{Circuit Design}
+
+% endsubsection Circuit Design
+
+\subsection{Negative Feedback Control}
+
+We decided to use a Raspberry Pi Model 3B+. <+PROVIDE DISCUSSION HERE+>
+
+% endsubsection Negative Feedback Control
+
+\section{Construction}
+
+% endsection Construction
+
+\section{Results and Discussion}
+
+% endsection Results and Discussion
+
+\begin{appendices}
+	\section{Negative Feedback Code}
+	\texttt{\#include <wiringPi.h>} \\\noindent
+	\texttt{\#include <stdio.h>} \\\noindent
+	\texttt{\#include <stdlib.h>} \\\noindent
+	\texttt{\#include <stdint.h>} \\\noindent
+	\texttt{\#include <time.h>} \\\noindent
+	\texttt{\#include <pthread.h>} \\\noindent
+	\texttt{\#include <math.h>} \\\noindent
+	\texttt{\#include <mcp3004.h>} \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{\#define BASE 100} \\\noindent
+	\texttt{\#define SPI\_CHAN 0} \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{double period = 40;} \\\noindent
+	\texttt{const double D\_MAX = 0.425;} \\\noindent
+	\texttt{const double D\_MIN = 0.025;} \\\noindent
+	\texttt{double duty\_cycle = D\_MIN;} \\\noindent
+	\texttt{int voltage = 0;} \\\noindent
+	\texttt{double normalized\_voltage = 0.0;} \\\noindent
+	\texttt{double error = 0.0;} \\\noindent
+	\texttt{int ref\_voltage = 18;} \\\noindent
+	\texttt{const vref = 5;} \\\noindent
+	\texttt{const double r\_factor = 21 * vref / 1024;} \\\noindent
+	\texttt{double p = 0.0125;} \\\noindent
+	\texttt{double p\_i = 0.003;} \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{bool running = true;} \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{void *run\_pwm()} \\\noindent
+	\texttt{{ \\\noindent}
+	\texttt{printf("Running pwm\n");} \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{int fixed\_cycle = 0;} \\\noindent
+	\texttt{int t\_on = 0;} \\\noindent
+	\texttt{int t\_off = 0;} \\\noindent
+	\texttt{int x;} \\\noindent
+	\texttt{while(running){ \\\noindent}
+	\texttt{fixed\_cycle = duty\_cycle;} \\\noindent
+	\texttt{t\_on = round(period * fixed\_cycle);} \\\noindent
+	\texttt{t\_off = round(period * (1 - fixed\_cycle));} \\\noindent
+	\texttt{digitalWrite(1, LOW);} \\\noindent
+	\texttt{delayMicroseconds(t\_on);} \\\noindent
+	\texttt{digitalWrite(1, HIGH);} \\\noindent
+	\texttt{delayMicroseconds(t\_off);} \\\noindent
+	\texttt{}} \\\noindent
+	\texttt{} \\\noindent
+	\texttt{printf("We're done\n");} \\\noindent
+	\texttt{digitalWrite(1, LOW);} \\\noindent
+	\texttt{pinMode(1, 0);} \\\noindent
+	\texttt{}} \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{void *controller()} \\\noindent
+	\texttt{{ \\\noindent}
+	\texttt{const int size\_max = 10;} \\\noindent
+	\texttt{double i\_values[size\_max] = {};} \\\noindent
+	\texttt{int size = 0;} \\\noindent
+	\texttt{double sum = 0;} \\\noindent
+	\texttt{while(running)} \\\noindent
+	\texttt{{ \\\noindent}
+	\texttt{// run until cancel} \\\noindent
+	\texttt{// get measurements} \\\noindent
+	\texttt{// voltage = analogRead(BASE);} \\\noindent
+	\texttt{// normalized\_voltage = voltage * r\_factor;} \\\noindent
+	\texttt{// error = ref\_voltage - normalized\_voltage;} \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{voltage = 0;} \\\noindent
+	\texttt{normalized\_voltage = 0;} \\\noindent
+	\texttt{error = 0;} \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{// Add error value to integrator} \\\noindent
+	\texttt{if(size < size\_max)} \\\noindent
+	\texttt{size++;} \\\noindent
+	\texttt{i\_values[size - 1] = error} \\\noindent
+	\texttt{else { \\\noindent}
+	\texttt{// shift old values} \\\noindent
+	\texttt{int i;} \\\noindent
+	\texttt{for(i = 0; i < size\_max - 1; i++)} \\\noindent
+	\texttt{i\_values[i] = i\_values[i + 1];} \\\noindent
+	\texttt{i\_values[size\_max - 1] = error;} \\\noindent
+	\texttt{}} \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{// sum values for integrator} \\\noindent
+	\texttt{int i;} \\\noindent
+	\texttt{sum = 0;} \\\noindent
+	\texttt{for(i = 0; i < size, i++)} \\\noindent
+	\texttt{sum += i\_values[i];} \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{// adjust duty cycle accordingly} \\\noindent
+	\texttt{duty\_cycle += p * error + p\_i * sum;} \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{if(duty\_cycle > D\_MAX)} \\\noindent
+	\texttt{duty\_cycle = D\_MAX;} \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{if(duty\_cycle < D\_MIN)} \\\noindent
+	\texttt{duty\_cycle = D\_MIN;} \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{// Delay single microsecond} \\\noindent
+	\texttt{delayMicroseconds(500);} \\\noindent
+	\texttt{}} \\\noindent
+	\texttt{}} \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{int main(void) { \\\noindent}
+	\texttt{// setup physical} \\\noindent
+	\texttt{wiringPiSetup();} \\\noindent
+	\texttt{mcp3004Setup(BASE, SPI\_CHAN);} \\\noindent
+	\texttt{pinMode(1, OUTPUT); } \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{pthread\_t thread\_1;} \\\noindent
+	\texttt{pthread\_t thread\_2;} \\\noindent
+	\texttt{pthread\_create(&thread\_1, NULL, run\_pwm, NULL);} \\\noindent
+	\texttt{pthread\_create(&thread\_2, NULL, controller, NULL);} \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{char* line = NULL;} \\\noindent
+	\texttt{size\_t len = 0;} \\\noindent
+	\texttt{ssize\_t read = 0;} \\\noindent
+	\texttt{ \\\noindent}
+	\texttt{while(running)} \\\noindent
+	\texttt{{ \\\noindent}
+	\texttt{while (read != -1) { \\\noindent}
+	\texttt{puts("Enter q to quit");} \\\noindent
+	\texttt{read = getline(&line, &len, stdin);} \\\noindent
+	\texttt{printf("line = %s", line);} \\\noindent
+	\texttt{printf(line);} \\\noindent
+	\texttt{puts("");} \\\noindent
+	\texttt{if (!strcmp(line, "q\n")) { \\\noindent}
+	\texttt{running = false;} \\\noindent
+	\texttt{break;} \\\noindent
+	\texttt{}} \\\noindent
+	\texttt{}} \\\noindent
+	\texttt{}} \\\noindent
+	\texttt{\\\noindent}
+	\texttt{free(line);} \\\noindent
+	\texttt{pthread\_join(thread\_1, NULL);} \\\noindent
+	\texttt{pthread\_join(thread\_2, NULL);} \\\noindent
+	\texttt{\\\noindent}
+	\texttt{return 0;} \\\noindent
+	\texttt{}} \\\noindent
+
+\end{appendices}
+
+\end{document}
