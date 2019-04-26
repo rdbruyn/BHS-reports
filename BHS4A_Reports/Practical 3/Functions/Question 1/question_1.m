@@ -27,12 +27,23 @@ function [retval] = question_1 ()
 
 A = [0 1 0 0;0.302 0 0 0;0 0 0 1;-0.56 0 0 0];
 B = [0 ;-5/59; 0; 1/2.8];
-C = [1 0 0 0;0 0 1 0]
-sys = ss(A,B,C)
+C = [1 0 0 0;0 0 1 0];
+sys = ss(A,B,C);
 step(sys);
-[NUM,DEN] = ss2tf(A,B,C)
-T = tf(NUM,DEN)
 
-# Need to implemenent a controller giving stability 
+# Eigen values of A gives pole locations of the system
+P = eig(A)
+
+# Desired pole locations from specification of x location of cart,
+Pdes = [0;0;-0.54955;-0.54955]
+# K values placing the poles at the desired location
+K = place(A,B,Pdes)
+
+Acl = A-B*K;
+
+Syscl = ss(Acl,B,C);
+figure;
+step(Syscl)
+
 
 endfunction
