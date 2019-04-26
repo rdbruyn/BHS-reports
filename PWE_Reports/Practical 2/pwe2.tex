@@ -5,6 +5,7 @@
 \documentclass[a4paper, 12pt]{article}
 
 \usepackage[]{amsmath, amssymb}
+\usepackage{IEEEtrantools}
 \usepackage[]{graphicx}
 \usepackage{float}
 \usepackage[toc, page]{appendix}
@@ -30,9 +31,113 @@
 
 \section{Design}
 
-% endsection Design
-
 \subsection{Circuit Design}
+
+The design specifications are given as such:
+<+ADD DESIGN SPECS HERE+>
+
+We used the recommended textbook the practical \cite{pressman} during the
+design of this converter. Since we have a switching frequency of $f_s = 25kHz$,
+that leaves us with a period of
+
+\begin{IEEEeqnarray}{rCl}
+	T = \frac{1}{f_s} \nonumber \\
+	& = & 40 \mu s
+	\label{eq:T}
+\end{IEEEeqnarray}
+
+For stability and dynamic response reasons, we decided to have this flyback
+converter operate in discontinuous mode. Thus, we will have an ``on'' time,
+$T_{on}$, which will represent our duty cycle. There needs to be a ``reset''
+time as well, to allow the inductor to completely dispose of the energy in its
+magnetic field. \cite{pressman} recommends the following constraint:
+
+\begin{equation}
+	T_{on} + T_r = 0.8T
+	\label{eq:time_constraint}
+\end{equation}
+
+Equation \eqref{eq:time_constraint} ensures that there is enough dead time
+between cycles for the inductor to reset. Then, with our maximum duty cycle
+being 42.5\%, we have
+
+\begin{equation}
+	T_{on} = D_{\text{max}} T = 17 \mu s
+	\label{eq:ton}
+\end{equation}
+
+\noindent and from equation \eqref{eq:time_constraint}
+
+\begin{IEEEeqnarray}{rCl}
+	T_r & = & 0.8(40 \mu s) - 17 \mu s \nonumber \\
+	& = & 15 \mu s
+	\label{eq:tr}
+\end{IEEEeqnarray}
+
+leaving us with a dead time of about $8 \mu s$ per cycle to ensure
+discontinuous mode operation. Next, we need to calculate the turns ratio for
+the coupled inductor. With the assumed efficiency of $\eta = 80\%$ and a
+specified output power of $P_o = 20 W$, this means we would have input power
+$P_i = 25 W$. From a 12V DC power supply, we would then expect to draw an
+average current of approximately 2A on the primary side. This is important,
+because when calculating our turns ratio, the voltage drop across the switch on
+the primary side needs to be taken into account. According to the IRF510 Power
+MOSFET datasheet, it has an $R_{DS, on}$ of $0.54\Omega$. Granted, this was
+measured with a primary current of 3.4A according to the datasheet, but this
+should suffice as an approximation for us. Then we have a forward voltage drop
+over the switch of approximately $V_{DS} = (2)(0.54) \approx 1V$. 
+
+Then, on the secondary side, we require an output voltage of $V_o = 18V$.
+However, our fast switching 1N4148 diode has a forward voltage drop of $V_f =
+1V$, which means that the coupled inductor has to step up voltage to compensate
+for this drop. Taking all of this into account, together with the fact that the
+integral of the volt-seconds over the inductor should equal zero, we have
+
+\begin{equation}
+	(V_i - V_{DS})T_{on} = \frac{N_s}{N_p}(V_o + V_f)T_r
+	\label{eq:turnsratio}
+\end{equation}
+
+Letting $\rho$ denote our turns ratio, and substituting for our known values,
+it follows from \eqref{eq:turnsratio} that
+
+\begin{IEEEeqnarray}{rCl}
+	\rho & = & \frac{V_i - V_{DS}T_{on}}{(V_o + V_f)T_r} \nonumber \\
+	& = & \frac{(12 - 1)17 \times 10^{-6}}{(18 + 1)15 \times 10^{-6}} \nonumber \\
+	& = & 0.656 \nonumber \\
+	& \approx & 0.65
+	\label{eq:rho}
+\end{IEEEeqnarray}
+
+The inductance of the primary side of the coupled inductor comes next. The
+proof of the equation for the primary inductance is covered in Pressman
+\cite{pressman}, and is beyond the scope of this report. We will, however,
+alter the equation as a function of efficiency (\cite{pressman} assumes a fixed
+efficiency), which yields
+
+\begin{equation}
+	V_o = V_{i} T_{on} \sqrt{\frac{R_o}{\tfrac{2}{\eta}T L_p}} \Rightarrow L_p = \frac{(V_i T_{on})^2}{\tfrac{2}{\eta} T P_o}
+	\label{eq:lp}
+\end{equation}
+
+Substituting our values, it leaves us with a primary inductance of
+
+\begin{IEEEeqnarray}{rCl}
+	L_p & = & \frac{(12 \times 17 \times 10^{-6})^2}{\tfrac{2}{0.8}(40 \times 10^{-6})(20)} \nonumber \\
+	& = & 2.08 \times 10^{-5} \nonumber \\
+	& = & 20.8 \mu H
+	\label{eq:primary_inductance}
+\end{IEEEeqnarray}
+
+Getting the secondary inductance can be done with a simple ratio:
+
+\begin{IEEEeqnarray}{rCl}
+	L_s & = & \rho^{-2}L_p \nonumber \\
+	& = & 0.65^{-2}(2.08 \times 10^{-5}) \nonumber \\
+	& = & 4.925 \times 10^{-5} \nonumber \\
+	& = & 49.3 \mu H
+	\label{eq:secondary_inductance}
+\end{IEEEeqnarray}
 
 % endsubsection Circuit Design
 
@@ -42,6 +147,7 @@ We decided to use a Raspberry Pi Model 3B+. <+PROVIDE DISCUSSION HERE+>
 
 % endsubsection Negative Feedback Control
 
+% endsection Design
 \section{Construction}
 
 % endsection Construction
@@ -49,6 +155,10 @@ We decided to use a Raspberry Pi Model 3B+. <+PROVIDE DISCUSSION HERE+>
 \section{Results and Discussion}
 
 % endsection Results and Discussion
+
+\begin{thebibliography}
+	\bibitem{pressman} A. Pressman, K. Billings, T. Morey, \textit{Switching Power Supply Design, Third Edition}, Chapter 4 --- Flyback Converter Topologies
+\end{thebibliography}
 
 \begin{appendices}
 	\section{Negative Feedback Code}
