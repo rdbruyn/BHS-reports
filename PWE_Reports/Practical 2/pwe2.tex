@@ -4,6 +4,7 @@
 %
 \documentclass[a4paper, 12pt]{article}
 
+\usepackage[T1]{fontenc}
 \usepackage[]{amsmath, amssymb}
 \usepackage{IEEEtrantools}
 \usepackage[]{graphicx}
@@ -41,9 +42,34 @@ extensively to understand and design a practical real-life flyback converter.
 
 \subsection{Circuit Design}
 
+This section discusses the design of the flyback converter. Our design follows
+a single switch topology, and is shown below in figure
+\ref{fig:circuit_diagram}. Note that $V_2$ is our control block, and denotes
+the PWM output driving the MOSFET. There is also a negative control loop
+returning from $R_2$ for measuring load voltage, as will be discussed on later
+sections. A more formal diagram of the flyback circuit we based our overall
+design on can be seen in figure \ref{fig:pressman_circuit}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{./images/circuit_diagram.png}
+  \caption{Flyback Converter Circuit}
+  \label{fig:circuit_diagram}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.6\textwidth]{./images/pressman_circuit.png}
+  \caption{Master/slave flyback converter with negative feedback loop \cite{pressman}}
+  \label{fig:pressman_circuit}
+\end{figure}
+
+\noindent 
+
 \subsubsection{Design Specifications}
 
-The student number we used to get the design specifications was 216054484. Following the practical guide, our design specifications are given as such:
+The student number we used to get the design specifications was 216054484.
+Following the practical guide, our design specifications are given as such:
 
 \begin{table}[H]
   \centering
@@ -55,12 +81,26 @@ The student number we used to get the design specifications was 216054484. Follo
     Efficiency & $\eta$ & 80\% \\
     Maximum duty cycle & $D_{\text{max}}$ & 42.5\% \\
     Output voltage & $V_o$ & 18V \\
+    Voltage ripple & $\Delta V_o$ & 10\% \\
     Switching frequency & $f_{\text{sw}}$ & 25 kHz \\
     \bottomrule
   \end{tabular}
   \caption{Design Specifications}
   \label{tab:design_specs}
 \end{table}
+
+\subsubsection{Load Resistance}
+
+Since we have output power and output voltage specified, we start with
+calculating the load resistance:
+
+\begin{IEEEeqnarray}{rCl}
+  P_o & = & \frac{V_o^2}{R_o} \nonumber \\
+  R_o & = & \frac{V_o^2}{P_o} \nonumber \\
+  & = & \frac{18^2}{20} \nonumber \\
+  & = & 16.2\Omega
+  \label{eq:load_resistor}
+\end{IEEEeqnarray}
 
 \subsubsection{Turns ratio}
 
@@ -122,7 +162,7 @@ for this drop. Taking all of this into account, together with the fact that the
 integral of the volt-seconds over the inductor should equal zero, we have
 
 \begin{equation}
-	(V_i - V_{DS})T_{on} = \frac{N_s}{N_p}(V_o + V_f)T_r
+	(V_i - V_{DS})T_{on} = \frac{N_p}{N_s}(V_o + V_f)T_r
 	\label{eq:turnsratio}
 \end{equation}
 
@@ -169,7 +209,7 @@ Getting the secondary inductance can be done with a simple ratio:
 	\label{eq:secondary_inductance}
 \end{IEEEeqnarray}
 
-\subsubsection{Peak Currents}
+\subsubsection{Peak Currents and Capacitance}
 
 In order to double check our peak currents, we can use the current through an
 inductor equation, where
@@ -179,7 +219,7 @@ inductor equation, where
   \label{eq:inductor_current}
 \end{equation}
 
-Denoting peak primary current as $\hat{I_p}$, we get our primary peak current as
+\noindent Denoting peak primary current as $\hat{I_p}$, we get our primary peak current as
 \begin{IEEEeqnarray}{rCl}
   \hat{I_p} & = & \frac{1}{L_p} \int_0^{T_{on}} V_i dt \nonumber \\
   & = & \frac{12}{20.8 \times 10 ^{-6}}(17 \times 10^{-6}) \nonumber \\
@@ -187,7 +227,7 @@ Denoting peak primary current as $\hat{I_p}$, we get our primary peak current as
   \label{eq:primary_current_peak}
 \end{IEEEeqnarray}
 
-In order to get the peak secondary current, we simply multiply it with $\rho$,
+\noindent In order to get the peak secondary current, we simply multiply it with $\rho$,
 and get
 
 \begin{IEEEeqnarray}{rCl}
@@ -208,7 +248,26 @@ Applying this formula with the results obtained for peak currents, we have
 
 \begin{IEEEeqnarray}{rCl}
   I_{rms(primary)} = 3.69A \\
-  I_{rms(secondary)} = 2.25A
+  I_{rms(secondary)} = 2.25A \label{eq:is_rms}
+\end{IEEEeqnarray}
+
+We can use the secondary rms current obtained above to calculate
+the value of output capacitor $C_1$ with the following equation:
+
+\begin{IEEEeqnarray}{rCl}
+  I & = & C \frac{\Delta V}{\Delta t} \nonumber \\
+  C & = & \frac{\Delta t}{\Delta V} I
+  \label{eq:co_formula}
+\end{IEEEeqnarray}
+
+Taking into account the fact that the capacitor must discharge current through
+an entire period except $T_r$, and that output ripple should at most be 10\% of
+our output voltage, equation \eqref{eq:co_formula} gives us
+
+\begin{IEEEeqnarray}{rCl}
+  C_1 & = & \frac{25 \times 10^{-6}}{0.1(18)}(2.25) \nonumber \\
+  & = & 3.1304 \times 10^{-5} \nonumber \\
+  & = & 31.3 \mu F \label{eq:co}
 \end{IEEEeqnarray}
 
 % endsubsection Circuit Design
@@ -217,7 +276,7 @@ Applying this formula with the results obtained for peak currents, we have
 
 We decided to use a Raspberry Pi Model 3B+ as our PWM source for this circuit.
 We made this choice because the Raspberry Pi has ample processing power for
-this application; its 1.4GHz processorcan perform elementary operations with
+this application; its 1.4GHz processor can perform elementary operations with
 sub-microsecond speed, and will ensure that our duty cycle --- which is on the
 order of microseconds --- will stay constant while sensor data from the circuit
 is being processed.
@@ -235,10 +294,14 @@ where $V_{\text{digital}}$ is quantized to be an integer. However, the MCP3008
 can only take a maximum $V_{\text{ref}}$ of 5.5V, according to the datasheet,
 meaning we need to step down our load voltage to be less than that if we are to
 implement effective control (and not damage the chip). This is done by the
-voltage divider resistors that are parallel to the load. <+ADD PROPER LABELS
-FOR RESISTORS ONCE SCHEMATICS ARE PUT IN+>. Since the voltage over the smaller
-resistor is measured by our A/D converter, we essentially step down our load
-voltage with as given by \eqref{eq:voltage_divider}.
+voltage divider resistors that are parallel to the load. From Figure
+\ref{fig:circuit_diagram}, these voltage dividers are denoted $R_1$ and $R_2$.
+For these voltage dividers, we require that both $R_1$ and $R_2$ must be much
+larger than the load, or else the branch will draw too much current and alter
+the output voltage. We choose $R_1 = 100k\Omega$ and $R_2 = 10k\Omega$, and
+then we have $R_1 + R_2 >> R_o$ as required.  Since the voltage over the
+smaller resistor is measured by our A/D converter, we essentially step down our
+load voltage with as given by \eqref{eq:voltage_divider}.
 
 \begin{equation}
   V_{\text{analog}} = \frac{10}{100 + 10}V_o = \frac{1}{11} V_o
@@ -251,11 +314,10 @@ the output is 5V, but we measured it to be 5.2V). This means that our load can
 have an output voltage of $11 \times 5.2 = 57.2V$ before the IC will start
 giving erroneous output or become damaged. Since our output voltage is 18V, we
 feel that this adds a sufficient buffer to protect the Raspberry Pi and the IC.
-A quick calculation also reveals that, with a reference voltage of 5.2 volts,
-the A/D converter has a voltage resolution of approximately 5mV, which is more
-than sufficient for controlling the output voltage of the converter. The actual
-code for negative feedback control is given in Appendix
-\ref{sec:feedback_code}.
+Also, with a reference voltage of 5.2 volts, the A/D converter has a voltage
+resolution of approximately $5.2V / 1024 \approx 5mV$, which is more than
+sufficient for controlling the output voltage of the converter. The actual code
+for negative feedback control is given in Appendix \ref{sec:feedback_code}.
 
 The PWM that this code ultimately controls is supplied from the Raspberry Pi to
 the circuit via an ICL7667 inverting MOSFET driver, which steps up the 3.3V PWM
@@ -273,6 +335,45 @@ small capacitor at the output of the driver to even out the spikes somewhat.
 
 % endsection Design
 \section{Construction}
+
+\subsection{Components Used}
+
+For the control block and PWM output, we used the following components:
+\begin{itemize}
+  \item Raspberry Pi. Used for implementing control loop and providing PWM
+    output.
+  \item MCP3008 A/D converter. As discussed earlier, at provides digital
+    voltage readings for the control loop running via the Raspberry Pi.
+  \item ICL7667 MOSFET driver. Converts 3.3V Raspberry Pi PWM to 12V PWM for
+    driving MOSFET.
+  \item 3.9 nF Film Capacitor. This is capacitor $C_2$ in the circuit. Reduces
+    PWM switching spikes, and the type was chosen due to the reliability and
+    generally long service life of film capacitors.
+\end{itemize}
+
+The components of the converter itself are listed below
+\begin{itemize}
+  \item $M1$: IRF510 Power MOSFET. A reliable MOSFET we've used previously and
+    are familiar with. Additionally, a robust heat sink was also added to keep
+    it cool under operating conditions.
+  \item $D_1$: 1N4148 diode. This diode is a fast switching type; useful for
+    minimizing switching losses.
+  \item $C_1$: $47 \mu F$. This capacitor is a \textit{low ESR} capacitor, and
+    was chosen because this property further minimizes power losses in the
+    circuit. It is larger than the result found in \eqref{eq:co}, to provide an
+    extra margin for ripple current, but not excessively large such that it
+    takes up a lot of space or makes the circuit significantly more costly.
+  \item $R_o$: We were unable to get a load matching exactly $16.2\Omega$, as
+    found in \ref{eq:load_resistor}. We used two $33\Omega$ 10W resistors for a
+    load instead. When combined, they give a combined resistance of
+    $16.5\Omega,\, 20$W, which is acceptable in our case.
+  \item $R_1$: $100k\Omega$ resistor, rated at 0.5W
+  \item $R_2$: $10k\Omega$ resistor, rated at 0.5W
+\end{itemize}
+
+\subsection{Final Circuit}
+
+<+add photo of circuit here+>
 
 % endsection Construction
 
