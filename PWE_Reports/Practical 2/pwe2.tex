@@ -28,6 +28,13 @@
 
 \section{Introduction}
 
+The purpose of this practical was to design and construct a Flyback converter.
+The design specifications of this converter are given to us in the practical
+guide, and this report shows the steps and reasoning we had while building the
+converter. It's also worth noting that the practical guide recommended a
+textbook on designing switching power supplies \cite{pressman}, which was used
+extensively to understand and design a practical real-life flyback converter.
+
 % endsection Introduction
 
 \section{Design}
@@ -281,6 +288,23 @@ small capacitor at the output of the driver to even out the spikes somewhat.
 \begin{appendices}
 	\section{Negative Feedback Code}
 	\label{sec:feedback_code}
+	Below is the code that was implemented for negative feedback control in
+	the Raspberry Pi. The code was implemented in the C programming
+	language, and compiled using the GCC compiler with the relevant
+	compiling flags to the libraries used. Note that the algorithm
+	implements a PI type controller. The reasoning for this specific choice
+	came from a lecture on PWM control in Power Electronics, where Dr.
+	Pentz stated that an integrator constant acts as a low-pass filter,
+	avoiding excessive readings from noise, whereas a derivative constant
+	acts as a high-pass filter, increasing the noise instead.
+	
+	Lastly, it's worth noting that this algorithm was able to execute
+	successfully without any significant impact on the PWM frequency, due
+	to the Raspberry Pi's processing speed, and the use of threads for
+	concurrent processing. There is some code that takes user input in the
+	main function. This was simply for demonstration purposes, so we could
+	easily run the PWM program through the terminal, and safely quit all
+	the threads with a single command.\\\\\noindent
 	\texttt{\#include <wiringPi.h>} \\\noindent
 	\texttt{\#include <stdio.h>} \\\noindent
 	\texttt{\#include <stdlib.h>} \\\noindent
@@ -373,7 +397,6 @@ small capacitor at the output of the driver to even out the spikes somewhat.
 	\texttt{\hspace*{2em}if(duty\_cycle < D\_MIN)} \\\noindent
 	\texttt{\hspace*{3em}duty\_cycle = D\_MIN;} \\\noindent
 	\texttt{ \\\noindent}
-	\texttt{\hspace*{2em}// Delay single microsecond} \\\noindent
 	\texttt{\hspace*{2em}delayMicroseconds(500);} \\\noindent
 	\texttt{\hspace*{1em}\}}\\\noindent
         \texttt{\}} \\\noindent
@@ -387,10 +410,8 @@ small capacitor at the output of the driver to even out the spikes somewhat.
 	\texttt{\hspace*{1em}\\\noindent}
 	\texttt{\hspace*{1em}pthread\_t thread\_1;} \\\noindent
 	\texttt{\hspace*{1em}pthread\_t thread\_2;} \\\noindent
-	\texttt{\hspace*{1em}pthread\_t thread\_3;} \\\noindent
 	\texttt{\hspace*{1em}pthread\_create(\&thread\_1, NULL, run\_pwm, NULL);} \\\noindent
 	\texttt{\hspace*{1em}pthread\_create(\&thread\_2, NULL, controller, NULL);} \\\noindent
-	\texttt{\hspace*{1em}pthread\_create(\&thread\_3, NULL, read\_ser, NULL);} \\\noindent
 	\texttt{\hspace*{1em}\\\noindent}
 	\texttt{\hspace*{1em}char* line = NULL;} \\\noindent
 	\texttt{\hspace*{1em}size\_t len = 0;} \\\noindent
@@ -412,7 +433,6 @@ small capacitor at the output of the driver to even out the spikes somewhat.
 	\texttt{\hspace*{1em}free(line);} \\\noindent
 	\texttt{\hspace*{1em}pthread\_join(thread\_1, NULL);} \\\noindent
 	\texttt{\hspace*{1em}pthread\_join(thread\_2, NULL);} \\\noindent
-	\texttt{\hspace*{1em}pthread\_join(thread\_3, NULL);} \\\noindent
 	\texttt{\hspace*{1em}\\\noindent}
 	\texttt{\hspace*{1em}return 0;} \\\noindent
         \texttt{\}} \\\noindent
