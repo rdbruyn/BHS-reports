@@ -7,6 +7,7 @@
 \usepackage[]{amsmath, amssymb}
 \usepackage{IEEEtrantools}
 \usepackage[]{graphicx}
+\usepackage{booktabs}
 \usepackage{float}
 \usepackage[toc, page]{appendix}
 \usepackage[]{hyperref}
@@ -33,15 +34,35 @@
 
 \subsection{Circuit Design}
 
-The design specifications are given as such:
-<+ADD DESIGN SPECS HERE+>
+\subsubsection{Design Specifications}
+
+The student number we used to get the design specifications was 216054484. Following the practical guide, our design specifications are given as such:
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{r c c}
+    \toprule
+    \textbf{Attribute} & \textbf{Symbol} & \textbf{Value} \\
+    \midrule
+    Power & $P_o$ & 20W \\
+    Efficiency & $\eta$ & 80\% \\
+    Maximum duty cycle & $D_{\text{max}}$ & 42.5\% \\
+    Output voltage & $V_o$ & 18V \\
+    Switching frequency & $f_{\text{sw}}$ & 25 kHz \\
+    \bottomrule
+  \end{tabular}
+  \caption{Design Specifications}
+  \label{tab:design_specs}
+\end{table}
+
+\subsubsection{Turns ratio}
 
 We used the recommended textbook the practical \cite{pressman} during the
 design of this converter. Since we have a switching frequency of $f_s = 25kHz$,
 that leaves us with a period of
 
 \begin{IEEEeqnarray}{rCl}
-	T = \frac{1}{f_s} \nonumber \\
+	T & = & \frac{1}{f_s} \nonumber \\
 	& = & 40 \mu s
 	\label{eq:T}
 \end{IEEEeqnarray}
@@ -102,12 +123,14 @@ Letting $\rho$ denote our turns ratio, and substituting for our known values,
 it follows from \eqref{eq:turnsratio} that
 
 \begin{IEEEeqnarray}{rCl}
-	\rho & = & \frac{V_i - V_{DS}T_{on}}{(V_o + V_f)T_r} \nonumber \\
+  \rho & = & \frac{(V_i - V_{DS})T_{on}}{(V_o + V_f)T_r} \nonumber \\
 	& = & \frac{(12 - 1)17 \times 10^{-6}}{(18 + 1)15 \times 10^{-6}} \nonumber \\
 	& = & 0.656 \nonumber \\
 	& \approx & 0.65
 	\label{eq:rho}
 \end{IEEEeqnarray}
+
+\subsubsection{Primary and Secondary Side Inductances}
 
 The inductance of the primary side of the coupled inductor comes next. The
 proof of the equation for the primary inductance is covered in Pressman
@@ -139,11 +162,105 @@ Getting the secondary inductance can be done with a simple ratio:
 	\label{eq:secondary_inductance}
 \end{IEEEeqnarray}
 
+\subsubsection{Peak Currents}
+
+In order to double check our peak currents, we can use the current through an
+inductor equation, where
+
+\begin{equation}
+  i_L = \frac{1}{L} \int V_L dt
+  \label{eq:inductor_current}
+\end{equation}
+
+Denoting peak primary current as $\hat{I_p}$, we get our primary peak current as
+\begin{IEEEeqnarray}{rCl}
+  \hat{I_p} & = & \frac{1}{L_p} \int_0^{T_{on}} V_i dt \nonumber \\
+  & = & \frac{12}{20.8 \times 10 ^{-6}}(17 \times 10^{-6}) \nonumber \\
+  & = & 9.8 A
+  \label{eq:primary_current_peak}
+\end{IEEEeqnarray}
+
+In order to get the peak secondary current, we simply multiply it with $\rho$,
+and get
+
+\begin{IEEEeqnarray}{rCl}
+  \hat{I_s} & = & \hat{I_p}\rho \nonumber \\
+  & = & (9.8)(0.65) \nonumber \\
+  & = & 6.38 A
+\end{IEEEeqnarray}
+
+Following a derivation in Chapter 2 of Pressman \cite{pressman}, we can get the
+RMS current on both sides using the formula
+
+\begin{equation}
+  I_{rms} = \frac{\hat{I}}{\sqrt{3}}\sqrt{\frac{T'}{T}}
+  \label{eq:rms_current_equation}
+\end{equation}
+
+Applying this formula with the results obtained for peak currents, we have
+
+\begin{IEEEeqnarray}{rCl}
+  I_{rms(primary)} = 3.69A \\
+  I_{rms(secondary)} = 2.25A
+\end{IEEEeqnarray}
+
 % endsubsection Circuit Design
 
 \subsection{Negative Feedback Control}
 
-We decided to use a Raspberry Pi Model 3B+. <+PROVIDE DISCUSSION HERE+>
+We decided to use a Raspberry Pi Model 3B+ as our PWM source for this circuit.
+We made this choice because the Raspberry Pi has ample processing power for
+this application; its 1.4GHz processorcan perform elementary operations with
+sub-microsecond speed, and will ensure that our duty cycle --- which is on the
+order of microseconds --- will stay constant while sensor data from the circuit
+is being processed.
+
+The MCP3008 IC was used as an analog-to-digital converter. This IC outputs a
+digital signal to the Raspberry Pi via the Serial SPI interface with as a ratio
+of the reference voltage provided to the chip with the formula
+
+\begin{equation}
+  V_{\text{digital}} = \frac{V_{\text{analog}}}{1024} V_{\text{ref}}
+  \label{eq:mcp_formula}
+\end{equation}
+
+where $V_{\text{digital}}$ is quantized to be an integer. However, the MCP3008
+can only take a maximum $V_{\text{ref}}$ of 5.5V, according to the datasheet,
+meaning we need to step down our load voltage to be less than that if we are to
+implement effective control (and not damage the chip). This is done by the
+voltage divider resistors that are parallel to the load. <+ADD PROPER LABELS
+FOR RESISTORS ONCE SCHEMATICS ARE PUT IN+>. Since the voltage over the smaller
+resistor is measured by our A/D converter, we essentially step down our load
+voltage with as given by \eqref{eq:voltage_divider}.
+
+\begin{equation}
+  V_{\text{analog}} = \frac{10}{100 + 10}V_o = \frac{1}{11} V_o
+  \label{eq:voltage_divider}
+\end{equation}
+
+Now, we supply the A/D converter with a reference voltage of $V_{\text{ref}} =
+5.2V$, from the 5V DC output of the Raspberry Pi (the documentation says that
+the output is 5V, but we measured it to be 5.2V). This means that our load can
+have an output voltage of $11 \times 5.2 = 57.2V$ before the IC will start
+giving erroneous output or become damaged. Since our output voltage is 18V, we
+feel that this adds a sufficient buffer to protect the Raspberry Pi and the IC.
+A quick calculation also reveals that, with a reference voltage of 5.2 volts,
+the A/D converter has a voltage resolution of approximately 5mV, which is more
+than sufficient for controlling the output voltage of the converter. The actual
+code for negative feedback control is given in Appendix
+\ref{sec:feedback_code}.
+
+The PWM that this code ultimately controls is supplied from the Raspberry Pi to
+the circuit via an ICL7667 inverting MOSFET driver, which steps up the 3.3V PWM
+from the Raspberry Pi to a 12V signal. This can comfortably drive our MOSFET
+past its threshold gate voltage. The MOSFET driver has protection circuitry
+internally built in to the package, which not only serves to protect the driver
+from any inductive effects from our MOSFET, but also protects the Raspberry Pi.
+When we initially built the circuit, we noticed large spikes at the output of
+of the driver, and followed advice from the manufacturer's datasheet and put a
+small capacitor at the output of the driver to even out the spikes somewhat.
+<+ADD REFERENCE TO PWM MEASUREMENT TO PROVE THIS+>
+
 
 % endsubsection Negative Feedback Control
 
@@ -156,148 +273,161 @@ We decided to use a Raspberry Pi Model 3B+. <+PROVIDE DISCUSSION HERE+>
 
 % endsection Results and Discussion
 
-\begin{thebibliography}
+\begin{thebibliography}{0}
 	\bibitem{pressman} A. Pressman, K. Billings, T. Morey, \textit{Switching Power Supply Design, Third Edition}, Chapter 4 --- Flyback Converter Topologies
 \end{thebibliography}
 
+\newpage
 \begin{appendices}
 	\section{Negative Feedback Code}
-	\texttt{\#include <wiringPi.h>} \\\noindent
-	\texttt{\#include <stdio.h>} \\\noindent
-	\texttt{\#include <stdlib.h>} \\\noindent
-	\texttt{\#include <stdint.h>} \\\noindent
-	\texttt{\#include <time.h>} \\\noindent
-	\texttt{\#include <pthread.h>} \\\noindent
-	\texttt{\#include <math.h>} \\\noindent
-	\texttt{\#include <mcp3004.h>} \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{\#define BASE 100} \\\noindent
-	\texttt{\#define SPI\_CHAN 0} \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{double period = 40;} \\\noindent
-	\texttt{const double D\_MAX = 0.425;} \\\noindent
-	\texttt{const double D\_MIN = 0.025;} \\\noindent
-	\texttt{double duty\_cycle = D\_MIN;} \\\noindent
-	\texttt{int voltage = 0;} \\\noindent
-	\texttt{double normalized\_voltage = 0.0;} \\\noindent
-	\texttt{double error = 0.0;} \\\noindent
-	\texttt{int ref\_voltage = 18;} \\\noindent
-	\texttt{const vref = 5;} \\\noindent
-	\texttt{const double r\_factor = 21 * vref / 1024;} \\\noindent
-	\texttt{double p = 0.0125;} \\\noindent
-	\texttt{double p\_i = 0.003;} \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{bool running = true;} \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{void *run\_pwm()} \\\noindent
-	\texttt{{ \\\noindent}
-	\texttt{printf("Running pwm\n");} \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{int fixed\_cycle = 0;} \\\noindent
-	\texttt{int t\_on = 0;} \\\noindent
-	\texttt{int t\_off = 0;} \\\noindent
-	\texttt{int x;} \\\noindent
-	\texttt{while(running){ \\\noindent}
-	\texttt{fixed\_cycle = duty\_cycle;} \\\noindent
-	\texttt{t\_on = round(period * fixed\_cycle);} \\\noindent
-	\texttt{t\_off = round(period * (1 - fixed\_cycle));} \\\noindent
-	\texttt{digitalWrite(1, LOW);} \\\noindent
-	\texttt{delayMicroseconds(t\_on);} \\\noindent
-	\texttt{digitalWrite(1, HIGH);} \\\noindent
-	\texttt{delayMicroseconds(t\_off);} \\\noindent
-	\texttt{}} \\\noindent
-	\texttt{} \\\noindent
-	\texttt{printf("We're done\n");} \\\noindent
-	\texttt{digitalWrite(1, LOW);} \\\noindent
-	\texttt{pinMode(1, 0);} \\\noindent
-	\texttt{}} \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{void *controller()} \\\noindent
-	\texttt{{ \\\noindent}
-	\texttt{const int size\_max = 10;} \\\noindent
-	\texttt{double i\_values[size\_max] = {};} \\\noindent
-	\texttt{int size = 0;} \\\noindent
-	\texttt{double sum = 0;} \\\noindent
-	\texttt{while(running)} \\\noindent
-	\texttt{{ \\\noindent}
-	\texttt{// run until cancel} \\\noindent
-	\texttt{// get measurements} \\\noindent
-	\texttt{// voltage = analogRead(BASE);} \\\noindent
-	\texttt{// normalized\_voltage = voltage * r\_factor;} \\\noindent
-	\texttt{// error = ref\_voltage - normalized\_voltage;} \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{voltage = 0;} \\\noindent
-	\texttt{normalized\_voltage = 0;} \\\noindent
-	\texttt{error = 0;} \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{// Add error value to integrator} \\\noindent
-	\texttt{if(size < size\_max)} \\\noindent
-	\texttt{size++;} \\\noindent
-	\texttt{i\_values[size - 1] = error} \\\noindent
-	\texttt{else { \\\noindent}
-	\texttt{// shift old values} \\\noindent
-	\texttt{int i;} \\\noindent
-	\texttt{for(i = 0; i < size\_max - 1; i++)} \\\noindent
-	\texttt{i\_values[i] = i\_values[i + 1];} \\\noindent
-	\texttt{i\_values[size\_max - 1] = error;} \\\noindent
-	\texttt{}} \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{// sum values for integrator} \\\noindent
-	\texttt{int i;} \\\noindent
-	\texttt{sum = 0;} \\\noindent
-	\texttt{for(i = 0; i < size, i++)} \\\noindent
-	\texttt{sum += i\_values[i];} \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{// adjust duty cycle accordingly} \\\noindent
-	\texttt{duty\_cycle += p * error + p\_i * sum;} \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{if(duty\_cycle > D\_MAX)} \\\noindent
-	\texttt{duty\_cycle = D\_MAX;} \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{if(duty\_cycle < D\_MIN)} \\\noindent
-	\texttt{duty\_cycle = D\_MIN;} \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{// Delay single microsecond} \\\noindent
-	\texttt{delayMicroseconds(500);} \\\noindent
-	\texttt{}} \\\noindent
-	\texttt{}} \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{int main(void) { \\\noindent}
-	\texttt{// setup physical} \\\noindent
-	\texttt{wiringPiSetup();} \\\noindent
-	\texttt{mcp3004Setup(BASE, SPI\_CHAN);} \\\noindent
-	\texttt{pinMode(1, OUTPUT); } \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{pthread\_t thread\_1;} \\\noindent
-	\texttt{pthread\_t thread\_2;} \\\noindent
-	\texttt{pthread\_create(&thread\_1, NULL, run\_pwm, NULL);} \\\noindent
-	\texttt{pthread\_create(&thread\_2, NULL, controller, NULL);} \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{char* line = NULL;} \\\noindent
-	\texttt{size\_t len = 0;} \\\noindent
-	\texttt{ssize\_t read = 0;} \\\noindent
-	\texttt{ \\\noindent}
-	\texttt{while(running)} \\\noindent
-	\texttt{{ \\\noindent}
-	\texttt{while (read != -1) { \\\noindent}
-	\texttt{puts("Enter q to quit");} \\\noindent
-	\texttt{read = getline(&line, &len, stdin);} \\\noindent
-	\texttt{printf("line = %s", line);} \\\noindent
-	\texttt{printf(line);} \\\noindent
-	\texttt{puts("");} \\\noindent
-	\texttt{if (!strcmp(line, "q\n")) { \\\noindent}
-	\texttt{running = false;} \\\noindent
-	\texttt{break;} \\\noindent
-	\texttt{}} \\\noindent
-	\texttt{}} \\\noindent
-	\texttt{}} \\\noindent
-	\texttt{\\\noindent}
-	\texttt{free(line);} \\\noindent
-	\texttt{pthread\_join(thread\_1, NULL);} \\\noindent
-	\texttt{pthread\_join(thread\_2, NULL);} \\\noindent
-	\texttt{\\\noindent}
-	\texttt{return 0;} \\\noindent
-	\texttt{}} \\\noindent
+	\label{sec:feedback_code}
+\#include <wiringPi.h>
+\#include <stdio.h>
+\#include <stdlib.h>
+\#include <stdint.h>
+\#include <time.h>
+\#include <pthread.h>
+\#include <math.h>
+\#include <stdbool.h>
+\#include <mcp3004.h>
+
+\#define BASE 100
+\#define SPI\_CHAN 0
+
+double period = 40;
+const double D\_MAX = 0.425;
+const double D\_MIN = 0.025;
+double duty\_cycle = 0.425;
+int voltage = 0;
+double normalized\_voltage = 0.0;
+double error = 0.0;
+int ref\_voltage = 18;
+const int vref = 5;
+const double r\_factor = 11 * 5.2 / 1024;
+double p = 0.0125;
+double p\_i = 0.003;
+
+bool running = true;
+
+void *run\_pwm()
+\{
+	printf("Running pwm\\n");
+
+	double fixed\_cycle = 0;
+	int t\_on = 0;
+	int t\_off = 0;
+	int x;
+	while(running)\{
+		fixed\_cycle = duty\_cycle;
+		t\_on = round(period * fixed\_cycle);
+		t\_off = round(period * (1 - fixed\_cycle));
+		digitalWrite(1, LOW);
+		delayMicroseconds(t\_on);
+		digitalWrite(1, HIGH);
+		delayMicroseconds(t\_off);
+	\}
+	
+	// Clean up the output pins for safety
+	digitalWrite(1, LOW);
+	pinMode(1, 0);
+\}
+
+void *controller()
+\{
+	const int size\_max = 10;
+	double i\_values[10] = \{\};
+	int size = 0;
+	double sum = 0;
+	while(running)
+	\{
+		// run until cancel
+		// get measurements
+		voltage = analogRead(BASE);
+		normalized\_voltage = voltage * r\_factor;
+		error = ref\_voltage - normalized\_voltage;
+
+		// Add error value to integrator
+		if(size < size\_max) \{
+			size++;
+			i\_values[size - 1] = error;
+		\}
+		else \{
+			// shift old values
+			int i;
+			for(i = 0; i < size\_max - 1; i++)
+				i\_values[i] = i\_values[i + 1];
+			i\_values[size\_max - 1] = error;
+		\}
+
+		// sum values for integrator
+		int i;
+		sum = 0;
+		for(i = 0; i < size; i++)
+			sum += i\_values[i];
+
+		// adjust duty cycle accordingly
+		duty\_cycle += p * error + p\_i * sum;
+
+		if(duty\_cycle > D\_MAX)
+			duty\_cycle = D\_MAX;
+
+		if(duty\_cycle < D\_MIN)
+			duty\_cycle = D\_MIN;
+
+		// Delay single microsecond
+		delayMicroseconds(500);
+	\}
+\}
+
+void *read\_ser() \{
+	while(running) \{
+		voltage = analogRead(BASE);
+		double tmp;
+	        tmp = voltage * r\_factor;
+		
+		if(tmp != 0)
+			printf("Load voltage: %f V\n", tmp);
+		delay(1000);
+	\}
+\}
+
+int main(void) \{
+	// setup physical
+	wiringPiSetup();
+	mcp3004Setup(BASE, SPI\_CHAN);
+	pinMode(1, OUTPUT); 
+
+	pthread\_t thread\_1;
+	pthread\_t thread\_2;
+	pthread\_t thread\_3;
+	pthread\_create(\&thread\_1, NULL, run\_pwm, NULL);
+	pthread\_create(\&thread\_2, NULL, controller, NULL);
+	pthread\_create(\&thread\_3, NULL, read\_ser, NULL);
+
+	char* line = NULL;
+	size\_t len = 0;
+	ssize\_t read = 0;
+
+	while(running)
+	\{
+		while (read != -1) \{
+			puts("Enter q to quit");
+			read = getline(\&line, \&len, stdin);
+			puts("");
+			if (!strcmp(line, "q\\n")) \{
+				running = false;
+				break;
+			\}
+		\}
+	\}
+
+	free(line);
+	pthread\_join(thread\_1, NULL);
+	pthread\_join(thread\_2, NULL);
+	pthread\_join(thread\_3, NULL);
+
+	return 0;
+\}
 
 \end{appendices}
 
