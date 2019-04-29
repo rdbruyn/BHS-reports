@@ -23,6 +23,9 @@
 ## Created: 2019-04-24
 
 function [retval] = question_1 ()
+pkg load symbolic;
+pkg load signal;
+pkg load control;
 # student number 216008466 uses M = 16Kg, m = 0.6kg and l = 3.5m
 %Question 1.1
 A = [0 1 0 0;0.302 0 0 0;0 0 0 1;-0.56 0 0 0];
@@ -30,6 +33,11 @@ B = [0 ;-5/59; 0; 1/2.8];
 C = [1 0 0 0;0 0 1 0];
 sys = ss(A,B,C);
 step(sys);
+
+[num,den] = ss2tf(A,B,C);
+transfer = tf(num,den);
+figure;
+zpk(transfer);
 
 %Qestion 2.1
 # Eigen values of A gives pole locations of the system
