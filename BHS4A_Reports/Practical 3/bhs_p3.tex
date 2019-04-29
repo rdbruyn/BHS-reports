@@ -89,42 +89,61 @@ A series of steps need to followed in order to realize control for this system, 
 
 After calculating the pole locations based on the required settling time and percent overshoot of $1.5$s and $20\%$, we use the \texttt{place} octave command which has a better accuracy than the \texttt{acker} command (it must be noted that the place command can only be applied if the desired poles are distinct which in this case is <+OR IS NOT WE HAVE TO CALCULATE THE POLES TO MAKE THIS STATEMENT+>). This gives us the control law needed to place the system in the desired pole locations.\\
 
-Using these constant values we can now obtain the controlled A matrix defined by the equation $A_{controlled} = \textbf{A}-\textbf{B}\textbf{K};$. The Octave code that implements this is shown below
+Using these constant values we can now obtain the controlled matrix defined by the equation $A_{controlled} = \textbf{A}-\textbf{B}\textbf{K};$. The Octave code that implements all of this is shown below
 
-% # Eigen values of A gives pole locations of the system
-% P = eig(A)
+\noindent
+	\texttt{A = [0 1 0 0;0.302 0 0 0;0 0 0 1;-0.56 0 0 0];}\\
+	\texttt{B = [0 ;-5/59; 0; 1/2.8];}\\
+	\texttt{C = [1 0 0 0;0 0 1 0];}\\
+	\texttt{sys = ss(A,B,C);}\\
+	\texttt{step(sys);}\\
+	\texttt{[num,den] = ss2tf(A,B,C);}\\
+	\texttt{transfer = tf(num,den);}\\
+	\texttt{figure;}\\
+	\texttt{pzmap(transfer);}\\
+	\texttt{P = eig(A)}\\
+	\texttt{OS = 0.2;}\\
+	\texttt{ts = 1.5;}\\
+	\texttt{zeta = (-log(OS))/(sqrt(pi\^2 + (log(OS))\^2));}\\
+	\texttt{wn = 4.6/(ts\*zeta);}\\
+	\texttt{sigma = zeta * wn;}\\
+	\texttt{wd = sqrt(wn\^2 - sigma\^2);}\\
+	\texttt{p1 = (-sigma + wd\*i);}\\
+	\texttt{p2 = 1.382\*(-sigma);}\\
+	\texttt{p3 = (-sigma - wd*i);}\\
+	\texttt{p4 = 1.382\*(-sigma);}\\
+	\texttt{poles\_desired = [p1 p2 p3 p4];}\\
+	\texttt{K = acker(A,B,poles\_desired);}\\
+	\texttt{A\_controlled = A-B\*K;}\\
+	\texttt{System\_controlled = ss(A\_controlled,B,C);}\\
+	\texttt{figure;}\\
+	\texttt{step(System\_controlled);}\\
 
-% # These poles must be changed to some other values giving the transint response 
-% # demanded by the question
+\newpage
+Where the desired pole locations were calculated using the formula $s_{1,2} =\zeta \omega_n \pm j\omega_n\sqrt{\zeta^2-1}$ and $\omega$, $t_s = \frac{4}{\omega_n}$ and $\zeta = \frac{-\log(OS)}{\sqrt{\pi^2+\log^2(OS)}}$. The results of running this code follows 
 
-% OS = 0.2;
-% ts = 1.5;
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/pzmap.png}
+  \caption{Pole zero map of the system with no control showing a pole in the right half plane giving rise to an unstable system}
+  \label{fig:pzmap}
+\end{figure}
 
-% zeta = (-log(OS))/(sqrt(pi^2 + (log(OS))^2));
-% wn = 4.6/(ts*zeta);
-% sigma = zeta * wn;
-% wd = sqrt(wn^2 - sigma^2);
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/nocontrol.png}
+  \caption{Step response of the state space representation of the system with no control implemented, showing an unstable system as alluded to by the pzmap of Figure \ref{fig:pzmap}}
+  \label{fig:nocontrol}
+\end{figure}
 
-% p1 = (-sigma + wd*i);
-% p2 = 1.382*(-sigma);
-% p3 = (-sigma - wd*i);
-% p4 = 1.382*(-sigma);
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/control.png}
+  \caption{Control law implemented on the unstable system, the poles in the right half plane were moved according to the code discussed previously}
+  \label{fig:control}
+\end{figure}
 
-% poles_desired = [p1 p2 p3 p4];
-
-% # Using place as apposed to acker for better accuracy , get the needed gains for
-% # placing the poles at the desired locations 
-% K = place(A,B,poles_desired);
-
-% # Give the new dynamic matrix A the values palcing the system at the desired pole 
-% # locations 
-% A_controlled = A-B*K;
-
-% System_controlled = ss(A_controlled,B,C);
-% figure;
-% step(System_controlled);
-
-The results are shown below <+RESULTS NEED TO BE PLACED IN HERE+>
+Figure \ref{fig:control} shows that we have effectively implemented feedback control for the system. From Figure \ref{fig:control} we see the output \texttt{y1} approaches $0$, the expected result for the pendulum to stay upright. From the plot we ca also see that the overshoot and the settling time is within the design for specification of respectively $20\%$ and $1.5$s
 
 
 
