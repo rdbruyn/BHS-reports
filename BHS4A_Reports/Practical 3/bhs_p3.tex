@@ -24,11 +24,113 @@
 \newpage
 \pagenumbering{arabic}
 
-\section{Question 1}
+\section{Question 1} % (fold)
+\label{sec:question_1}
+Using the student number 216008466 gives the masses for this question to be $M = 2.8$kg, $m = 0.16$kg and the distance betweent the rod and the mass to be $3.5$
 
-<+DO THINGS HERE+>
+\subsection{Implementing the Linear State-space Model} % (fold)
+\label{sub:implementing_the_linear_state_space_model}
+The system implemented  using the student number as previously stated gives the state-space model as follows 
+\begin{equation}
+  A = \left[
+  \begin{array}{c c c c}
+   	0 & 1 & 0 & 0 \\
+   	0.302 &  0 & 0 & 0\\
+   	0 & 0 & 0 & 1\\
+   	-0.56 &  0 &  0 &  0\\
+  \end{array}
+  \right]
+  \label{eq:a_q1}
+\end{equation}
 
-% endsection Question 1
+\begin{equation}
+  B = \left[
+  \begin{array}{c}
+   0 \\-\frac{5}{59}\\ 0\\\frac{1}{2.8}
+  \end{array}
+  \right]
+  \label{eq:b_q1}
+\end{equation}
+
+\begin{equation}
+  C = \left[
+  \begin{array}{c c c c}
+    1 & 0 & 0 & 0\\
+    0 & 0 & 1 & 0\\
+  \end{array}
+  \right]
+  \label{eq:c_q1}
+\end{equation}
+
+
+% subsection implementing_the_linear_state_space_model (end)
+
+\subsection{Full State Feedback System} % (fold)
+\label{sub:full_state_feedback_system}
+A series of steps need to followed in order to realize control for this system, we start off with finding the control law as defined by equation \eqref{eq:control_law}
+\begin{equation}
+  u = -\left[
+  \begin{array}{cccc}
+    K1&K2&...&Kn
+  \end{array}
+  \right]
+  \left[
+  \begin{array}{c}
+    x_1 \\
+    x_2\\
+    ...\\
+    x_n
+  \end{array}
+  \right]
+  \label{eq:control_law}
+\end{equation}
+
+\eqref{eq:control_law} tells us that the system has a constant matrix in the feedback path. For an $n^{th}$ order system there are $n$ feedback gains. The pole locations of the system can be set using the appropriate values  of $K_1, ... , K_n$ in the closed loop characteristic equation given as $det[s\textbf{I}-(\textbf{A}-\textbf{BK})] = 0$. Thus our design narrows down to finding the values of $K_i$ such that the system poles are placed in the locations as specified by the question, to do this we must first find the desired pole locations by doing something something and another something <+PROCEDURE FOR FINDING THE POLES MUST BE DISCUSSED HERE+>\\
+
+After calculating the pole locations based on the required settling time and percent overshoot of $1.5$s and $20\%$, we use the \texttt{place} octave command which has a better accuracy than the \texttt{acker} command (it must be noted that the place command can only be applied if the desired poles are distinct which in this case is <+OR IS NOT WE HAVE TO CALCULATE THE POLES TO MAKE THIS STATEMENT+>). This gives us the control law needed to place the system in the desired pole locations.\\
+
+Using these constant values we can now obtain the controlled A matrix defined by the equation $A_{controlled} = \textbf{A}-\textbf{B}\textbf{K};$. The Octave code that implements this is shown below
+
+% # Eigen values of A gives pole locations of the system
+% P = eig(A)
+
+% # These poles must be changed to some other values giving the transint response 
+% # demanded by the question
+
+% OS = 0.2;
+% ts = 1.5;
+
+% zeta = (-log(OS))/(sqrt(pi^2 + (log(OS))^2));
+% wn = 4.6/(ts*zeta);
+% sigma = zeta * wn;
+% wd = sqrt(wn^2 - sigma^2);
+
+% p1 = (-sigma + wd*i);
+% p2 = 1.382*(-sigma);
+% p3 = (-sigma - wd*i);
+% p4 = 1.382*(-sigma);
+
+% poles_desired = [p1 p2 p3 p4];
+
+% # Using place as apposed to acker for better accuracy , get the needed gains for
+% # placing the poles at the desired locations 
+% K = place(A,B,poles_desired);
+
+% # Give the new dynamic matrix A the values palcing the system at the desired pole 
+% # locations 
+% A_controlled = A-B*K;
+
+% System_controlled = ss(A_controlled,B,C);
+% figure;
+% step(System_controlled);
+
+The results are shown below <+RESULTS NEED TO BE PLACED IN HERE+>
+
+
+
+% subsection full_state_feedback_system (end)
+
+% section question_1 (end)
 
 \section{Question 2}
 
@@ -199,64 +301,5 @@ We omit the specific steps for brevity, and obtain the expression
 
 % endsection Controllability and Observability
 % endsection Question 2
-
-\section{Question 1} % (fold)
-\label{sec:question_1}
-Using the student number 216008466 gives the masses for this question to be $M = 2.8$kg, $m = 0.16$kg and the distance betweent the rod and the mass to be $3.5$
-
-\subsection{Implementing the Linear State-space Model} % (fold)
-\label{sub:implementing_the_linear_state_space_model}
-The system implemented  using the student number as previously stated gives the state-space model as follows 
-\begin{equation}
-  A = \left[
-  \begin{array}{c c c c}
-   	0 & 1 & 0 & 0 \\
-   	0.302 &  0 & 0 & 0\\
-   	0 & 0 & 0 & 1\\
-   	-0.56 &  0 &  0 &  0\\
-  \end{array}
-  \right]
-  \label{eq:a_q1}
-\end{equation}
-
-\begin{equation}
-  B = \left[
-  \begin{array}{c}
-   0 \\-\frac{5}{59}\\ 0\\\frac{1}{2.8}
-  \end{array}
-  \right]
-  \label{eq:b_q1}
-\end{equation}
-
-\begin{equation}
-  C = \left[
-  \begin{array}{c c c c}
-    1 & 0 & 0 & 0\\
-    0 & 0 & 1 & 0\\
-  \end{array}
-  \right]
-  \label{eq:c_q1}
-\end{equation}
-
-
-% subsection implementing_the_linear_state_space_model (end)
-
-\subsection{Full State Feedback System} % (fold)
-\label{sub:full_state_feedback_system}
-A series of steps need to followed in order to realize control for this system, the procedure follows
-\begin{enumerate}
-	\item Finding the control law\\
-	This step establishes pole locations of the closed-loop system yielding the desired dynamic response of the system
-	\item Introducing the reference input with full state feedback
-	\item something 
-	\item something 
-\end{enumerate}
-
-To implement step 1 we must find a matrix $K$ describing feedback of the system containing 4 constants for the forth order system at hand. We find the constants by findign the values of $k_i$ in $K$ by comparing the equation $det[s\textbf{I}-(\textbf{A}-\textbf{BK})] = 0$ (control characteristic equation) with the eqaution of system poles $det[s\textbf{I}-\textbf{A}] = 0$ (system characteristic equation)
-
-
-% subsection full_state_feedback_system (end)
-
-% section question_1 (end)
 
 \end{document}

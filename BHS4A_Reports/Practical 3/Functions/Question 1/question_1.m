@@ -1,4 +1,4 @@
-## Copyright (C) 2019 Quintin
+  ## Copyright (C) 2019 Quintin
 ## 
 ## This program is free software; you can redistribute it and/or modify it
 ## under the terms of the GNU General Public License as published by
@@ -24,26 +24,44 @@
 
 function [retval] = question_1 ()
 # student number 216008466 uses M = 16Kg, m = 0.6kg and l = 3.5m
-
+%Question 1.1
 A = [0 1 0 0;0.302 0 0 0;0 0 0 1;-0.56 0 0 0];
 B = [0 ;-5/59; 0; 1/2.8];
 C = [1 0 0 0;0 0 1 0];
 sys = ss(A,B,C);
 step(sys);
 
+%Qestion 2.1
 # Eigen values of A gives pole locations of the system
 P = eig(A)
 
-# Desired pole locations from specification of x location of cart,
-Pdes = [0;0;-0.54955;-0.54955]
-# K values placing the poles at the desired location
-K = place(A,B,Pdes)
+# These poles must be changed to some other values giving the transint response 
+# demanded by the question
 
-Acl = A-B*K;
+OS = 0.2;
+ts = 1.5;
 
-Syscl = ss(Acl,B,C);
+zeta = (-log(OS))/(sqrt(pi^2 + (log(OS))^2));
+wn = 4.6/(ts*zeta);
+sigma = zeta * wn;
+wd = sqrt(wn^2 - sigma^2);
+
+p1 = (-sigma + wd*i);
+p2 = 1.382*(-sigma);
+p3 = (-sigma - wd*i);
+p4 = 1.382*(-sigma);
+
+poles_desired = [p1 p2 p3 p4];
+
+# Using place as apposed to acker for better accuracy , get the needed gains for
+# placing the poles at the desired locations 
+K = place(A,B,poles_desired);
+
+# Give the new dynamic matrix A the values palcing the system at the desired pole 
+# locations 
+A_controlled = A-B*K;
+
+System_controlled = ss(A_controlled,B,C);
 figure;
-step(Syscl)
-
-
+step(System_controlled);
 endfunction
