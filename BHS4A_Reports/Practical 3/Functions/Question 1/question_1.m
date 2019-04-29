@@ -23,9 +23,9 @@
 ## Created: 2019-04-24
 
 function [retval] = question_1 ()
-pkg load symbolic;
-pkg load signal;
-pkg load control;
+pkg load control
+pkg load symbolic
+pkg load signal
 # student number 216008466 uses M = 16Kg, m = 0.6kg and l = 3.5m
 %Question 1.1
 A = [0 1 0 0;0.302 0 0 0;0 0 0 1;-0.56 0 0 0];
@@ -37,7 +37,7 @@ step(sys);
 [num,den] = ss2tf(A,B,C);
 transfer = tf(num,den);
 figure;
-zpk(transfer);
+pzmap(transfer);
 
 %Qestion 2.1
 # Eigen values of A gives pole locations of the system
@@ -63,7 +63,7 @@ poles_desired = [p1 p2 p3 p4];
 
 # Using place as apposed to acker for better accuracy , get the needed gains for
 # placing the poles at the desired locations 
-K = place(A,B,poles_desired);
+K = acker(A,B,poles_desired);
 
 # Give the new dynamic matrix A the values palcing the system at the desired pole 
 # locations 
