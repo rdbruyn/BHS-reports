@@ -10,7 +10,7 @@
 
 
 \title{Control Systems 4A Practical 2 Report}
-\author{Ruan de Bruyn, 216054484 \and Quintin Kruger, 216008466}
+\author{216054484 \and 216008466}
 
 \begin{document}
 
@@ -155,7 +155,12 @@ Figure \ref{fig:control} shows that we have effectively implemented feedback con
 
 In this question, we consider the following circuit:
 
-<+IMAGE OF CIRCUIT HERE+>
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.8\textwidth]{./images/circuit.png}
+  \caption{}
+  \label{fig:circuit}
+\end{figure}
 
 \subsection{State-space Representation}
 
@@ -202,7 +207,7 @@ Kirchoff's Voltage Law at the loop with the input voltage, we get
   & = & R_1 C_1 \dot{V}_{C1} + R_1 C_2 \dot{V}_{C2} + V_{C1} \nonumber \\
   & = & R_1 C_1 \dot{V}_{C1} + R_1 C_2 \left( \frac{1}{R_2 C_2} V_{C1} - \frac{1}{R_2 C_2} V_{C2} \right) + V_{C1} \nonumber \\
   R_1 C_1 \dot{V}_{C1} & = & - \left( \frac{R_1 + R_2}{R_2} \right) V_{C1} +  \frac{R_1}{R_2} V_{C2} + V_i \nonumber \\
-  \dot{V}_{C1} & = & -\frac{R_1 + R_2}{R_1 R_2 C_1} V_{C1} + \frac{1}{R_2 C_2} V_{C2} + \frac{1}{R_1 C_1} V_i
+  \dot{V}_{C1} & = & -\frac{R_1 + R_2}{R_1 R_2 C_1} V_{C1} + \frac{1}{R_2 C_1} V_{C2} + \frac{1}{R_1 C_1} V_i
 \end{IEEEeqnarray}
 
 This leaves us with the following state-space matrices:
@@ -210,7 +215,7 @@ This leaves us with the following state-space matrices:
 \begin{equation}
   A = \left[
   \begin{array}{cc}
-    -\frac{R_1 + R_2}{R_1 R_2 C_1} & \frac{1}{R_2 C_2} \\
+    -\frac{R_1 + R_2}{R_1 R_2 C_1} & \frac{1}{R_2 C_1} \\
     \frac{1}{R_2 C_2} & -\frac{1}{R_2 C_2}
   \end{array}
   \right]
@@ -245,9 +250,19 @@ and finally,
   \label{eq:ss_D}
 \end{equation}
 
+On the question of stability, we can easily deduce that the system is stable by
+applying the operating principles of a capacitor to the problem. A capacitor
+can only store a certain maximum amount of charge, at which point, if it has no
+path in which to discharge, it will theoretically hold this charge forever. The
+stability of a system is defined in the value it settles on when $t \rightarrow
+\infty$. In the case of our circuit, when $t$ does approach infinity, $C2$ and
+$C1$ will be fully charged, the voltage across them would be $V_i$, and no
+current would flow in the circuit unless a load is connected over $C2$ so that
+the capacitors can discharge. Therefore, this circuit is always stable.
+
 \subsection{Controllability and Observability}
 
-Let us take the following values for our components: $R_1 = R_2 = 50\omega$,
+Let us take the following values for our components: $R_1 = R_2 = 50\Omega$,
 $C_1 = 3.9 \mu F$, $C_2 = 4.7 \mu F$. Then we have
 
 \begin{equation}
@@ -277,8 +292,13 @@ Then we have controllability matrix
 \begin{equation}
   C_M = \left[
   \begin{array}{c c}
-    0 & 1 \\
-    4.26 \times 10^3 & 4.26 \times 10^3
+    \textbf{B} & \textbf{AB}
+  \end{array}
+  \right]
+  = \left[
+  \begin{array}{c c}
+    5.13 \times 10^3 & -5.26 \times 10^7 \\
+    0 & 2.18 \times 10^7
   \end{array}
   \right]
   \label{eq:q_cm}
@@ -289,8 +309,14 @@ and observability matrix
 \begin{equation}
   O_M = \left[
   \begin{array}{c c}
-    5.13 \times 10^3 & -5.26 \times 10^7 \\
-    0 & 2.18 \times 10^7
+    \textbf{C} \\
+    \textbf{CA}
+  \end{array}
+\right] =
+  \left[
+  \begin{array}{c c}
+    0 & 1 \\
+    4.26 \times 10^3 & -4.26 \times 10^3
   \end{array}
   \right]
   \label{eq:q_om}
@@ -298,7 +324,8 @@ and observability matrix
 
 Now, it is easy to see that both of these matrices have a non-zero determinant,
 and therefore that they are invertible. This leads us to conclude that the
-system is, in fact, controllable and observable.
+system is, in fact, controllable and observable. All of the steps in this
+section were done by hand, and confirmed on Octave.
 
 \subsection{Transfer Function}
 
@@ -313,10 +340,35 @@ previously obtained matrices, and use the equation
 We omit the specific steps for brevity, and obtain the expression
 
 \begin{IEEEeqnarray}{rCl}
-  T(s) & = & \frac{C \text{adj}\left( sI - A \right) B}{\text{det}\left( sI - A \right)} \nonumber \\
-  & = & \frac{2.19 \times 10^7}{s^2 + 6.04 \times 10^3 s - 2.2 \times 10^7}
+  T(s) & = & \frac{ \text{adj}\left( sI - A \right) B}{\text{det}\left( sI - A \right)} \nonumber \\
+  & = & \frac{\left[
+    \begin{array}{c c}
+    0 & 1
+\end{array}
+\right] \left[
+\begin{array}{c c}
+  s + 4.26 \times 10^3 & -5.13 \times 10^3 \\
+  -4.26 \times 10^3 & s + 1.03 \times 10^4
+\end{array}
+\right] \left[
+\begin{array}{c}
+  5.13 \times 10^3\\
+  0
+\end{array}
+\right]}{s^2 + 6.04 \times 10^3 s - 2.2 \times 10^7} \nonumber \\
+& = & \frac{2.19 \times 10^7}{s^2 + 1.45 \times 10^4 s - 2.2 \times 10^7}
   \label{eq:2_tf_answer}
 \end{IEEEeqnarray}
+
+Writing \eqref{eq:2_tf_answer} in zero-pole-gain format, we get
+
+\begin{equation}
+  T(S) = 2.19 \times 10^7 \frac{1}{\left( s + 1.28 \times 10^4 \right)\left( s + 1.7 \times 10^3 \right)}
+  \label{eq:tf_zpk}
+\end{equation}
+
+which means that, since both poles are in the left hand plane, our system is
+confirmed to be stable, like we deduced in an earlier section.
 
 % endsection Controllability and Observability
 % endsection Question 2
