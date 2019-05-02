@@ -38,6 +38,72 @@ extensively to understand and design a practical real-life flyback converter.
 
 % endsection Introduction
 
+\section{Literature Review}
+
+A Flyback Converter is a very versatile DC-DC converter design for low power
+applications, and can essentially be derived from a buck boost converter,
+except for the important distinction that a coupled inductor is used instead.
+The reason for this is because it provides isolation between the primary and
+secondary circuits, and according to \cite{pressman}, it is ``particularly
+valuable in low-cost multiple output power supplies yielding a significant
+saving in cost and space''. A typical flyback topology is shown in Figure
+\ref{fig:pressman_circuit}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.6\textwidth]{./images/pressman_circuit.png}
+  \caption{Master/slave flyback converter with negative feedback loop \textit{(\cite{pressman} Figure 4.1 (a))}}
+  \label{fig:pressman_circuit}
+\end{figure}
+
+A comprehensive analysis of this circuit topology can be found in
+\cite{pwe_conv_applications}, where the key waveforms for a flyback converter
+topology can be seen below in Figure
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.8\textwidth]{./images/pwe_text_flyback_waveforms.png}
+	\caption{Flyback Topology Waveforms \textit{(\cite{pwe_conv_applications}, Figure 10-8)}}
+	\label{fig:pwe_text_waveforms}
+\end{figure}
+
+where $v_1$ is the voltage over the primary side transformer, $\phi$ is the
+flux in the coupled inductor core, and $i_D$ is the current flowing through the
+secondary side diode. The derivation that relates the transfer function to the
+duty cycle can be derived by taking into account the fact that the core flux
+$\phi$ is constant; that is, at the start of every duty cycle $D, \{D: 0 \le D <
+1\}$, $\phi(0)$ is the same value. We omit the full derivation, which can be
+seen in \cite{pwe_conv_applications}, and give the full transfer function
+equation as
+
+\begin{equation}
+	\frac{V_o}{V_i} = \frac{N_2}{N_1}\frac{D}{1 - D}
+	\label{eq:lit_review_tf}
+\end{equation}
+
+\cite{pressman} addresses the next important design consideration ---
+continuous operation mode vs discontinuous operation mode. The discontinuous
+operating mode has ``dead time'', which essentially means that there is a
+portion of the duty cycle where the current in the primary and secondary of the
+inductor is zero, essentially ensuring that the flux stays constant because
+$\phi(0) = 0$ at the start of every cycle. The continuous operation mode
+doesn't have this feature, and has $\phi(0) \not = 0$ at the start of every
+cycle.
+
+Discontinuous mode flyback converters have several disadvantages according to
+\cite{pressman}, including that ``secondary peak current \dots can be between
+two and three times larger than that in the continuous mode''. With this comes
+larger transients in output voltage, and requires large output capacitances to
+counter ripple voltage. Despite this, the discontinuous mode is used more often
+due to its rapid dynamic response and smaller footprint on circuits.
+
+The continuous mode is more difficult to control in a negative feedback loop,
+and if used can lead to core saturation and undesirable performance of the
+converter, but is very desirable for low power circuit due to small secondary
+side rms current.
+
+% endsection Literature Review
+
 \section{Design}
 
 \subsection{Circuit Design}
@@ -55,13 +121,6 @@ design on can be seen in figure \ref{fig:pressman_circuit}.
   \includegraphics[width=\textwidth]{./images/circuit_diagram.png}
   \caption{Flyback Converter Circuit}
   \label{fig:circuit_diagram}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=.6\textwidth]{./images/pressman_circuit.png}
-  \caption{Master/slave flyback converter with negative feedback loop \cite{pressman}}
-  \label{fig:pressman_circuit}
 \end{figure}
 
 \noindent 
@@ -214,9 +273,9 @@ Getting the secondary inductance can be done with a simple ratio:
 Now that we have the required inductance we can determine the number of turns
 we need on the primary side and the secondary side respectively using a core
 that has an air-gap total length of $\sum g = 3\times 10^{-3}m$ and an air gap
-total area of $A_g = 2.4\times10^{-5}m^2$. From Mohamed <+REFERENCE MOHAMED
-BOOK+>, using these specifications we calculated the number of windings onto an
-E42 gapped core using the equation that follows
+total area of $A_g = 2.4\times10^{-5}m^2$. From Mohan
+\cite{pwe_conv_applications}, using these specifications we calculated the
+number of windings onto an E42 gapped core using the equation that follows
 
 \begin{equation}
 	\label{eq:windings}
@@ -226,8 +285,8 @@ E42 gapped core using the equation that follows
 where $L$ is the inductance for which we are designing, $N$ the number of
 windings and $\mu$ the permeability of air which is $4\pi\times 10^{-7}$.
 Equation \eqref{eq:windings} was arrived at using a derivation which is again
-beyond the scope of this report but can be deduced from Mohamed <+REFERENCE
-MOHAMED BOOK+>. \\
+beyond the scope of this report but can be seen from
+\cite{pwe_conv_applications}. \\
 
 For primary-side inductance, the primary-side turns needed are calculated below
 \begin{equation}
@@ -358,7 +417,7 @@ from any inductive effects from our MOSFET, but also protects the Raspberry Pi.
 When we initially built the circuit, we noticed large spikes at the output of
 of the driver, and followed advice from the manufacturer's datasheet and put a
 small capacitor at the output of the driver to even out the spikes somewhat.
-<+ADD REFERENCE TO PWM MEASUREMENT TO PROVE THIS+>
+The resultant waveforms can be seen in Figure \ref{fig:pwm_output_from_chip}.
 
 
 % endsubsection Negative Feedback Control
@@ -510,6 +569,7 @@ Another deduced result from the figure is that there exists no voltage ripple wh
 
 \begin{thebibliography}{0}
 	\bibitem{pressman} A. Pressman, K. Billings, T. Morey, \textit{Switching Power Supply Design, Third Edition}, Chapter 4 --- Flyback Converter Topologies
+	\bibitem{pwe_conv_applications} N. Mohan, T. M. Undeland, W. P. Robbins, \textit{Power Electronics --- Converters, Applications, and Design, Second Edition}, Chapter 10.4.2 
 \end{thebibliography}
 
 \newpage
