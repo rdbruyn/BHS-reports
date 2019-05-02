@@ -38,6 +38,72 @@ extensively to understand and design a practical real-life flyback converter.
 
 % endsection Introduction
 
+\section{Literature Review}
+
+A Flyback Converter is a very versatile DC-DC converter design for low power
+applications, and can essentially be derived from a buck boost converter,
+except for the important distinction that a coupled inductor is used instead.
+The reason for this is because it provides isolation between the primary and
+secondary circuits, and according to \cite{pressman}, it is ``particularly
+valuable in low-cost multiple output power supplies yielding a significant
+saving in cost and space''. A typical flyback topology is shown in Figure
+\ref{fig:pressman_circuit}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.6\textwidth]{./images/pressman_circuit.png}
+  \caption{Master/slave flyback converter with negative feedback loop \textit{(\cite{pressman} Figure 4.1 (a))}}
+  \label{fig:pressman_circuit}
+\end{figure}
+
+A comprehensive analysis of this circuit topology can be found in
+\cite{pwe_conv_applications}, where the key waveforms for a flyback converter
+topology can be seen below in Figure
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.8\textwidth]{./images/pwe_text_flyback_waveforms.png}
+	\caption{Flyback Topology Waveforms \textit{(\cite{pwe_conv_applications}, Figure 10-8)}}
+	\label{fig:pwe_text_waveforms}
+\end{figure}
+
+where $v_1$ is the voltage over the primary side transformer, $\phi$ is the
+flux in the coupled inductor core, and $i_D$ is the current flowing through the
+secondary side diode. The derivation that relates the transfer function to the
+duty cycle can be derived by taking into account the fact that the core flux
+$\phi$ is constant; that is, at the start of every duty cycle $D, \{D: 0 \le D <
+1\}$, $\phi(0)$ is the same value. We omit the full derivation, which can be
+seen in \cite{pwe_conv_applications}, and give the full transfer function
+equation as
+
+\begin{equation}
+	\frac{V_o}{V_i} = \frac{N_2}{N_1}\frac{D}{1 - D}
+	\label{eq:lit_review_tf}
+\end{equation}
+
+\cite{pressman} addresses the next important design consideration ---
+continuous operation mode vs discontinuous operation mode. The discontinuous
+operating mode has ``dead time'', which essentially means that there is a
+portion of the duty cycle where the current in the primary and secondary of the
+inductor is zero, essentially ensuring that the flux stays constant because
+$\phi(0) = 0$ at the start of every cycle. The continuous operation mode
+doesn't have this feature, and has $\phi(0) \not = 0$ at the start of every
+cycle.
+
+Discontinuous mode flyback converters have several disadvantages according to
+\cite{pressman}, including that ``secondary peak current \dots can be between
+two and three times larger than that in the continuous mode''. With this comes
+larger transients in output voltage, and requires large output capacitances to
+counter ripple voltage. Despite this, the discontinuous mode is used more often
+due to its rapid dynamic response and smaller footprint on circuits.
+
+The continuous mode is more difficult to control in a negative feedback loop,
+and if used can lead to core saturation and undesirable performance of the
+converter, but is very desirable for low power circuit due to small secondary
+side rms current.
+
+% endsection Literature Review
+
 \section{Design}
 
 \subsection{Circuit Design}
@@ -55,13 +121,6 @@ design on can be seen in figure \ref{fig:pressman_circuit}.
   \includegraphics[width=\textwidth]{./images/circuit_diagram.png}
   \caption{Flyback Converter Circuit}
   \label{fig:circuit_diagram}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=.6\textwidth]{./images/pressman_circuit.png}
-  \caption{Master/slave flyback converter with negative feedback loop \cite{pressman}}
-  \label{fig:pressman_circuit}
 \end{figure}
 
 \noindent 
@@ -211,14 +270,23 @@ Getting the secondary inductance can be done with a simple ratio:
 
 \subsection{Inductor Design} % (fold)
 \label{sub:inductor_design}
-Now that we have the required inductance we can determine the number of turns we need on the primary side and the secondary side respectively using a core that has an air-gap total length of $\sum g = 3\times 10^{-3}m$ and an air gap total area of $A_g = 2.4\times10^{-5}m^2$. From Mohamed <+REFERENCE MOHAMED BOOK+>, using these specifications we calculated the number of windings onto an E42 gapped core using the equation that follows
+Now that we have the required inductance we can determine the number of turns
+we need on the primary side and the secondary side respectively using a core
+that has an air-gap total length of $\sum g = 3\times 10^{-3}m$ and an air gap
+total area of $A_g = 2.4\times10^{-5}m^2$. From Mohan
+\cite{pwe_conv_applications}, using these specifications we calculated the
+number of windings onto an E42 gapped core using the equation that follows
 
 \begin{equation}
 	\label{eq:windings}
 	L = \frac{N^2A_g\mu}{\sum g}
 \end{equation}
 
-where $L$ is the inductance for which we are designing, $N$ the number of windings and $\mu$ the permeability of air which is $4\pi\times 10^{-7}$. Equation \eqref{eq:windings} was arrived at using a derivation which is again beyond the scope of this report but can be deduced from Mohamed <+REFERENCE MOHAMED BOOK+>. \\
+where $L$ is the inductance for which we are designing, $N$ the number of
+windings and $\mu$ the permeability of air which is $4\pi\times 10^{-7}$.
+Equation \eqref{eq:windings} was arrived at using a derivation which is again
+beyond the scope of this report but can be seen from
+\cite{pwe_conv_applications}. \\
 
 For primary-side inductance, the primary-side turns needed are calculated below
 \begin{equation}
@@ -228,7 +296,8 @@ For primary-side inductance, the primary-side turns needed are calculated below
 	\end{array}
 \end{equation}
 
-Now from the turns ratio calculated to be $0.65$, the turns needed on the secondary side yielding this ratio is $N_s = 71$ 
+Now from the turns ratio calculated to be $0.65$, the turns needed on the
+secondary side yielding this ratio is $N_s = 71$ 
 
 \subsubsection{Peak Currents and Capacitance}
 In order to double check our peak currents, we can use the current through an
@@ -348,7 +417,7 @@ from any inductive effects from our MOSFET, but also protects the Raspberry Pi.
 When we initially built the circuit, we noticed large spikes at the output of
 of the driver, and followed advice from the manufacturer's datasheet and put a
 small capacitor at the output of the driver to even out the spikes somewhat.
-<+ADD REFERENCE TO PWM MEASUREMENT TO PROVE THIS+>
+The resultant waveforms can be seen in Figure \ref{fig:pwm_output_from_chip}.
 
 
 % endsubsection Negative Feedback Control
@@ -395,12 +464,21 @@ The components of the converter itself are listed below
 \end{itemize}
 
 \noindent
-The inductor was built by adding masking tape to the outer legs of the E-core to make up $1mm$ air gap lengths on the $3$ leg of the E-core. This yielded the designed for air gap area and air gap total length. Windings were wound around the  E-42 core bobbin in an interleaving manner, half of the secondary windings were wound after which the primary windings were wound followed by the last half of the secondary windings (with  primary windings sandwiched between the secondary windings). The core was placed within the bobbin and masking tape was used to keep the E-core halves and the bobbin together. 
+The inductor was built by adding masking tape to the outer legs of the E-core
+to make up $1mm$ air gap lengths on the $3$ leg of the E-core. This yielded the
+designed for air gap area and air gap total length. Windings were wound around
+the  E-42 core bobbin in an interleaving manner, half of the secondary windings
+were wound after which the primary windings were wound followed by the last
+half of the secondary windings (with  primary windings sandwiched between the
+secondary windings). The core was placed within the bobbin and masking tape was
+used to keep the E-core halves and the bobbin together. 
 
 
 
 \subsection{Final Circuit}
-Figure \ref{fig:flyback_converter_build} shows the final build of the fly-back converter and the PWM and feedback system connection of the flyback converter to the raspberry pi.
+Figure \ref{fig:flyback_converter_build} shows the final build of the fly-back
+converter and the PWM and feedback system connection of the flyback converter
+to the raspberry pi.
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{images/final_circuit_image.png}
@@ -429,18 +507,30 @@ We see that the input to the driver is a digital signal with the desired switchi
   \label{fig:pwm_output_from_chip}
 \end{figure}
 
-This is the voltage fed to the gate terminal of the IRF510 MOSFET (after the capacitor ridding the signal of voltage spikes). The ICL7667 takes as an input voltage the $12$V from the supply (even though the datasheet of the IRF510 MOSFET requires a minimum of $5$V across the gate-source terminals to turn it on, the $12$V supply was taken because it is easily available from the input supply to the circuit). A minimization of the voltage spikes during transition from the off state to the on state resulted due to the addition of the capacitor. The voltage spikes and ringing of the voltage can be explained by the unwanted inductance in the critical loop of the circuit (the critical loop is the loop containing the input supply, inductance $L1$ and the the NMOS MOSFET of Figure \ref{fig:circuit_diagram}) added to by the driver. \\
+
+This is the voltage fed to the gate terminal of the IRF510 MOSFET (after the
+capacitor ridding the signal of voltage spikes). The ICL7667 takes as an input
+voltage the $12$V from the supply (even though the datasheet of the IRF510
+MOSFET requires a minimum of $5$V across the gate-source terminals to turn on,
+the $12$V supply was taken because it is easily available from the input supply
+to the circuit). A minimization of the voltage spikes during transition from
+the off state to the on state resulted due to the addition of the capacitor.
+The voltage spikes and ringing of the voltage can be explained by the unwanted
+inductance in the critical loop of the circuit (the critical loop is loop
+containing the input supply, inductance $L1$ and the NMOS MOSFET of Figure
+\ref{fig:circuit_diagram}). \\
 
 Figure \ref{fig:pwm_output_from_chip} also shows the maximum duty cycle of $\approx 42.5\%$ evident with the maximum load connected, controlled by the feedback system. \\
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{images/pwm_input_output_comparison.png}
-  \caption{A comparison of the input signal from the raspberry pi to the MOSFTE driver (the yellow trace) and the output of the MOSFTE driver (blue trace)}
+  \caption{A comparison of the input signal from the raspberry pi to the MOSFET driver (the yellow trace) and the output of the MOSFET driver (blue trace)}
   \label{fig:pwm_input_output_comparison}
 \end{figure}
 
-Figure \ref{fig:pwm_input_output_comparison} shows the supper-position of the MOSFET input signal and output signal as already discussed.\\
+Figure \ref{fig:pwm_input_output_comparison} shows the supper-position of the
+MOSFET input signal and output signal as already discussed.\\
 
 \begin{figure}[H]
   \centering
@@ -460,6 +550,7 @@ The drain voltage (yellow trace from Figure \ref{fig:vds}) shows ringing, this i
 
 Figure \ref{fig:primary} shows the same oscillations as with the ringing across the drain and the source terminals of the MOSFET (Figure \ref{fig:vds}). Again the oscillation is explained by the capacitance of the MOSFET. The rms voltage lies close to $11$V which is expected, there is a $1$V voltage drop across the MOSFET when it's in the on mode due to the $R_{DS}$ resistance of the MOSFET which was designed for.  
 
+
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{images/Secondary.png}
@@ -467,7 +558,7 @@ Figure \ref{fig:primary} shows the same oscillations as with the ringing across 
   \label{fig:secondary}
 \end{figure} 
 
-The voltage across the secondary as can be seen from Figure \ref{fig:secondary} peaks at $\approx 10V$ during the off time of the MOSFET while the voltage drops to a minimum of approximately $\approx -16$V. From the plot we can see that our inductor design is flawed, we would ideally expect to see $\approx 19$V (see equation \eqref{eq:rho}) during the off time - the difference is explained by the leakage inductance of the inductor. The reverse voltage during the on time of the MOSFET also ideally has to be $-19$V, the difference to the true value can be explained due to copper losses in the windings.  
+The voltage across the secondary as can be seen from Figure \ref{fig:secondary} peaks at $\approx 10V$ during the off time of the MOSFET while the voltage drops to a minimum of approximately $\approx -16$V. From the plot we can see that our inductor design is flawed, we would ideally expect to see $\approx 19$V (see equation \eqref{eq:rho}) during the off time - the difference is explained by the leakage inductance of the inductor. The reverse voltage during the on time of the MOSFET also ideally has to be $-19$V, the difference to the true value can be explained due to copper losses in the windings.  Ringing is again evident on the secondary side again explained by the LC components of the secondary circuit.
 
 
 \begin{figure}[H]
@@ -479,12 +570,62 @@ The voltage across the secondary as can be seen from Figure \ref{fig:secondary} 
 
 Figure \ref{fig:output_from_load} shows the output voltage measure across the $16.5\Omega$ load. The desired voltage of $18$V was not obtained because of the leakage inductance of the core as previously mentioned. The leakage inductance of the core was measured to test our theory. By short circuiting the primary-side and using an LCR meter to find the inductance on the secondary side and performing the same procedure on the secondary-side we found the leakage inductances to be $L_{Pleak} = 0.49mH$ and $L_{Sleak} = 0.18mH$ respectively. Compared to the total inductances of the primary and the secondary of $0.572mH$ and $1.44mH$ respectively, a leakage inductance percentage of $86\%$ and $12.5\%$ respectively, our theory was proved.\\
 
-The core used wasn't gapped by design --- we gapped it ourselves using masking tape. If a gapped core was used, less leakage inductance would have resulted around the air gap and the results would have been closer to the expected value.  
+The core used wasn't gapped by design --- we gapped it ourselves using masking tape. If a gapped core was used, less leakage inductance would have resulted around the air gap and the results would have been closer to the expected value.
+
+\section{Simulations} % (fold)
+  \label{sec:simulations}
+
+  \begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/vds_on_sim.png}
+  \caption{The simulation of the on voltage of the drain to source of the MOSFET}
+  \label{fig:vds_on_sim}
+\end{figure} 
+Figure \ref{fig:vds_on_sim} shows a voltage drop average of $\approx 1.5$V when the MOSFET conducts, a very similar result was obtained experimentally as shown by Figure \ref{fig:vds}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/secondary_sim.png}
+  \caption{Simulation of the secondary voltage across the coupled inductor}
+  \label{fig:secondary_sim}
+\end{figure} 
+
+The ringing of the circuit is also portrayed in the simulation however a big difference in the voltage minimum and maximum exists when compared to that of the practical flyback converter (Figure \ref{fig:secondary}). The secondary voltage of the simulation (Figure \ref{fig:secondary_sim}) is close to ideal (as discussed in the results section of this report under the consideration of secondary voltage) as it doesn't incorporate the leakage inductance.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/primary_sim.png}
+  \caption{Simulation of the primary voltage across the coupled inductor}
+  \label{fig:primary_sim}
+\end{figure}
+
+No voltage spike exists because the parasitic inductance of the components in the simulation are assumed to be negligibly small, there does exists the oscillations due to the capacitance and the inductance however because the inductance isn't exactly $0$ and capacitance of the MOSFET is also considered in the simulation (the IRF510 MOSFET was given).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/output_1_sim.png}
+  \caption{Simulation of the output voltage showing the transients and the final value of the output voltage}
+  \label{fig:output_1_sim}
+\end{figure} 
+
+Figure \ref{fig:output_1_sim} shows the transients of the system dying out and a steady state voltage of the desired value.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/output_2_sim.png}
+  \caption{Simulation of the steady state voltage}
+  \label{fig:output_2_sim}
+\end{figure}
+
+Figure \ref{fig:output_2_sim} illustrates the voltage ripple that exists due to current flowing when the MOSFET is in the off mode and not flowing when the MOSFET conducts. The ripple is within the designed for value of $10\%$. 
+  
+  % section simulations (end)  
 
 % endsection Results and Discussion
 
 \begin{thebibliography}{0}
 	\bibitem{pressman} A. Pressman, K. Billings, T. Morey, \textit{Switching Power Supply Design, Third Edition}, Chapter 4 --- Flyback Converter Topologies
+	\bibitem{pwe_conv_applications} N. Mohan, T. M. Undeland, W. P. Robbins, \textit{Power Electronics --- Converters, Applications, and Design, Second Edition}, Chapter 10.4.2 
 \end{thebibliography}
 
 \newpage
