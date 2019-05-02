@@ -211,14 +211,23 @@ Getting the secondary inductance can be done with a simple ratio:
 
 \subsection{Inductor Design} % (fold)
 \label{sub:inductor_design}
-Now that we have the required inductance we can determine the number of turns we need on the primary side and the secondary side respectively using a core that has an air-gap total length of $\sum g = 3\times 10^{-3}m$ and an air gap total area of $A_g = 2.4\times10^{-5}m^2$. From Mohamed <+REFERENCE MOHAMED BOOK+>, using these specifications we calculated the number of windings onto an E42 gapped core using the equation that follows
+Now that we have the required inductance we can determine the number of turns
+we need on the primary side and the secondary side respectively using a core
+that has an air-gap total length of $\sum g = 3\times 10^{-3}m$ and an air gap
+total area of $A_g = 2.4\times10^{-5}m^2$. From Mohamed <+REFERENCE MOHAMED
+BOOK+>, using these specifications we calculated the number of windings onto an
+E42 gapped core using the equation that follows
 
 \begin{equation}
 	\label{eq:windings}
 	L = \frac{N^2A_g\mu}{\sum g}
 \end{equation}
 
-where $L$ is the inductance for which we are designing, $N$ the number of windings and $\mu$ the permeability of air which is $4\pi\times 10^{-7}$. Equation \eqref{eq:windings} was arrived at using a derivation which is again beyond the scope of this report but can be deduced from Mohamed <+REFERENCE MOHAMED BOOK+>. \\
+where $L$ is the inductance for which we are designing, $N$ the number of
+windings and $\mu$ the permeability of air which is $4\pi\times 10^{-7}$.
+Equation \eqref{eq:windings} was arrived at using a derivation which is again
+beyond the scope of this report but can be deduced from Mohamed <+REFERENCE
+MOHAMED BOOK+>. \\
 
 For primary-side inductance, the primary-side turns needed are calculated below
 \begin{equation}
@@ -228,7 +237,8 @@ For primary-side inductance, the primary-side turns needed are calculated below
 	\end{array}
 \end{equation}
 
-Now from the turns ratio calculated to be $0.65$, the turns needed on the secondary side yielding this ratio is $N_s = 71$ 
+Now from the turns ratio calculated to be $0.65$, the turns needed on the
+secondary side yielding this ratio is $N_s = 71$ 
 
 \subsubsection{Peak Currents and Capacitance}
 In order to double check our peak currents, we can use the current through an
@@ -395,12 +405,21 @@ The components of the converter itself are listed below
 \end{itemize}
 
 \noindent
-The inductor was built by adding masking tape to the outer legs of the E-core to make up $1mm$ air gap lengths on the $3$ leg of the E-core. This yielded the designed for air gap area and air gap total length. Windings were wound around the  E-42 core bobbin in an interleaving manner, half of the secondary windings were wound after which the primary windings were wound followed by the last half of the secondary windings (with  primary windings sandwiched between the secondary windings). The core was placed within the bobbin and masking tape was used to keep the E-core halves and the bobbin together. 
+The inductor was built by adding masking tape to the outer legs of the E-core
+to make up $1mm$ air gap lengths on the $3$ leg of the E-core. This yielded the
+designed for air gap area and air gap total length. Windings were wound around
+the  E-42 core bobbin in an interleaving manner, half of the secondary windings
+were wound after which the primary windings were wound followed by the last
+half of the secondary windings (with  primary windings sandwiched between the
+secondary windings). The core was placed within the bobbin and masking tape was
+used to keep the E-core halves and the bobbin together. 
 
 
 
 \subsection{Final Circuit}
-Figure \ref{fig:flyback_converter_build} shows the final build of the fly-back converter and the PWM and feedback system connection of the flyback converter to the raspberry pi.
+Figure \ref{fig:flyback_converter_build} shows the final build of the fly-back
+converter and the PWM and feedback system connection of the flyback converter
+to the raspberry pi.
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{images/final_circuit_image.png}
@@ -411,7 +430,9 @@ Figure \ref{fig:flyback_converter_build} shows the final build of the fly-back c
 % endsection Construction
 
 \section{Results and Discussion}
-The oscilloscope images of various parts of the fly-back converter is shown respectively by the figures that follow and a brief discussion of what each images tells us is given.
+The oscilloscope images of various parts of the fly-back converter is shown
+respectively by the figures that follow and a brief discussion of what each
+images tells us is given.
 
 \begin{figure}[H]
   \centering
@@ -420,7 +441,10 @@ The oscilloscope images of various parts of the fly-back converter is shown resp
   \label{fig:pwm_input_from_pi}
 \end{figure}
 
-We see that the input to the driver is a digital signal with the desired switching frequency of $\approx 25$KHz. The peak voltage is $2.96$V which is expected as the MOSFET driver should step up this voltage and is the reason why the MOSFET driver is used to drive the MOSFET between the on and the off state.
+We see that the input to the driver is a digital signal with the desired
+switching frequency of $\approx 25$KHz. The peak voltage is $2.96$V which is
+expected as the MOSFET driver should step up this voltage and is the reason why
+the MOSFET driver is used to drive the MOSFET between the on and the off state.
 
 \begin{figure}[H]
   \centering
@@ -429,18 +453,29 @@ We see that the input to the driver is a digital signal with the desired switchi
   \label{fig:pwm_output_from_chip}
 \end{figure}
 
-This is the voltage fed to the gate terminal of the IRF510 MOSFET (after the capacitor ridding the signal of voltage spikes). The ICL7667 takes as an input voltage the $12$V from the supply (even though the datasheet of the IRF510 MOSFET requires a minimum of $5$V across the gate-source terminals to turn on, the $12$V supply was taken because it is easily available from the input supply to the circuit). A minimization of the voltage spikes during transition from the off state to the on state resulted due to the addition of the capacitor. The voltage spikes and ringing of the voltage can be explained by the unwanted inductance in the critical loop of the circuit (the critical loop is loop containing the input supply, inductance $L1$ and the the NMOS MOSFET of Figure \ref{fig:circuit_diagram}). \\
+This is the voltage fed to the gate terminal of the IRF510 MOSFET (after the
+capacitor ridding the signal of voltage spikes). The ICL7667 takes as an input
+voltage the $12$V from the supply (even though the datasheet of the IRF510
+MOSFET requires a minimum of $5$V across the gate-source terminals to turn on,
+the $12$V supply was taken because it is easily available from the input supply
+to the circuit). A minimization of the voltage spikes during transition from
+the off state to the on state resulted due to the addition of the capacitor.
+The voltage spikes and ringing of the voltage can be explained by the unwanted
+inductance in the critical loop of the circuit (the critical loop is loop
+containing the input supply, inductance $L1$ and the NMOS MOSFET of Figure
+\ref{fig:circuit_diagram}). \\
 
 Figure \ref{fig:pwm_output_from_chip} also shows the maximum duty cycle of $\approx 42.5\%$ evident with the maximum load connected, controlled by the feedback system.\\
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{images/pwm_input_output_comparison.png}
-  \caption{A comparison of the input signal from the raspberry pi to the MOSFTE driver (the yellow trace) and the output of the MOSFTE driver (blue trace)}
+  \caption{A comparison of the input signal from the raspberry pi to the MOSFET driver (the yellow trace) and the output of the MOSFET driver (blue trace)}
   \label{fig:pwm_input_output_comparison}
 \end{figure}
 
-Figure \ref{fig:pwm_input_output_comparison} shows the supper-position of the MOSFET input signal and output signal as already discussed.\\
+Figure \ref{fig:pwm_input_output_comparison} shows the supper-position of the
+MOSFET input signal and output signal as already discussed.\\
 
 \begin{figure}[H]
   \centering
@@ -449,8 +484,6 @@ Figure \ref{fig:pwm_input_output_comparison} shows the supper-position of the MO
   \label{fig:vds}
 \end{figure} 
 
-<+Return here brah+>
-
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{images/output_from_load.png}
@@ -458,15 +491,20 @@ Figure \ref{fig:pwm_input_output_comparison} shows the supper-position of the MO
   \label{fig:output_from_load}
 \end{figure}.
 
-Figure \ref{fig:output_from_load} shows the output voltage measure across the $16.5\Omega$ load. The desired voltage of $18$V was not obtained because of the leakage inductance of the core. After building the circuit and realizing the desired output voltage was not obtained, the only reason for this could have been the leakage inductance of the inductor. The leakage inductance of the core was measured to test out theory. By short circuiting the primary-side and using an LRC meter to find the inductance on the secondary side and performing the same procedure on the secondary-side we found the leakage inductances to be $L_{Pleak} = 0.49mH$ and $L_{Sleak} = 0.18mH$. Compared to the total inductances of the primary and the secondary of $something$ and $something$ respectively, a leakage inductance percentage of $somehting$ and $something$ respectively, our theory was proved.\\
+Figure \ref{fig:output_from_load} shows the output voltage measure across the
+$16.5\Omega$ load. The desired voltage of $18$V was not obtained because of the
+leakage inductance of the core. After building the circuit and realizing the
+desired output voltage was not obtained, the only reason for this could have
+been the leakage inductance of the inductor. The leakage inductance of the core
+was measured to test out theory. By short circuiting the primary-side and using
+an LRC meter to find the inductance on the secondary side and performing the
+same procedure on the secondary-side we found the leakage inductances to be
+$L_{Pleak} = 0.49mH$ and $L_{Sleak} = 0.18mH$. Compared to the total
+inductances of the primary and the secondary of $something$ and $something$
+respectively, a leakage inductance percentage of $somehting$ and $something$
+respectively, our theory was proved.\\
 
 Another deduced result from the figure is that there exists no voltage ripple which is accredited by the capacitor $C1$ in Figure \ref{fig:circuit_diagram}  
-
-
-
-
-
-
 
 % endsection Results and Discussion
 
