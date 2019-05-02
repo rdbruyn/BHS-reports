@@ -411,7 +411,7 @@ Figure \ref{fig:flyback_converter_build} shows the final build of the fly-back c
 % endsection Construction
 
 \section{Results and Discussion}
-The oscilloscope images of various parts of the fly-back converter is shown respectively by the figures that follow and a brief discussion of what each images tells us is given.
+The oscilloscope images of various parts of the fly-back converter are shown respectively by the figures that follow and a brief discussion of what each images tells us is given.
 
 \begin{figure}[H]
   \centering
@@ -420,7 +420,7 @@ The oscilloscope images of various parts of the fly-back converter is shown resp
   \label{fig:pwm_input_from_pi}
 \end{figure}
 
-We see that the input to the driver is a digital signal with the desired switching frequency of $\approx 25$KHz. The peak voltage is $2.96$V which is expected as the MOSFET driver should step up this voltage and is the reason why the MOSFET driver is used to drive the MOSFET between the on and the off state.
+We see that the input to the driver is a digital signal with the desired switching frequency of $\approx 25$KHz. The peak voltage is $2.96$V, not enough to turn on the MOSFET. The MOSFET driver is used to step up this voltage to some provided voltage, see the figure that follows for more.
 
 \begin{figure}[H]
   \centering
@@ -429,9 +429,9 @@ We see that the input to the driver is a digital signal with the desired switchi
   \label{fig:pwm_output_from_chip}
 \end{figure}
 
-This is the voltage fed to the gate terminal of the IRF510 MOSFET (after the capacitor ridding the signal of voltage spikes). The ICL7667 takes as an input voltage the $12$V from the supply (even though the datasheet of the IRF510 MOSFET requires a minimum of $5$V across the gate-source terminals to turn on, the $12$V supply was taken because it is easily available from the input supply to the circuit). A minimization of the voltage spikes during transition from the off state to the on state resulted due to the addition of the capacitor. The voltage spikes and ringing of the voltage can be explained by the unwanted inductance in the critical loop of the circuit (the critical loop is loop containing the input supply, inductance $L1$ and the the NMOS MOSFET of Figure \ref{fig:circuit_diagram}). \\
+This is the voltage fed to the gate terminal of the IRF510 MOSFET (after the capacitor ridding the signal of voltage spikes). The ICL7667 takes as an input voltage the $12$V from the supply (even though the datasheet of the IRF510 MOSFET requires a minimum of $5$V across the gate-source terminals to turn it on, the $12$V supply was taken because it is easily available from the input supply to the circuit). A minimization of the voltage spikes during transition from the off state to the on state resulted due to the addition of the capacitor. The voltage spikes and ringing of the voltage can be explained by the unwanted inductance in the critical loop of the circuit (the critical loop is the loop containing the input supply, inductance $L1$ and the the NMOS MOSFET of Figure \ref{fig:circuit_diagram}) added to by the driver. \\
 
-Figure \ref{fig:pwm_output_from_chip} also shows the maximum duty cycle of $\approx 42.5\%$ evident with the maximum load connected, controlled by the feedback system.\\
+Figure \ref{fig:pwm_output_from_chip} also shows the maximum duty cycle of $\approx 42.5\%$ evident with the maximum load connected, controlled by the feedback system. \\
 
 \begin{figure}[H]
   \centering
@@ -445,28 +445,41 @@ Figure \ref{fig:pwm_input_output_comparison} shows the supper-position of the MO
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{images/VDS.png}
-  \caption{Drain to source voltage of the IRF510 MOSFET}
+  \caption{Drain to source voltage of the IRF510 MOSFET, the blue trace shows the voltage across the source of the MOSFET and the yellow trace shows the drain voltage}
   \label{fig:vds}
 \end{figure} 
 
-<+Return here brah+>
+The drain voltage (yellow trace from Figure \ref{fig:vds}) shows ringing, this is not due to inductance alone rather it is explained by the combined effect of inductance (inductance of the MOSFET as well as the inductor) and capacitance (the capacitance is introduced by the MOSFET). We also see that the MOSFET voltage drop during the on mode is $\approx 1$V (the difference between the yellow trace and the blue trace during an on cycle is $1$V).
+ 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/Primary.png}
+  \caption{Primary side voltage of the inductor}
+  \label{fig:primary}
+\end{figure} 
+
+Figure \ref{fig:primary} shows the same oscillations as with the ringing across the drain and the source terminals of the MOSFET (Figure \ref{fig:vds}). Again the oscillation is explained by the capacitance of the MOSFET. The rms voltage lies close to $11$V which is expected, there is a $1$V voltage drop across the MOSFET when it's in the on mode due to the $R_{DS}$ resistance of the MOSFET which was designed for.  
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/Secondary.png}
+  \caption{Secondary voltage of the inductor}
+  \label{fig:secondary}
+\end{figure} 
+
+The voltage across the secondary as can be seen from Figure \ref{fig:secondary} peaks at $\approx 10V$ during the off time of the MOSFET while the voltage drops to a minimum of approximately $\approx -16$V. From the plot we can see that our inductor design is flawed, we would ideally expect to see $\approx 19$V (see equation \eqref{eq:rho}) during the off time - the difference is explained by the leakage inductance of the inductor. The reverse voltage during the on time of the MOSFET also ideally has to be $-19$V, the difference to the true value can be explained due to copper losses in the windings.  
+
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{images/output_from_load.png}
   \caption{The output voltage of the load}
   \label{fig:output_from_load}
-\end{figure}.
+\end{figure}. 
 
-Figure \ref{fig:output_from_load} shows the output voltage measure across the $16.5\Omega$ load. The desired voltage of $18$V was not obtained because of the leakage inductance of the core. After building the circuit and realizing the desired output voltage was not obtained, the only reason for this could have been the leakage inductance of the inductor. The leakage inductance of the core was measured to test out theory. By short circuiting the primary-side and using an LRC meter to find the inductance on the secondary side and performing the same procedure on the secondary-side we found the leakage inductances to be $L_{Pleak} = 0.49mH$ and $L_{Sleak} = 0.18mH$. Compared to the total inductances of the primary and the secondary of $something$ and $something$ respectively, a leakage inductance percentage of $somehting$ and $something$ respectively, our theory was proved.\\
+Figure \ref{fig:output_from_load} shows the output voltage measure across the $16.5\Omega$ load. The desired voltage of $18$V was not obtained because of the leakage inductance of the core as previously mentioned. The leakage inductance of the core was measured to test our theory. By short circuiting the primary-side and using an LCR meter to find the inductance on the secondary side and performing the same procedure on the secondary-side we found the leakage inductances to be $L_{Pleak} = 0.49mH$ and $L_{Sleak} = 0.18mH$ respectively. Compared to the total inductances of the primary and the secondary of $0.572mH$ and $1.44mH$ respectively, a leakage inductance percentage of $86\%$ and $12.5\%$ respectively, our theory was proved.\\
 
-Another deduced result from the figure is that there exists no voltage ripple which is accredited by the capacitor $C1$ in Figure \ref{fig:circuit_diagram}  
-
-
-
-
-
-
+The core used wasn't gapped by design --- we gapped it ourselves using masking tape. If a gapped core was used, less leakage inductance would have resulted around the air gap and the results would have been closer to the expected value.  
 
 % endsection Results and Discussion
 
