@@ -516,8 +516,8 @@ the $12$V supply was taken because it is easily available from the input supply
 to the circuit). A minimization of the voltage spikes during transition from
 the off state to the on state resulted due to the addition of the capacitor.
 The voltage spikes and ringing of the voltage can be explained by the unwanted
-inductance in the critical loop of the circuit (the critical loop is loop
-containing the input supply, inductance $L1$ and the NMOS MOSFET of Figure
+inductance in the critical loop of the circuit (the critical loop is the loop
+containing the input supply voltage, inductance $L1$ and the NMOS MOSFET of Figure
 \ref{fig:circuit_diagram}). \\
 
 Figure \ref{fig:pwm_output_from_chip} also shows the maximum duty cycle of $\approx 42.5\%$ evident with the maximum load connected, controlled by the feedback system. \\
@@ -574,6 +574,20 @@ The core used wasn't gapped by design --- we gapped it ourselves using masking t
 
 \section{Simulations} % (fold)
   \label{sec:simulations}
+
+  To start off the discussion on the simulations we first present an image of the current through the primary and secondary of the coupled inductor to show that the flyback converter operates in the discontinuous mode.
+
+ \begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{images/discont_sim.png}
+  \caption{An image showing the discontinuous mode conduction of the flyback converter}
+  \label{fig:discont_sim}
+\end{figure} 
+
+As can be seen from Figure \ref{fig:discont_sim}, a dead time exists between current flowing in the primary and the secondary showing that the design accomplished the desired discontinuous mode.  
+
+
+
 
   \begin{figure}[H]
   \centering
