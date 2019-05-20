@@ -85,11 +85,25 @@ A series of steps need to followed in order to realize control for this system, 
   \label{eq:control_law}
 \end{equation}
 
-\eqref{eq:control_law} tells us that the system has a constant matrix in the feedback path. For an $n^{th}$ order system there are $n$ feedback gains. The pole locations of the system can be set using the appropriate values  of $K_1, ... , K_n$ in the closed loop characteristic equation given as $det[s\textbf{I}-(\textbf{A}-\textbf{BK})] = 0$. Thus our design narrows down to finding the values of $K_i$ such that the system poles are placed in the locations as specified by the question, to do this we must first find the desired pole locations by doing something something and another something <+PROCEDURE FOR FINDING THE POLES MUST BE DISCUSSED HERE+>\\
+\eqref{eq:control_law} tells us that the system has a constant matrix in the
+feedback path. For an $n^{th}$ order system there are $n$ feedback gains. The
+pole locations of the system can be set using the appropriate values  of $K_1,
+... , K_n$ in the closed loop characteristic equation given as
+$det[s\textbf{I}-(\textbf{A}-\textbf{BK})] = 0$. Thus our design narrows down
+to finding the values of $K_i$ such that the system poles are placed in the
+locations as specified by the question, to do this we must first find the
+desired pole locations.\\
 
-After calculating the pole locations based on the required settling time and percent overshoot of $1.5$s and $20\%$, we use the \texttt{place} octave command which has a better accuracy than the \texttt{acker} command (it must be noted that the place command can only be applied if the desired poles are distinct which in this case is <+OR IS NOT WE HAVE TO CALCULATE THE POLES TO MAKE THIS STATEMENT+>). This gives us the control law needed to place the system in the desired pole locations.\\
+After calculating the pole locations based on the required settling time and
+percent overshoot of $1.5$s and $20\%$, we use the \texttt{place} octave
+command which has a better accuracy than the \texttt{acker} command (it must be
+noted that the place command can only be applied if the desired poles are
+distinct). This gives us the control law needed to place the system in the
+desired pole locations.\\
 
-Using these constant values we can now obtain the controlled matrix defined by the equation $A_{controlled} = \textbf{A}-\textbf{B}\textbf{K};$. The Octave code that implements all of this is shown below
+Using these constant values we can now obtain the controlled matrix defined by
+the equation $A_{controlled} = \textbf{A}-\textbf{B}\textbf{K};$. The Octave
+code that implements all of this is shown below
 
 \noindent
 	\texttt{A = [0 1 0 0;0.302 0 0 0;0 0 0 1;-0.56 0 0 0];}\\
@@ -120,7 +134,10 @@ Using these constant values we can now obtain the controlled matrix defined by t
 	\texttt{step(System\_controlled);}\\
 
 \newpage
-Where the desired pole locations were calculated using the formula $s_{1,2} =\zeta \omega_n \pm j\omega_n\sqrt{\zeta^2-1}$ and $\omega$, $t_s = \frac{4}{\omega_n}$ and $\zeta = \frac{-\log(OS)}{\sqrt{\pi^2+\log^2(OS)}}$. The results of running this code follows 
+Where the desired pole locations were calculated using the formula $s_{1,2}
+=\zeta \omega_n \pm j\omega_n\sqrt{\zeta^2-1}$ and $\omega$, $t_s =
+\frac{4}{\omega_n}$ and $\zeta = \frac{-\log(OS)}{\sqrt{\pi^2+\log^2(OS)}}$.
+The results of running this code follows 
 
 \begin{figure}[H]
   \centering
@@ -143,7 +160,11 @@ Where the desired pole locations were calculated using the formula $s_{1,2} =\ze
   \label{fig:control}
 \end{figure}
 
-Figure \ref{fig:control} shows that we have effectively implemented feedback control for the system. From Figure \ref{fig:control} we see the output \texttt{y1} approaches $0$, the expected result for the pendulum to stay upright. From the plot we ca also see that the overshoot and the settling time is within the design for specification of respectively $20\%$ and $1.5$s
+Figure \ref{fig:control} shows that we have effectively implemented feedback
+control for the system. From Figure \ref{fig:control} we see the output
+\texttt{y1} approaches $0$, the expected result for the pendulum to stay
+upright. From the plot we ca also see that the overshoot and the settling time
+is within the design for specification of respectively $20\%$ and $1.5$s
 
 
 

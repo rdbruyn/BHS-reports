@@ -3,28 +3,26 @@ function [k, td, ti] = q25()
   pkg load signal;
   s = tf('s');
 
-  for K = 1:50
-    for Td = 1:50
-      for Ti = 1:50
-        [K, Td, Ti]
+  for Kp = 1:50
+    for Kd = 1:50
+      for Ki = 1:50
+        [Kp, Kd, Ki]
         fflush(stdout);
-        controller = K * (1 + Td * s + 1/(Ti * s));
-        plant = tf([0 0 1], [1 1 0]);
-        syscl = feedback(controller * plant);
+        syscl = tf([0 Kd Kp Ki], [1 (Kd+1) Kp Ki]);
         [wn, z] = damp(syscl);
         
         # Look for it...
         found = true;
         for i = 1:3
-          if (wn(i) < 1 || z(i) < 0.5)
+          if (wn(i) <= 1 || z(i) <= 0.5)
             found = false;
             break;
           endif
         endfor
         if (found)
-          k = K
-          td = Td
-          ti = Ti
+          k = Kp
+          td = Kd/Kp
+          ti = Kp/Ki
           syscl
           return;
         endif
