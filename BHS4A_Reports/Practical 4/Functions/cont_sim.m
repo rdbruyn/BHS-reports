@@ -35,6 +35,4 @@ function [retval] = cont_sim (tsam1,tsam2,tsam3,tsam4)
   step(feedbackDisTusTsam3)
   subplot(4,1,4);
   step(feedbackDisTusTsam4)
-  
-  
 endfunction

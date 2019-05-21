@@ -44,7 +44,7 @@ we only considered continuous control systems, however, and now we will
 investigate how we might implement the same control systems using modern
 digital technology. Before we begin, it would be instructive to note the step
 response of the plant in series with the lead compensator given in equation
-\ref{eq:lead_compensator}, and showed in figure \ref{fig:continuous_control}
+\ref{eq:lead_compensator}, and shown in figure \ref{fig:continuous_control}
 below. The rise-time of this system can be found by zooming in on the first
 portion of the graph, and we see that it is approximately $t_r = 0.246$
 seconds.
@@ -59,7 +59,7 @@ seconds.
 
 \section{Question 1} % (fold)
 \label{sec:question_1}
-The Tustin method of approximating the lead controller as defined by \eqref{eq:lead_compensator} was used to yield the discrete controller for the system in consideration. To follow are 4 different discrete controller results obtained for a number of different sampling times.
+The Tustin method of approximating the lead controller as defined by equation \eqref{eq:lead_compensator} was used to yield the discrete controller for the system in consideration. To follow are 4 different discrete controller results obtained for a number of different sampling times.
 
 \begin{figure}[H]
   \centering
@@ -68,7 +68,7 @@ The Tustin method of approximating the lead controller as defined by \eqref{eq:l
   \label{fig:discrete_controllers}
 \end{figure}
 
-These plots were obtained by running the following octave code given in
+These plots were obtained by running Octave code given in
 appendix \ref{sec:appendix_1}. The continuous system was made discrete in order
 to implement the feedback using the discrete controllers (another approach that
 would yield a better result is to use MATLAB's Simulink)\\
@@ -85,7 +85,7 @@ of the desired system response using a continuous controller).\\
 
 The best sampling time yielding a close to exact replica of a system's response
 using a continuous controller is $20\times \omega_n$ where $\omega_n$ is the
-natural frequency of the system. Problems with the approximation come if the
+natural frequency of the system. Problems with the approximation come into play if the
 sampling time is chosen to be $10\times \omega_n$. It is safe to say that using
 a sampling time of $2$ seconds, is much less than $10\times \omega_n$ and
 sampling times of $0.04$, $0.08$ and $0.16$ lie closer to $20\times \omega_n$
@@ -101,7 +101,7 @@ In this question we try to match the lead compensator's performance from the
 previous question, at least in terms of rise-time. We attempt to do this using
 the pole placement method. Noticing that our lead compensator exhibits quite a
 bit of overshoot, we require the poles of our transfer function to be, first
-and foremost, in the left hand half of the s-plane, but also that the poles
+and foremost, in the left-hand half of the s-plane, but also that the poles
 have an imaginary component, which yields the oscillatory motion as seen in
 figure \ref{fig:continuous_control}.
 
@@ -194,7 +194,7 @@ response given in figure \ref{fig:2_original}.
 \end{figure}
 
 In the following sections, we present the different transfer functions and step
-input responses for the discretized controllers based on \eqref{eq:gs_original}.\\
+input responses for the discretized controllers based on equation \eqref{eq:gs_original}.\\
 
 % tustin 1
 \noindent Tustin's method. Sampling time $T = 1$ second.
