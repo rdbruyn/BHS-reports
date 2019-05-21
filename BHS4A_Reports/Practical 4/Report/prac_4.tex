@@ -44,11 +44,14 @@ we only considered continuous control systems, however, and now we will
 investigate how we might implement the same control systems using modern
 digital technology. Before we begin, it would be instructive to note the step
 response of the plant in series with the lead compensator given in equation
-\ref{eq:lead_compensator}, and showed in figure \ref{fig:continuous_control} below.
+\ref{eq:lead_compensator}, and showed in figure \ref{fig:continuous_control}
+below. The rise-time of this system can be found by zooming in on the first
+portion of the graph, and we see that it is approximately $t_r = 0.246$
+seconds.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{img/continuous_control.png}
+  \includegraphics[width=.8\textwidth]{img/continuous_control.png}
   \caption{Continuous control using a lead compensator}
   \label{fig:continuous_control}
 \end{figure}
@@ -162,13 +165,13 @@ $\zeta$ and $\omega_n$ values for the system as given in table \ref{tab:specs}.
 
 \begin{table}
   \centering
-  \begin{tabular}{c c c}
+  \begin{tabular}{c c c c}
     \toprule
-    & $\zeta$ & $\omega_n$ \\
+    & Pole position & $\zeta$ & $\omega_n$ \\
     \midrule
-	$p_1$ & 0.69553 & 1.1031 \\
-	$p_2$ & 0.69553 & 1.1031 \\
-	$p_3$ & 1.00000 & 2.4656 \\
+    $p_1$ & -0.767 + j0.79 & 0.69553 & 1.1031 \\
+    $p_2$ & -0.767 + j0.79 & 0.69553 & 1.1031 \\
+    $p_3$ & -2.47 & 1.00000 & 2.4656 \\
     \bottomrule
   \end{tabular}
   \caption{Damping ratio and natural frequency attributes of the system}
@@ -231,20 +234,28 @@ input responses for the discretized controllers based on \eqref{eq:gs_original}.
 \end{equation}
 
 To enhance the discussion, the graphs of the step responses have been provided.
-As we can see in figure \ref{fig:tustin001} and figure \ref{fig:mpz001},
-sampling at a very quick rate of 0.01 seconds, we can see that the discrete
-system matches the continuous version almost exactly, with no real appreciable
-difference. Looking at figures \ref{fig:tustin01} and \ref{fig:mpz01}, we can
-now clearly see the reduced resolution by sampling at 0.1 second intervals.
-However, the general characteristics seem to have been preserved in the system.
-The overshoot, rise times, and settling times for both methods seems to have
-been preserved. Looking at figure \ref{fig:tustin1} and figure \ref{fig:mpz1}
-though, we see that a sampling rate of 1 second seems to drastically affect the
-discrete system. The overshoot is drastically increased to more than 25\% for
-the Tustin method, and there is clearly a lot of aliasing distortion taking
-place in both filter methods, and the reader may refer back to the discussion
-in the previous question on why aliasing is detrimental to discrete control
-systems.
+Overall, we can see that even though the two different methods tend to yield
+dissimilar transfer functions, their characteristics are quite close to one
+another. As we can see in figure \ref{fig:tustin001} and figure
+\ref{fig:mpz001}, sampling at a very quick rate of 0.01 seconds, we can see
+that the discrete system matches the continuous version almost exactly, with no
+real appreciable difference. Looking at figures \ref{fig:tustin01} and
+\ref{fig:mpz01}, we can now clearly see the reduced resolution by sampling at
+0.1 second intervals.  However, the general characteristics seem to have been
+preserved in the system.  The overshoot, rise times, and settling times for
+both methods seems to have been preserved.
+
+Looking at figure \ref{fig:tustin1} and figure \ref{fig:mpz1} though, we see
+that a sampling rate of 1 second seems to drastically affect the discrete
+system. The overshoot is drastically increased to more than 25\% for the Tustin
+method, and there is clearly a lot of aliasing distortion taking place in both
+filter methods, and the reader may refer back to the discussion in the previous
+question on why aliasing is detrimental to discrete control systems. The Tustin
+method's overshoot can be traced back to the design principles governing it; it
+essentially sees discrete control as an integration problem, and uses
+trapezoidal integration to perform the discrete transform. This means that,
+with a low sampling rate, the errors from this integration process are severe,
+particularly before the system reaches steady-state.
 
 \begin{figure}[H]
   \centering
