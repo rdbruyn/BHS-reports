@@ -10,12 +10,10 @@ function q25_discussion()
   controller = K * (1 + Td * s + 1/(Ti * s));
   sys = feedback(controller * plant);
   
-  #sampling_arr = [1, .1, .01];
-  #for i = 1:3
-  #  T = sampling_arr(i)
-  #  tustin = c2d(sys, T, 'tustin')
-  #  mpz = c2d(sys, T, 'mpz')
-  #endfor
-  
-  step(c2d(sys, 1, 'tustin'))
+  sampling_arr = [1, .1, .01];
+  for i = 1:3
+    T = sampling_arr(i)
+    tustin = c2d(sys, T, 'tustin')
+    mpz = c2d(sys, T, 'mpz')
+  endfor
 endfunction
